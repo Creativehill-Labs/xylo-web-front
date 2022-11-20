@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import HelpCenter from './pages/helpCenter/HelpCenter';
+import Main from './pages/Main';
+import GlobalStyle from './GlobalStyle';
+import CommonLayout from './layouts/CommonLayout';
+import Navigation from './components/Layout/Navigation';
+import Notice from './pages/helpCenter/Notice';
 
-function App() {
+const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CommonLayout>
+      <GlobalStyle />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/helpcenter/faq" element={<HelpCenter />} />
+        <Route path="/helpcenter/notice" element={<Notice />} />
+        <Route path="/helpcenter/policy" element={<Notice />} />
+      </Routes>
+    </CommonLayout>
   );
-}
+};
 
 export default App;
