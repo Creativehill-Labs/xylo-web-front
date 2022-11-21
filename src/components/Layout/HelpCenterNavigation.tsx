@@ -16,7 +16,6 @@ const NavStyle = styled.div<INavbutton>`
     width: 100%;
   }
   ${({ currentClick }) => {
-    console.log(currentClick);
     return `
            a:nth-child(${currentClick}) {
             background-color: #313131;

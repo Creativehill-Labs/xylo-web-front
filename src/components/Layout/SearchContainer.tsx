@@ -25,7 +25,10 @@ const ContentContainer = styled.div`
   }
 `;
 
-const InputContainer = styled.div``;
+const InputContainer = styled.div`
+  display: flex;
+  gap: 20px;
+`;
 
 const SearchContainer = () => {
   return (

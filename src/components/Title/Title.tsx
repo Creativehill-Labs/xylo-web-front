@@ -21,14 +21,20 @@ const Text = styled.div<ITitle>`
     }
     if (size === `tertiary`) {
       return `
-        font-size: 20px;
-        line-height: 24px;
+        font-size: 32px;
+        line-height: 39px;
       `;
     }
     if (size === `quaternary`) {
       return `
         font-size: 20px;
         line-height: 24px;
+      `;
+    }
+    if (size === `quinary`) {
+      return `
+        font-size: 16px;
+        line-height: 19.5px;
       `;
     }
     return ``;
