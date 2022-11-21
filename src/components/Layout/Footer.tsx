@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const BottomFooter = styled.header`
+const BottomFooter = styled.footer`
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 200px;
+  height: 206px;
   background-color: #151515;
 `;
 

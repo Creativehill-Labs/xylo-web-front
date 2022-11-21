@@ -4,7 +4,6 @@ import HelpCenter from './pages/helpCenter/HelpCenter';
 import Main from './pages/Main';
 import GlobalStyle from './GlobalStyle';
 import CommonLayout from './layouts/CommonLayout';
-import Navigation from './components/Layout/Navigation';
 import Notice from './pages/helpCenter/Notice';
 
 const App: FC = () => {
