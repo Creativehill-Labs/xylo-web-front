@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
 import { promotedData } from '../../dummy/noticeData';
 import Text from '../../components/Text';
@@ -9,7 +9,7 @@ import Box from '../../components/Box';
 import Flex from '../../components/Flex';
 import iconStar from '../../assets/png/icon-star.png';
 import iconUser from '../../assets/png/icon-user.png';
-import iconClip from '../../assets/svg/icon-clip.svg';
+import iconCopy from '../../assets/svg/icon-copy.svg';
 import iconFacebook from '../../assets/png/icon-facebook.png';
 import iconTwitter from '../../assets/png/icon-twitter.png';
 import iconLinked from '../../assets/png/icon-linked.png';
@@ -70,10 +70,10 @@ const ShareArticleBox = styled.div`
   align-items: center;
 `;
 
-const IconClip = styled.div`
+const IconCopy = styled.div`
   width: 18px;
   height: 18px;
-  background-image: url(${iconClip});
+  background-image: url(${iconCopy});
   background-size: cover;
   background-repeat: no-repeat;
   margin-right: 12px;
@@ -267,7 +267,7 @@ const NoticeDetail: FC = () => {
             <ShareArticleBox>
               <CopyLinkButton>
                 <Flex justifyContent="center">
-                  <IconClip />
+                  <IconCopy />
                   <Text size="16px" weight="700" color="#acacac">
                     Copy link
                   </Text>
@@ -320,7 +320,9 @@ const NoticeDetail: FC = () => {
             </Box>
             <Box>
               <Text size="20px">Have more questions?</Text>
-              <SubmitButton>Submit a request</SubmitButton>
+              <SubmitButton>
+                <Link to="/helpcenter/submit">Submit a request</Link>
+              </SubmitButton>
             </Box>
           </Flex>
         </Box>
