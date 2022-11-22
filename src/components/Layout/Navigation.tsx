@@ -14,23 +14,32 @@ const Navheader = styled.header`
   height: 120px;
 `;
 
+const LogoContainer = styled.div`
+  margin-left: 15%;
+`;
+
 const Logo = styled.img`
   width: 115px;
   height: 36px;
-  margin-left: 15%;
 `;
 
 const LinkContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 500px;
+  gap: 56px;
+  justify-content: flex-end;
+  align-items: center;
+  width: 30%;
   margin-right: 15%;
 `;
 
 const Navigation = () => {
   return (
     <Navheader>
-      <Logo src={iconLogo} />
+      <LogoContainer>
+        <Link to="/">
+          <Logo src={iconLogo} />
+        </Link>
+      </LogoContainer>
       <LinkContainer>
         <Link to="/">Main</Link>
         <Link to="/">Docs</Link>
