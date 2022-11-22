@@ -12,7 +12,7 @@ const Flex = styled(Box)<FlexProps>`
   display: flex;
   flex-direction: ${({ flexDirection }) => flexDirection};
   justify-content: ${({ justifyContent }) => justifyContent};
-  align-items: ${({ alignItems }) => alignItems || `center`};
+  align-items: ${({ alignItems }) => alignItems};
 `;
 
 export default Flex;

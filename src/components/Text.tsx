@@ -5,6 +5,7 @@ interface TextProps {
   weight?: string;
   margin?: string;
   padding?: string;
+  color?: string;
 }
 
 const Text = styled.span<TextProps>`
@@ -13,6 +14,7 @@ const Text = styled.span<TextProps>`
   font-weight: ${({ weight }) => weight};
   margin: ${({ margin }) => margin};
   padding: ${({ padding }) => padding};
+  color: ${({ color }) => color};
   line-height: 1;
 `;
 

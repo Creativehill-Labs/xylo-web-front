@@ -1,11 +1,18 @@
 import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Pagination from 'react-js-pagination';
+import { Link } from 'react-router-dom';
+import CustomPagination, {
+  CurrentItemProps,
+} from '../../components/Partials/CustomPagination';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
 import Title from '../../components/Title/Title';
 import Line from '../../components/Line';
 import Text from '../../components/Text';
 import { promotedData, articleData } from '../../dummy/noticeData';
+import Box from '../../components/Box';
+import iconStar from '../../assets/png/icon-star.png';
+import iconPaper from '../../assets/svg/icon-paper.svg';
+import Flex from '../../components/Flex';
 
 const NoticeSection = styled.section`
   width: 1280px;
@@ -17,12 +24,22 @@ const NoticeTitle = styled.div`
   text-align: center;
 `;
 
-const PromotedArticles = styled.div`
-  margin-bottom: 120px;
+const IconStar = styled.div`
+  width: 16px;
+  height: 16px;
+  background-image: url(${iconStar});
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-right: 8px;
 `;
 
-const NoticeArticles = styled.div`
-  margin-bottom: 80px;
+const IconPaper = styled.div`
+  width: 16px;
+  height: 20px;
+  background-image: url(${iconPaper});
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-right: 14px;
 `;
 
 const ArticleBox = styled.div<{ promoted?: boolean }>`
@@ -30,6 +47,7 @@ const ArticleBox = styled.div<{ promoted?: boolean }>`
   font-size: 20px;
   font-weight: 400;
   cursor: pointer;
+  color: #000;
 
   ${(props) =>
     props.promoted
@@ -37,49 +55,8 @@ const ArticleBox = styled.div<{ promoted?: boolean }>`
   border-radius: 8px;
   box-shadow: 4px 4px 8px 0 rgba(143, 143, 143, 0.1);
   margin-top: 20px;`
-      : ``}
+      : ``};
 `;
-
-const PaginationBox = styled.div`
-  .pagination {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 120px;
-  }
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  ul.pagination li {
-    width: 48px;
-    height: 48px;
-    border: 1px solid #f4f4f4;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 12px;
-    :last-child {
-      margin-right: 0;
-    }
-  }
-  ul.pagination li a {
-    text-decoration: none;
-    color: #000;
-    font-size: 20px;
-  }
-  ul.pagination li.active a {
-    color: #fff;
-  }
-  ul.pagination li.active {
-    background-color: #000;
-  }
-`;
-
-interface CurrentItemProps {
-  id: number;
-  title: string;
-}
 
 const Notice: FC = () => {
   const [activePage, setActivePage] = useState(1);
@@ -106,20 +83,28 @@ const Notice: FC = () => {
             You can check the latest news realated to XYLO
           </Title>
         </NoticeTitle>
-        <PromotedArticles>
-          <Text size="24px" weight="700">
-            Promoted artice
-          </Text>
+        <Box margin="0 0 120px 0">
+          <Flex>
+            <IconStar />
+            <Text size="24px" weight="700">
+              Promoted artice
+            </Text>
+          </Flex>
           <Line margin="24px 0 0 0" />
           {promotedData.map((data) => {
             return (
-              <ArticleBox key={data.id} promoted>
-                {data.title}
-              </ArticleBox>
+              <Link to={`promoted/${data.id}`} key={data.id}>
+                <ArticleBox promoted>
+                  <Flex>
+                    <IconPaper />
+                    <Text>{data.title}</Text>
+                  </Flex>
+                </ArticleBox>
+              </Link>
             );
           })}
-        </PromotedArticles>
-        <NoticeArticles>
+        </Box>
+        <Box margin="0 0 80px 0">
           <Text size="24px" weight="700">
             Article
           </Text>
@@ -127,22 +112,24 @@ const Notice: FC = () => {
           {currentItems.map((data) => {
             return (
               <div key={data.id}>
-                <ArticleBox>{data.title}</ArticleBox>
+                <Link to="/">
+                  <ArticleBox>
+                    <Flex>
+                      <IconPaper />
+                      <Text>{data.title}</Text>
+                    </Flex>
+                  </ArticleBox>
+                </Link>
                 <Line color="#f4f4f4" />
               </div>
             );
           })}
-        </NoticeArticles>
-        <PaginationBox>
-          <Pagination
-            totalItemsCount={articleData.length}
-            activePage={activePage}
-            itemsCountPerPage={8}
-            onChange={handlePageClick}
-            pageRangeDisplayed={4}
-            hideFirstLastPages
-          />
-        </PaginationBox>
+        </Box>
+        <CustomPagination
+          articleData={articleData}
+          activePage={activePage}
+          handlePageClick={handlePageClick}
+        />
       </NoticeSection>
     </>
   );
