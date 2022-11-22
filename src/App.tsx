@@ -6,6 +6,7 @@ import GlobalStyle from './GlobalStyle';
 import CommonLayout from './layouts/CommonLayout';
 import Notice from './pages/helpCenter/Notice';
 import NoticeDetail from './pages/helpCenter/NoticeDetail';
+import Policy from './pages/helpCenter/Policy';
 
 const App: FC = () => {
   return (
@@ -19,7 +20,7 @@ const App: FC = () => {
           path="/helpcenter/notice/promoted/:id"
           element={<NoticeDetail />}
         />
-        <Route path="/helpcenter/policy" element={<Notice />} />
+        <Route path="/helpcenter/policy" element={<Policy />} />
       </Routes>
     </CommonLayout>
   );
