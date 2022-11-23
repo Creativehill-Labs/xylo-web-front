@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import SubmitRequestButton from '../Partials/SubmitRequestButton';
 
 const BottomFooter = styled.footer`
   display: flex;
@@ -63,11 +65,9 @@ const Footer = () => {
       <FooterContent color="grey">{reservedContent}</FooterContent>
       <QuestionContainer>
         <FooterContent color="white">{questionContent}</FooterContent>
-        <FooterButton
-          type="button"
-          value="Submit a request"
-          onClick={() => console.log(`hi`)}
-        />
+        <Link to="/helpcenter/submit">
+          <SubmitRequestButton />
+        </Link>
       </QuestionContainer>
     </BottomFooter>
   );

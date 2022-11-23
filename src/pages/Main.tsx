@@ -21,10 +21,15 @@ const MainStyled = styled.div``;
 const BackgroundSection = styled.div`
   display: flex;
   align-items: center;
-  padding-left: 15%;
   background-image: url('${backgroundImg}');
+  background-color: rgba(0, 0, 0, 0.8);
   height: calc(100vh - 114px);
   background-size: cover;
+`;
+
+const BackgroundContent = styled.div`
+  width: 1280px;
+  margin: 0 auto;
   div {
     width: 50%;
     color: #ffffff;
@@ -75,35 +80,34 @@ const CoinImg = styled.span`
   }
 `;
 
-const PageSection = styled.div`
-  height: calc(100vh + 7px);
-`;
-
 const ProductSectionStyle = styled.div`
   display: flex;
   height: inherit;
+  background-image: url('${phoneBackgroundImg}');
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 50% 100%;
+  height: calc(100vh + 7px);
+`;
+
+const ProductSectionContent = styled.div`
+  display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
+  flex: 1 1 0;
 `;
 
 const SliceLeft = styled.div`
-  /* padding-left: 15%; */
-  margin-top: -130px;
-  padding-left: 15%;
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 70px;
-  width: 39%;
   height: inherit;
+  width: 50%;
 `;
 
-const SliceRight = styled.div`
-  background-image: url('${phoneBackgroundImg}');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: bottom center;
-  width: 55%;
-  height: inherit;
-`;
+const SliceRight = styled.div``;
 
 const PhoneImg = styled.div`
   position: absolute;
@@ -124,23 +128,19 @@ const ProductContent = styled.div`
 `;
 
 const InfoSectionStyle = styled.div<ScrollType>`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 120px;
-  height: inherit;
+  height: calc(100vh + 7px);
+
   transition: background 1.4s ease-in-out;
 
   ${({ scrollPosition }) => {
     if (scrollPosition > 1400 && scrollPosition < 2400) {
       return `
-        background-color: #FAFAFA;
+      background-color: #FAFAFA;
       `;
     }
     if (scrollPosition < 1400) {
       return `
-        background-color: #FFFFFF;
+      background-color: #FFFFFF;
       `;
     }
     return ``;
@@ -150,8 +150,20 @@ const InfoSectionStyle = styled.div<ScrollType>`
 const InfoContent = styled.div`
   display: flex;
   text-align: center;
-  padding: 0 15%;
+  justify-content: space-around;
   font-size: 20px;
+  width: 100%;
+`;
+
+const InfoSectionContent = styled.div`
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+  height: 100%;
 `;
 
 const Image = styled.img`
@@ -174,18 +186,13 @@ const HelpContainer = styled(DocsContainer)``;
 const PaperContainer = styled(DocsContainer)``;
 
 const RoadmapSectionStyle = styled.div<ScrollType>`
-  display: flex;
-  gap: 70px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: inherit;
+  height: calc(100vh + 7px);
   transition: background 1s ease-in-out;
 
   ${({ scrollPosition }) => {
     if (scrollPosition > 2400) {
       return `
-        background-color: #222222;
+      background-color: #222222;
       `;
     }
     return `
@@ -196,6 +203,17 @@ const RoadmapSectionStyle = styled.div<ScrollType>`
   div {
     color: #ffffff;
   }
+`;
+
+const RoadmapSectionContent = styled.div`
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  gap: 70px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: inherit;
 `;
 
 const RoadmapContent = styled.div`
@@ -258,10 +276,6 @@ const XyloAnimation = styled.div<IXyloAnimation>`
   }
 `;
 
-const ScrollArea = styled.div`
-  scroll-snap-align: center;
-`;
-
 interface IXyloAnimation {
   src: string;
   level: number;
@@ -289,14 +303,16 @@ const Main = () => {
   return (
     <MainStyled>
       <BackgroundSection>
-        <Title size="primary">
-          Outgrowing Blockchain, <br /> Rocketing rewards
-        </Title>
-        <DonutImg />
-        <CoinImg />
+        <BackgroundContent>
+          <Title size="primary">
+            Outgrowing Blockchain, <br /> Rocketing rewards
+          </Title>
+          <DonutImg />
+          <CoinImg />
+        </BackgroundContent>
       </BackgroundSection>
-      <PageSection>
-        <ProductSectionStyle>
+      <ProductSectionStyle>
+        <ProductSectionContent>
           <SliceLeft>
             <Title size="primary">PRODUCT</Title>
             <ProductContent>
@@ -311,61 +327,57 @@ const Main = () => {
           <SliceRight>
             <PhoneImg />
           </SliceRight>
-        </ProductSectionStyle>
-      </PageSection>
-      <ScrollArea>
-        <PageSection>
-          <InfoSectionStyle scrollPosition={scrollPosition}>
-            <Title size="primary">INFO</Title>
-            <InfoContent>
-              <DocsContainer>
-                <Title size="tertiary">XYLO Docs</Title>
-                <Image src={iconFolder} alt="folder" />
-                <div>
-                  An official document that provides concepts
-                  <br />
-                  and guides related to XYLO
-                </div>
-                <AnimationLink link="/" name="XYLO DOCS" />
-              </DocsContainer>
-              <HelpContainer>
-                <Title size="tertiary">Help Center</Title>
-                <Image src={iconHelpCenter} alt="HelpCenter" />
-                <div>
-                  You can check the news and FAQs(Frequently
-                  <br />
-                  asked questions) about XYLO
-                </div>
-                <AnimationLink link="/helpcenter/faq" name="Help Center" />
-              </HelpContainer>
-              <PaperContainer>
-                <Title size="tertiary">White Paper</Title>
-                <Image src={iconWhitePaper} alt="WhitePaper" />
-                <div>
-                  An official white paper where you can check
-                  <br />
-                  detailed information about XYLO
-                </div>
-                <AnimationLink link="/" name="White Paper" />
-              </PaperContainer>
-            </InfoContent>
-          </InfoSectionStyle>
-        </PageSection>
-      </ScrollArea>
-      <ScrollArea>
-        <PageSection>
-          <RoadmapSectionStyle scrollPosition={scrollPosition}>
-            <Title size="primary">ROADMAP</Title>
-            <RoadmapContent>
-              <RoadmapCard />
-            </RoadmapContent>
-          </RoadmapSectionStyle>
-          <XyloAnimation src={iconX} level={3} />
-          <XyloAnimation src={iconY} level={7} />
-          <XyloAnimation src={iconL} level={2} />
-          <XyloAnimation src={iconO} level={6} />
-        </PageSection>
-      </ScrollArea>
+        </ProductSectionContent>
+      </ProductSectionStyle>
+      <InfoSectionStyle scrollPosition={scrollPosition}>
+        <InfoSectionContent>
+          <Title size="primary">INFO</Title>
+          <InfoContent>
+            <DocsContainer>
+              <Title size="tertiary">XYLO Docs</Title>
+              <Image src={iconFolder} alt="folder" />
+              <div>
+                An official document that provides concepts
+                <br />
+                and guides related to XYLO
+              </div>
+              <AnimationLink link="/" name="XYLO DOCS" />
+            </DocsContainer>
+            <HelpContainer>
+              <Title size="tertiary">Help Center</Title>
+              <Image src={iconHelpCenter} alt="HelpCenter" />
+              <div>
+                You can check the news and FAQs(Frequently
+                <br />
+                asked questions) about XYLO
+              </div>
+              <AnimationLink link="/helpcenter/faq" name="Help Center" />
+            </HelpContainer>
+            <PaperContainer>
+              <Title size="tertiary">White Paper</Title>
+              <Image src={iconWhitePaper} alt="WhitePaper" />
+              <div>
+                An official white paper where you can check
+                <br />
+                detailed information about XYLO
+              </div>
+              <AnimationLink link="/" name="White Paper" />
+            </PaperContainer>
+          </InfoContent>
+        </InfoSectionContent>
+      </InfoSectionStyle>
+      <RoadmapSectionStyle scrollPosition={scrollPosition}>
+        <RoadmapSectionContent>
+          <Title size="primary">ROADMAP</Title>
+          <RoadmapContent>
+            <RoadmapCard />
+          </RoadmapContent>
+        </RoadmapSectionContent>
+        <XyloAnimation src={iconX} level={3} />
+        <XyloAnimation src={iconY} level={7} />
+        <XyloAnimation src={iconL} level={2} />
+        <XyloAnimation src={iconO} level={6} />
+      </RoadmapSectionStyle>
     </MainStyled>
   );
 };

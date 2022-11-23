@@ -3,19 +3,19 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import iconLogo from '../../assets/png/icon-logo@2x-8.png';
 
+const NavStyle = styled.div`
+  background-color: #000000;
+`;
+
 const Navheader = styled.header`
   display: flex;
   align-items: center;
   gap: 30px;
   justify-content: space-between;
   position: relative;
-  background-color: #000000;
-  width: 100%;
   height: 120px;
-`;
-
-const LogoContainer = styled.div`
-  margin-left: 15%;
+  max-width: 1280px;
+  margin: 0 auto;
 `;
 
 const Logo = styled.img`
@@ -25,28 +25,26 @@ const Logo = styled.img`
 
 const LinkContainer = styled.div`
   display: flex;
-  gap: 56px;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  width: 30%;
-  margin-right: 15%;
+  width: 42%;
 `;
 
 const Navigation = () => {
   return (
-    <Navheader>
-      <LogoContainer>
+    <NavStyle>
+      <Navheader>
         <Link to="/">
           <Logo src={iconLogo} />
         </Link>
-      </LogoContainer>
-      <LinkContainer>
-        <Link to="/">Main</Link>
-        <Link to="/">Docs</Link>
-        <Link to="/helpcenter/faq">Help Center</Link>
-        <Link to="/">White Paper</Link>
-      </LinkContainer>
-    </Navheader>
+        <LinkContainer>
+          <Link to="/">Main</Link>
+          <Link to="/">Docs</Link>
+          <Link to="/helpcenter/faq">Help Center</Link>
+          <Link to="/">White Paper</Link>
+        </LinkContainer>
+      </Navheader>
+    </NavStyle>
   );
 };
 
