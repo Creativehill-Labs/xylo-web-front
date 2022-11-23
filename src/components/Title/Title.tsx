@@ -42,7 +42,7 @@ const Text = styled.div<ITitle>`
 `;
 
 interface ITitle {
-  size: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
+  size: 'primary' | 'secondary' | 'tertiary' | 'quaternary' | 'quinary';
   children: ReactNode;
 }
 
