@@ -1,9 +1,9 @@
 import React, { FC, ReactNode } from 'react';
 import styled from 'styled-components';
 
-const ButtonStyle = styled.button`
-  width: 132px;
-  height: 54px;
+const ButtonStyle = styled.button<IButton>`
+  width: ${({ width = `132px` }) => width};
+  height: ${({ height = `54px` }) => height};
   border: none;
   background-color: #aae112;
   border-radius: 8px;
@@ -16,10 +16,16 @@ const ButtonStyle = styled.button`
 
 interface IButton {
   children: ReactNode;
+  width?: string;
+  height?: string;
 }
 
-const Button: FC<IButton> = ({ children }) => {
-  return <ButtonStyle>{children}</ButtonStyle>;
+const Button: FC<IButton> = ({ width, height, children }) => {
+  return (
+    <ButtonStyle width={width} height={height}>
+      {children}
+    </ButtonStyle>
+  );
 };
 
 export default Button;
