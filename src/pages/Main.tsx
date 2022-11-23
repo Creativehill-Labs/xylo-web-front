@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import backgroundImg from '../assets/png/background.png';
 import Title from '../components/Title/Title';
@@ -14,6 +14,7 @@ import iconX from '../assets/png/icon-X.png';
 import iconY from '../assets/png/icon-Y.png';
 import iconL from '../assets/png/icon-L.png';
 import iconO from '../assets/png/icon-O.png';
+import RoadmapCard from '../components/Card/RoadmapCard';
 
 const MainStyled = styled.div``;
 
@@ -85,53 +86,65 @@ const ProductSectionStyle = styled.div`
 
 const SliceLeft = styled.div`
   /* padding-left: 15%; */
-  margin-top: -80px;
+  margin-top: -130px;
   padding-left: 15%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 72px;
+  gap: 70px;
   width: 39%;
   height: inherit;
 `;
 
 const SliceRight = styled.div`
   background-image: url('${phoneBackgroundImg}');
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position: bottom center;
   width: 55%;
   height: inherit;
-  /* z-index: 1; */
 `;
 
 const PhoneImg = styled.div`
   position: absolute;
   background-image: url('${iconPhone}');
-  /* background-size: cover; */
+  background-size: 100% 100%;
   background-repeat: no-repeat;
-  width: 18%;
-  height: 16%;
-  left: 66%;
-  top: 24%;
-  /* z-index: 100; */
+  width: 17%;
+  height: 14%;
+  left: 67%;
+  top: 26%;
 `;
 
 const ProductContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 30px;
+  gap: 11px;
+  margin-top: -25px;
 `;
 
-const InfoSectionStyle = styled.div`
+const InfoSectionStyle = styled.div<ScrollType>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 120px;
   height: inherit;
-  background-color: #fafafa;
+  transition: background 1.4s ease-in-out;
+
+  ${({ scrollPosition }) => {
+    if (scrollPosition > 1400 && scrollPosition < 2400) {
+      return `
+        background-color: #FAFAFA;
+      `;
+    }
+    if (scrollPosition < 1400) {
+      return `
+        background-color: #FFFFFF;
+      `;
+    }
+    return ``;
+  }}
 `;
 
 const InfoContent = styled.div`
@@ -160,19 +173,35 @@ const HelpContainer = styled(DocsContainer)``;
 
 const PaperContainer = styled(DocsContainer)``;
 
-const RoadmapSectionStyle = styled.div`
+const RoadmapSectionStyle = styled.div<ScrollType>`
   display: flex;
+  gap: 70px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: inherit;
-  background-color: #222222;
+  transition: background 1s ease-in-out;
+
+  ${({ scrollPosition }) => {
+    if (scrollPosition > 2400) {
+      return `
+        background-color: #222222;
+      `;
+    }
+    return `
+      background-color: #fafafa;
+    `;
+  }}
+
   div {
     color: #ffffff;
   }
 `;
 
-const RoadmapContent = styled.div``;
+const RoadmapContent = styled.div`
+  display: flex;
+  gap: 20px;
+`;
 
 const XyloAnimation = styled.div<IXyloAnimation>`
   ${({ src }) => {
@@ -215,7 +244,7 @@ const XyloAnimation = styled.div<IXyloAnimation>`
   background-position: center;
   ${({ level }) => {
     return `
-      animation: up-down 1.${level}s infinite ease-in-out alternate;
+      animation: up-down 2.${level}s infinite ease-in-out alternate;
     `;
   }}
 
@@ -224,9 +253,13 @@ const XyloAnimation = styled.div<IXyloAnimation>`
       margin-top: 5px;
     }
     100% {
-      margin-top: -15px;
+      margin-top: -10px;
     }
   }
+`;
+
+const ScrollArea = styled.div`
+  scroll-snap-align: center;
 `;
 
 interface IXyloAnimation {
@@ -234,7 +267,25 @@ interface IXyloAnimation {
   level: number;
 }
 
+interface ScrollType {
+  scrollPosition: number;
+}
+
 const Main = () => {
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  };
+  useEffect(() => {
+    const scrollListener = () => {
+      window.addEventListener(`scroll`, updateScroll);
+    };
+    scrollListener();
+    return () => {
+      window.removeEventListener(`scroll`, updateScroll);
+    };
+  }, []);
+
   return (
     <MainStyled>
       <BackgroundSection>
@@ -262,55 +313,59 @@ const Main = () => {
           </SliceRight>
         </ProductSectionStyle>
       </PageSection>
-      <PageSection>
-        <InfoSectionStyle>
-          <Title size="primary">INFO</Title>
-          <InfoContent>
-            <DocsContainer>
-              <Title size="tertiary">XYLO Docs</Title>
-              <Image src={iconFolder} alt="folder" />
-              <div>
-                An official document that provides concepts
-                <br />
-                and guides related to XYLO
-              </div>
-              <AnimationLink link="/" name="XYLO DOCS" />
-            </DocsContainer>
-            <HelpContainer>
-              <Title size="tertiary">Help Center</Title>
-              <Image src={iconHelpCenter} alt="HelpCenter" />
-              <div>
-                You can check the news and FAQs(Frequently
-                <br />
-                asked questions) about XYLO
-              </div>
-              <AnimationLink link="/helpcenter/faq" name="Help Center" />
-            </HelpContainer>
-            <PaperContainer>
-              <Title size="tertiary">White Paper</Title>
-              <Image src={iconWhitePaper} alt="WhitePaper" />
-              <div>
-                An official white paper where you can check
-                <br />
-                detailed information about XYLO
-              </div>
-              <AnimationLink link="/" name="White Paper" />
-            </PaperContainer>
-          </InfoContent>
-        </InfoSectionStyle>
-      </PageSection>
-      <PageSection>
-        <RoadmapSectionStyle>
-          <Title size="primary">ROADMAP</Title>
-          <RoadmapContent>
-            <Title size="tertiary">1Q. 2023</Title>
-          </RoadmapContent>
-        </RoadmapSectionStyle>
-        <XyloAnimation src={iconX} level={1} />
-        <XyloAnimation src={iconY} level={2} />
-        <XyloAnimation src={iconL} level={1} />
-        <XyloAnimation src={iconO} level={2} />
-      </PageSection>
+      <ScrollArea>
+        <PageSection>
+          <InfoSectionStyle scrollPosition={scrollPosition}>
+            <Title size="primary">INFO</Title>
+            <InfoContent>
+              <DocsContainer>
+                <Title size="tertiary">XYLO Docs</Title>
+                <Image src={iconFolder} alt="folder" />
+                <div>
+                  An official document that provides concepts
+                  <br />
+                  and guides related to XYLO
+                </div>
+                <AnimationLink link="/" name="XYLO DOCS" />
+              </DocsContainer>
+              <HelpContainer>
+                <Title size="tertiary">Help Center</Title>
+                <Image src={iconHelpCenter} alt="HelpCenter" />
+                <div>
+                  You can check the news and FAQs(Frequently
+                  <br />
+                  asked questions) about XYLO
+                </div>
+                <AnimationLink link="/helpcenter/faq" name="Help Center" />
+              </HelpContainer>
+              <PaperContainer>
+                <Title size="tertiary">White Paper</Title>
+                <Image src={iconWhitePaper} alt="WhitePaper" />
+                <div>
+                  An official white paper where you can check
+                  <br />
+                  detailed information about XYLO
+                </div>
+                <AnimationLink link="/" name="White Paper" />
+              </PaperContainer>
+            </InfoContent>
+          </InfoSectionStyle>
+        </PageSection>
+      </ScrollArea>
+      <ScrollArea>
+        <PageSection>
+          <RoadmapSectionStyle scrollPosition={scrollPosition}>
+            <Title size="primary">ROADMAP</Title>
+            <RoadmapContent>
+              <RoadmapCard />
+            </RoadmapContent>
+          </RoadmapSectionStyle>
+          <XyloAnimation src={iconX} level={3} />
+          <XyloAnimation src={iconY} level={7} />
+          <XyloAnimation src={iconL} level={2} />
+          <XyloAnimation src={iconO} level={6} />
+        </PageSection>
+      </ScrollArea>
     </MainStyled>
   );
 };
