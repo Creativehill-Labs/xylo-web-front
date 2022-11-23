@@ -13,48 +13,26 @@ import Box from '../../components/Box';
 import iconStar from '../../assets/png/icon-star.png';
 import iconPaper from '../../assets/svg/icon-paper.svg';
 import Flex from '../../components/Flex';
-
-const NoticeSection = styled.section`
-  width: 1280px;
-  margin: 0 auto;
-`;
+import NoticeLayout from '../../components/Layout/NoticeLayout';
+import Icon from '../../components/Icon';
 
 const NoticeTitle = styled.div`
   margin: 80px 0;
   text-align: center;
 `;
 
-const IconStar = styled.div`
-  width: 16px;
-  height: 16px;
-  background-image: url(${iconStar});
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-right: 8px;
-`;
-
-const IconPaper = styled.div`
-  width: 16px;
-  height: 20px;
-  background-image: url(${iconPaper});
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-right: 14px;
-`;
-
 const ArticleBox = styled.div<{ promoted?: boolean }>`
   padding: 24px 20px;
   font-size: 20px;
-  font-weight: 400;
-  cursor: pointer;
   color: #000;
+  cursor: pointer;
 
   ${(props) =>
     props.promoted
       ? ` border: 1px solid #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 4px 4px 8px 0 rgba(143, 143, 143, 0.1);
-  margin-top: 20px;`
+          border-radius: 8px;
+          box-shadow: 4px 4px 8px 0 rgba(143, 143, 143, 0.1);
+          margin-top: 20px;`
       : ``};
 `;
 
@@ -77,15 +55,21 @@ const Notice: FC = () => {
   return (
     <>
       <HelpCenterLayout />
-      <NoticeSection>
+      <NoticeLayout>
         <NoticeTitle>
           <Title size="secondary">
             You can check the latest news realated to XYLO
           </Title>
         </NoticeTitle>
         <Box margin="0 0 120px 0">
-          <Flex>
-            <IconStar />
+          <Flex alignItems="center">
+            <Icon
+              url={iconStar}
+              width="16px"
+              height="16px"
+              backgroundSize="contain"
+              margin="0 8px 0 0"
+            />
             <Text size="24px" weight="700">
               Promoted artice
             </Text>
@@ -96,8 +80,14 @@ const Notice: FC = () => {
               <Link to={`promoted/${data.id}`} key={data.id}>
                 <ArticleBox promoted>
                   <Flex>
-                    <IconPaper />
-                    <Text>{data.title}</Text>
+                    <Icon
+                      url={iconPaper}
+                      width="16px"
+                      height="20px"
+                      backgroundSize="cover"
+                      margin="0 14px 0 0"
+                    />
+                    <Text size="20px">{data.title}</Text>
                   </Flex>
                 </ArticleBox>
               </Link>
@@ -115,8 +105,14 @@ const Notice: FC = () => {
                 <Link to="/">
                   <ArticleBox>
                     <Flex>
-                      <IconPaper />
-                      <Text>{data.title}</Text>
+                      <Icon
+                        url={iconPaper}
+                        width="16px"
+                        height="20px"
+                        backgroundSize="cover"
+                        margin="0 14px 0 0"
+                      />
+                      <Text size="20px">{data.title}</Text>
                     </Flex>
                   </ArticleBox>
                 </Link>
@@ -129,8 +125,9 @@ const Notice: FC = () => {
           articleData={articleData}
           activePage={activePage}
           handlePageClick={handlePageClick}
+          itemsCountPerPage={8}
         />
-      </NoticeSection>
+      </NoticeLayout>
     </>
   );
 };

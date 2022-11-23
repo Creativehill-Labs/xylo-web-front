@@ -8,6 +8,7 @@ import Notice from './pages/helpCenter/Notice';
 import NoticeDetail from './pages/helpCenter/NoticeDetail';
 import Policy from './pages/helpCenter/Policy';
 import Submit from './pages/helpCenter/Submit';
+import SearchResults from './pages/helpCenter/SearchResults';
 
 const App: FC = () => {
   return (
@@ -23,6 +24,7 @@ const App: FC = () => {
         />
         <Route path="/helpcenter/policy" element={<Policy />} />
         <Route path="/helpcenter/submit" element={<Submit />} />
+        <Route path="/helpcenter/search" element={<SearchResults />} />
       </Routes>
     </CommonLayout>
   );

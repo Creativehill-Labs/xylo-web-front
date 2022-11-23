@@ -6,9 +6,10 @@ import Text from '../../components/Text';
 import Flex from '../../components/Flex';
 import iconClip from '../../assets/svg/icon-clip.svg';
 import iconClose from '../../assets/svg/icon-close.svg';
+import Icon from '../../components/Icon';
 
 const SubmitSection = styled.section`
-  width: 618px;
+  max-width: 618px;
   margin: 0 auto;
 `;
 
@@ -18,7 +19,7 @@ const SubmitTitle = styled.div`
 `;
 
 const SubmitText = styled.input`
-  width: 596px;
+  width: 594px;
   height: 68px;
   font-size: 20px;
   border: 1px solid #fff;
@@ -49,18 +50,16 @@ const SubmitSelect = styled.select`
   background-color: #f9f9f9;
   border-radius: 8px;
   color: rgba(32, 32, 32, 0.3);
+
   :focus {
     border: 1px solid #202020;
-  }
-  option[value=''][disabled] {
-    display: none;
   }
 `;
 
 const SubmitTextarea = styled.textarea`
   margin: 12px 0 40px 0;
   padding: 22px 16px;
-  width: 586px;
+  width: 584px;
   height: 361px;
   resize: none;
   border: 1px solid #fff;
@@ -78,7 +77,7 @@ const SubmitFile = styled.div`
   display: flex;
   flex-direction: column;
   label {
-    width: 618px;
+    width: 616px;
     height: 68px;
     border: 1px solid #000;
     border-radius: 8px;
@@ -93,25 +92,15 @@ const SubmitFile = styled.div`
   }
 `;
 
-const IconClip = styled.div`
-  width: 21px;
-  height: 22px;
-  background-image: url(${iconClip});
-  margin-right: 9px;
-`;
-
-const IconClose = styled.div`
-  width: 12px;
-  height: 12px;
-  background-image: url(${iconClose});
-`;
-
 const SubmitFileList = styled.div`
   display: flex;
   justify-content: space-between;
   color: #000;
   opacity: 0.3;
   margin-bottom: 12px;
+  .close-btn {
+    cursor: pointer;
+  }
   :last-child {
     margin-bottom: 0;
   }
@@ -153,8 +142,8 @@ const Submit: FC = () => {
     setFileList([...fileList, ...newFileList]);
   };
 
-  const onFileDelete = (e: any) => {
-    console.log(e.target);
+  const onFileDelete = (idx: number) => {
+    setFileList(fileList.filter((file, id) => idx !== id));
   };
 
   const onSubmit: SubmitHandler<SubmitFormData> = useCallback((data) => {
@@ -189,8 +178,11 @@ const Submit: FC = () => {
             <Text size="24px" weight="700">
               Type
             </Text>
-            <SubmitSelect {...register(`type`, { required: true })}>
-              <option value="" disabled selected>
+            <SubmitSelect
+              defaultValue=""
+              {...register(`type`, { required: true })}
+            >
+              <option value="" disabled hidden>
                 Select a type
               </option>
               <option value="test">test</option>
@@ -226,15 +218,24 @@ const Submit: FC = () => {
               <label htmlFor="file">Add file or drop files here</label>
               <input type="file" id="file" multiple onChange={onFileChange} />
             </SubmitFile>
-
-            {fileList.map((file) => (
-              <SubmitFileList>
+            {fileList.map((file, idx) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <SubmitFileList key={idx}>
                 <Flex alignItems="center">
-                  <IconClip />
+                  <Icon
+                    url={iconClip}
+                    width="21px"
+                    height="22px"
+                    margin="0 9px 0 0"
+                  />
                   {file.name}
                 </Flex>
-                <Flex alignItems="center" onClick={onFileDelete}>
-                  <IconClose />
+                <Flex
+                  alignItems="center"
+                  onClick={() => onFileDelete(idx)}
+                  className="close-btn"
+                >
+                  <Icon url={iconClose} width="12px" height="12px" />
                 </Flex>
               </SubmitFileList>
             ))}

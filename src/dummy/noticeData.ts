@@ -99,3 +99,48 @@ export const promotedData = [
     title: `Temporary In-App Function Suspension Notice and Personal Security Management Request`,
   },
 ];
+
+export const recentlyData = [
+  { id: 1, title: `Revision of Terms and Conditions 이용약관 개정 안내` },
+  { id: 2, title: `XYLO official account information` },
+  { id: 3, title: `Operational standards for proposal service.` },
+];
+
+export const searchData = [
+  {
+    id: 1,
+    title: `Can anyone register a proposal? (누구나 제안을 등록할 수 있나요?)`,
+  },
+  {
+    id: 2,
+    title: `What is the Explorer?`,
+  },
+  {
+    id: 3,
+    title: `Is there a disadvantage if I don't vote? (투표를 하지 않으면 불이익이 있나요?)`,
+  },
+  {
+    id: 4,
+    title: `I don't get a verification email. What should I do? `,
+  },
+  {
+    id: 5,
+    title: `I didn’t change the network with the Bridge and made a direct deposit to the KSTADIUM Wallet. Can I find the KOK I accidentally deposited?`,
+  },
+  {
+    id: 6,
+    title: `Can anyone register a proposal? (누구나 제안을 등록할 수 있나요?)`,
+  },
+  {
+    id: 7,
+    title: `Can anyone register a proposal? (누구나 제안을 등록할 수 있나요?)`,
+  },
+  {
+    id: 8,
+    title: `Can anyone register a proposal? (누구나 제안을 등록할 수 있나요?)`,
+  },
+  {
+    id: 9,
+    title: `Can anyone register a proposal? (누구나 제안을 등록할 수 있나요?)`,
+  },
+];
