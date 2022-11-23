@@ -41,11 +41,13 @@ interface INavbutton {
 const HelpCenterNavigation = () => {
   const { pathname } = useLocation();
   const [currentClick, setCurrentClick] = useState<string>(
-    pathname.includes(`/notice`)
+    pathname.includes(`/faq`)
+      ? `1`
+      : pathname.includes(`/notice`)
       ? `2`
       : pathname.includes(`/policy`)
       ? `3`
-      : `1`,
+      : ``,
   );
   return (
     <NavStyle currentClick={currentClick}>

@@ -47,19 +47,21 @@ interface CustomPaginationProps {
   articleData: CurrentItemProps[];
   activePage: number;
   handlePageClick: (e: number) => void;
+  itemsCountPerPage: number;
 }
 
 const CustomPagination: FC<CustomPaginationProps> = ({
   articleData,
   activePage,
   handlePageClick,
+  itemsCountPerPage,
 }) => {
   return (
     <PaginationBox>
       <Pagination
         totalItemsCount={articleData.length}
         activePage={activePage}
-        itemsCountPerPage={8}
+        itemsCountPerPage={itemsCountPerPage}
         onChange={handlePageClick}
         pageRangeDisplayed={4}
         hideFirstLastPages

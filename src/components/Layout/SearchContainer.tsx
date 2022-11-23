@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import BackgroundImg from '../../assets/png/background.png';
 import Button from '../Input/Button';
@@ -37,7 +38,9 @@ const SearchContainer = () => {
         <Title size="secondary">How can we help you?</Title>
         <InputContainer>
           <InputText placeholder="What are you looking for?" />
-          <Button>Search</Button>
+          <Link to="/helpcenter/search">
+            <Button>Search</Button>
+          </Link>
         </InputContainer>
       </ContentContainer>
     </MainContainer>
