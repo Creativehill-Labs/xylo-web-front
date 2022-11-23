@@ -9,30 +9,17 @@ import Line from '../../components/Line';
 import Text from '../../components/Text';
 import iconPaper from '../../assets/svg/icon-paper.svg';
 import { promotedData } from '../../dummy/noticeData';
-
-const PolicySection = styled.section`
-  width: 1280px;
-  margin: 0 auto;
-`;
+import NoticeLayout from '../../components/Layout/NoticeLayout';
+import Icon from '../../components/Icon';
 
 const PolicyTitle = styled.div`
   margin: 80px 0;
   text-align: center;
 `;
 
-const IconPaper = styled.div`
-  width: 16px;
-  height: 20px;
-  background-image: url(${iconPaper});
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-right: 14px;
-`;
-
 const ArticleBox = styled.div`
   padding: 24px 20px;
   font-size: 20px;
-  font-weight: 400;
   cursor: pointer;
   color: #000;
   border: 1px solid #f4f4f4;
@@ -45,32 +32,40 @@ const Policy: FC = () => {
   return (
     <>
       <HelpCenterLayout />
-      <PolicySection>
+      <NoticeLayout>
         <PolicyTitle>
           <Title size="secondary">
             Operating standards and specific regulations
           </Title>
         </PolicyTitle>
-        <Box margin="0 0 120px 0">
-          <Text size="24px" weight="700">
-            Promoted artice
-          </Text>
 
+        <Box margin="0 0 120px 0">
+          <Flex>
+            <Text size="24px" weight="700">
+              Operation Policy
+            </Text>
+          </Flex>
           <Line margin="24px 0 0 0" />
           {promotedData.map((data) => {
             return (
               <Link to={`promoted/${data.id}`} key={data.id}>
                 <ArticleBox>
                   <Flex>
-                    <IconPaper />
-                    <Text>{data.title}</Text>
+                    <Icon
+                      url={iconPaper}
+                      width="16px"
+                      height="20px"
+                      backgroundSize="cover"
+                      margin="0 14px 0 0"
+                    />
+                    <Text size="20px">{data.title}</Text>
                   </Flex>
                 </ArticleBox>
               </Link>
             );
           })}
         </Box>
-      </PolicySection>
+      </NoticeLayout>
     </>
   );
 };

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { useParams, Link } from 'react-router-dom';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
-import { promotedData } from '../../dummy/noticeData';
+import { promotedData, recentlyData } from '../../dummy/noticeData';
 import Text from '../../components/Text';
 import Line from '../../components/Line';
 import Box from '../../components/Box';
@@ -16,27 +16,10 @@ import iconLinked from '../../assets/png/icon-linked.png';
 import iconArrowRight from '../../assets/png/arrow-right.png';
 import iconPaper from '../../assets/svg/icon-paper.svg';
 import BreadCrumbs from '../../components/Partials/BreadCrumbs';
+import NoticeLayout from '../../components/Layout/NoticeLayout';
+import Icon from '../../components/Icon';
 
-const NoticeDetailSection = styled.section`
-  width: 1280px;
-  margin: 0 auto;
-`;
-
-const NoticeDetailContent = styled.div`
-  width: 820px;
-`;
-
-const IconStar = styled.div`
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  background-image: url(${iconStar});
-  background-size: contain;
-  background-repeat: no-repeat;
-  margin-right: 8px;
-`;
-
-const IconUser = styled.div`
+const UserIconBox = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 999px;
@@ -45,18 +28,6 @@ const IconUser = styled.div`
   justify-content: center;
   align-items: center;
   margin-right: 10px;
-  div {
-    width: 28px;
-    height: 28px;
-    background-image: url(${iconUser});
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-`;
-
-const NoticeDetailArticle = styled.div`
-  margin-left: 32px;
-  width: 460px;
 `;
 
 const ShareArticleBox = styled.div`
@@ -68,15 +39,6 @@ const ShareArticleBox = styled.div`
   margin-top: 24px;
   display: flex;
   align-items: center;
-`;
-
-const IconCopy = styled.div`
-  width: 18px;
-  height: 18px;
-  background-image: url(${iconCopy});
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-right: 12px;
 `;
 
 const CopyLinkButton = styled.button`
@@ -101,46 +63,17 @@ const ShareButton = styled.div`
   cursor: pointer;
 `;
 
-const IconSNS = styled.div<{ icon: string }>`
-  width: 20px;
-  height: 20px;
-  background-size: contain;
-  background-repeat: no-repeat;
-
-  ${({ icon }) => {
-    if (icon === `facebook`) {
-      return `background-image: url(${iconFacebook});`;
-    }
-    if (icon === `twitter`) {
-      return `background-image: url(${iconTwitter});`;
-    }
-    if (icon === `linked`) {
-      return `background-image: url(${iconLinked});`;
-    }
-    return ``;
-  }}
-`;
-
 const MoveButton = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
 `;
 
-const IconArrowRight = styled.div`
-  background-image: url(${iconArrowRight});
-  width: 42px;
-  height: 20px;
-  background-size: contain;
-  background-repeat: no-repeat;
-`;
-
-const ArticleBox = styled.div<{ promoted?: boolean }>`
+const ArticleBox = styled.div`
   padding: 24px 20px;
   font-size: 20px;
-  font-weight: 400;
-  cursor: pointer;
   color: #000;
+  cursor: pointer;
   border: 1px solid #f4f4f4;
   border-radius: 8px;
   box-shadow: 4px 4px 8px 0 rgba(143, 143, 143, 0.1);
@@ -150,16 +83,7 @@ const ArticleBox = styled.div<{ promoted?: boolean }>`
   }
 `;
 
-const IconPaper = styled.div`
-  width: 16px;
-  height: 20px;
-  background-image: url(${iconPaper});
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin-right: 14px;
-`;
-
-const NoticeButton = styled.button`
+const HelpfulButton = styled.button`
   width: 63px;
   height: 43px;
   border: none;
@@ -190,24 +114,10 @@ const SubmitButton = styled.button`
 `;
 
 const ArticleList = styled.div`
-  padding: 24px 20px;
+  margin-top: 16px;
   font-size: 20px;
   font-weight: 400;
   cursor: pointer;
-  color: #000;
-`;
-
-const ArticleBottom = styled.div`
-  margin-bottom: 121px;
-  display: flex;
-`;
-
-const Article = styled.div`
-  width: 624px;
-`;
-
-const SpaceBox = styled.div`
-  width: 32px;
 `;
 
 const NoticeDetail: FC = () => {
@@ -217,18 +127,31 @@ const NoticeDetail: FC = () => {
   return (
     <>
       <HelpCenterLayout />
-      <NoticeDetailSection>
+      <NoticeLayout>
         <BreadCrumbs />
         <Flex>
-          <NoticeDetailContent>
-            <Text size="24px" weight="700">
-              <IconStar />
-              {filteredData.title}
-            </Text>
+          <Box width="820px">
+            <Flex>
+              <Icon
+                url={iconStar}
+                width="16px"
+                height="16px"
+                backgroundSize="contain"
+                margin="0 8px 0 0"
+              />
+              <Text size="24px" weight="700">
+                {filteredData.title}
+              </Text>
+            </Flex>
             <Flex margin="24px 0 58px 0">
-              <IconUser>
-                <div />
-              </IconUser>
+              <UserIconBox>
+                <Icon
+                  url={iconUser}
+                  width="28px"
+                  height="28px"
+                  backgroundSize="contain"
+                />
+              </UserIconBox>
               <Flex flexDirection="column" justifyContent="center">
                 <Text size="16px" weight="400" color="#202020">
                   XYLO Team
@@ -259,28 +182,48 @@ const NoticeDetail: FC = () => {
               the voting methods can be found in Docs on the XYLO website. We
               will do our best to meet your expectations. XYLO Team
             </Text>
-          </NoticeDetailContent>
-          <NoticeDetailArticle>
+          </Box>
+          <Box width="460px" margin="0 0 0 32px">
             <Text size="20px" weight="700">
               Share this Articles
             </Text>
             <ShareArticleBox>
               <CopyLinkButton>
                 <Flex justifyContent="center">
-                  <IconCopy />
+                  <Icon
+                    url={iconCopy}
+                    width="18px"
+                    height="18px"
+                    margin="0 12px 0 0"
+                  />
                   <Text size="16px" weight="700" color="#acacac">
                     Copy link
                   </Text>
                 </Flex>
               </CopyLinkButton>
               <ShareButton>
-                <IconSNS icon="facebook" />
+                <Icon
+                  url={iconFacebook}
+                  width="20px"
+                  height="20px"
+                  backgroundSize="contain"
+                />
               </ShareButton>
               <ShareButton>
-                <IconSNS icon="twitter" />
+                <Icon
+                  url={iconTwitter}
+                  width="20px"
+                  height="20px"
+                  backgroundSize="contain"
+                />
               </ShareButton>
               <ShareButton>
-                <IconSNS icon="linked" />
+                <Icon
+                  url={iconLinked}
+                  width="20px"
+                  height="20px"
+                  backgroundSize="contain"
+                />
               </ShareButton>
             </ShareArticleBox>
             <Flex justifyContent="space-between" margin="60px 0 24px 0">
@@ -293,18 +236,28 @@ const NoticeDetail: FC = () => {
                 <Text size="16px" weight="700" margin="0 12px 0 0">
                   Move
                 </Text>
-                <IconArrowRight />
+                <Icon
+                  url={iconArrowRight}
+                  width="42px"
+                  height="20px"
+                  backgroundSize="contain"
+                />
               </MoveButton>
             </Flex>
             {promotedData.map((data) => (
               <ArticleBox key={data.id}>
                 <Flex>
-                  <IconPaper />
+                  <Icon
+                    url={iconPaper}
+                    width="16px"
+                    height="20px"
+                    margin="0 14px 0 0"
+                  />
                   <Text size="16px">{data.title}</Text>
                 </Flex>
               </ArticleBox>
             ))}
-          </NoticeDetailArticle>
+          </Box>
         </Flex>
         <Box margin="80px 0 100px 0">
           <Text size="24px" weight="700">
@@ -314,9 +267,9 @@ const NoticeDetail: FC = () => {
           <Flex justifyContent="space-between">
             <Box>
               <Text size="20px">0 out of 0 found this helpful</Text>
-              <NoticeButton>YES</NoticeButton>
+              <HelpfulButton>YES</HelpfulButton>
               <Text size="20px">or</Text>
-              <NoticeButton>NO</NoticeButton>
+              <HelpfulButton>NO</HelpfulButton>
             </Box>
             <Box>
               <Text size="20px">Have more questions?</Text>
@@ -326,27 +279,50 @@ const NoticeDetail: FC = () => {
             </Box>
           </Flex>
         </Box>
-        <ArticleBottom>
-          <Article>
+        <Flex margin="0 0 121px 0">
+          <Box width="624px">
             <Text size="24px" weight="700">
               Recently viewed articles
             </Text>
             <Line />
-            <ArticleList>qweqweqweqwe</ArticleList>
-            <ArticleList>asdasdasdasd</ArticleList>
-          </Article>
-          <SpaceBox> </SpaceBox>
-          <Article>
+            {recentlyData.map((data) => (
+              <ArticleList>
+                <Flex>
+                  <Icon
+                    url={iconPaper}
+                    width="16px"
+                    height="20px"
+                    backgroundSize="cover"
+                    margin="0 14px 0 0"
+                  />
+                  <Text size="20px">{data.title}</Text>
+                </Flex>
+              </ArticleList>
+            ))}
+          </Box>
+          <Box width="32px"> </Box>
+          <Box width="624px">
             <Text size="24px" weight="700">
               Related articles
             </Text>
             <Line />
-            <ArticleList>qweqweqweqwe</ArticleList>
-            <ArticleList>asdasdasdasd</ArticleList>
-            <ArticleList>zxczxczxczxc</ArticleList>
-          </Article>
-        </ArticleBottom>
-      </NoticeDetailSection>
+            {recentlyData.map((data) => (
+              <ArticleList>
+                <Flex>
+                  <Icon
+                    url={iconPaper}
+                    width="16px"
+                    height="20px"
+                    backgroundSize="cover"
+                    margin="0 14px 0 0"
+                  />
+                  <Text size="20px">{data.title}</Text>
+                </Flex>
+              </ArticleList>
+            ))}
+          </Box>
+        </Flex>
+      </NoticeLayout>
     </>
   );
 };
