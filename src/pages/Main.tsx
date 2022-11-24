@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import backgroundImg from '../assets/png/background.png';
 import Title from '../components/Title/Title';
 import AnimationLink from '../components/Partials/AnimationLink';
+import iconArrowDown from '../assets/png/arrow-down.png';
 import donut from '../assets/png/donut.png';
 import coin from '../assets/png/coin.png';
 import phoneBackgroundImg from '../assets/png/background-phone.png';
@@ -25,15 +27,60 @@ const BackgroundSection = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
   height: calc(100vh - 114px);
   background-size: cover;
+
+  @media screen and (max-width: 768px) {
+    height: calc(100vh - 69px);
+    background-position: 65%;
+  }
 `;
 
 const BackgroundContent = styled.div`
+  display: flex;
+  align-items: center;
   width: 1280px;
   margin: 0 auto;
+  height: 100%;
   div {
     width: 50%;
     color: #ffffff;
   }
+
+  @media screen and (max-width: 1400px) {
+    width: 768px;
+  }
+
+  @media screen and (max-width: 768px) {
+    /* flex-direction: column; */
+    align-items: flex-start;
+    /* justify-content: baseline; */
+    & > div {
+      padding: 50px 30px 0 30px;
+      font-size: 24px;
+      line-height: 29px;
+      width: 100%;
+    }
+  }
+`;
+
+const ScrollDownAttach = styled.span`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 21.5%;
+  transform: translate(-50%);
+  div {
+    color: #aae112;
+    width: 100%;
+  }
+`;
+
+const ScrollDown = styled.div`
+  width: inherit;
+  height: 30px;
+  background-image: url('${iconArrowDown}');
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const DonutImg = styled.span`
@@ -55,6 +102,13 @@ const DonutImg = styled.span`
     100% {
       margin-top: 15px;
     }
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    left: 50%;
+    top: 5%;
+    transform: translate(-50%);
   }
 `;
 
@@ -149,7 +203,7 @@ const InfoSectionStyle = styled.div<ScrollType>`
 
 const InfoContent = styled.div`
   display: flex;
-  text-align: center;
+  align-items: center;
   justify-content: space-around;
   font-size: 20px;
   width: 100%;
@@ -174,16 +228,33 @@ const Image = styled.img`
 const DocsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 25px;
-  div {
+  /* div {
     width: 440px;
-  }
+    text-align: center;
+  } */
 `;
 
 const HelpContainer = styled(DocsContainer)``;
 
 const PaperContainer = styled(DocsContainer)``;
+
+const InfoContentText = styled.div`
+  text-align: center;
+`;
+
+const DocsContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const HelpContent = styled(DocsContent)``;
+const PaperContent = styled(DocsContent)``;
+
+const AnimationLinkContainer = styled.span`
+  margin-left: 35%;
+`;
 
 const RoadmapSectionStyle = styled.div<ScrollType>`
   height: calc(100vh + 7px);
@@ -286,6 +357,9 @@ interface ScrollType {
 }
 
 const Main = () => {
+  const isMobile = useMediaQuery({
+    query: `(max-width: 768px)`,
+  });
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const updateScroll = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -309,6 +383,10 @@ const Main = () => {
           </Title>
           <DonutImg />
           <CoinImg />
+          <ScrollDownAttach>
+            <Title size="quinary">Scroll Down</Title>
+            <ScrollDown />
+          </ScrollDownAttach>
         </BackgroundContent>
       </BackgroundSection>
       <ProductSectionStyle>
@@ -334,34 +412,46 @@ const Main = () => {
           <Title size="primary">INFO</Title>
           <InfoContent>
             <DocsContainer>
-              <Title size="tertiary">XYLO Docs</Title>
-              <Image src={iconFolder} alt="folder" />
-              <div>
-                An official document that provides concepts
-                <br />
-                and guides related to XYLO
-              </div>
-              <AnimationLink link="/" name="XYLO DOCS" />
+              <DocsContent>
+                <Title size="tertiary">XYLO Docs</Title>
+                <Image src={iconFolder} alt="folder" />
+                <InfoContentText>
+                  An official document that provides concepts
+                  <br />
+                  and guides related to XYLO
+                </InfoContentText>
+              </DocsContent>
+              <AnimationLinkContainer>
+                <AnimationLink link="/" name="XYLO DOCS" />
+              </AnimationLinkContainer>
             </DocsContainer>
             <HelpContainer>
-              <Title size="tertiary">Help Center</Title>
-              <Image src={iconHelpCenter} alt="HelpCenter" />
-              <div>
-                You can check the news and FAQs(Frequently
-                <br />
-                asked questions) about XYLO
-              </div>
-              <AnimationLink link="/helpcenter/faq" name="Help Center" />
+              <HelpContent>
+                <Title size="tertiary">Help Center</Title>
+                <Image src={iconHelpCenter} alt="HelpCenter" />
+                <InfoContentText>
+                  You can check the news and FAQs(Frequently
+                  <br />
+                  asked questions) about XYLO
+                </InfoContentText>
+              </HelpContent>
+              <AnimationLinkContainer>
+                <AnimationLink link="/helpcenter/faq" name="Help Center" />
+              </AnimationLinkContainer>
             </HelpContainer>
             <PaperContainer>
-              <Title size="tertiary">White Paper</Title>
-              <Image src={iconWhitePaper} alt="WhitePaper" />
-              <div>
-                An official white paper where you can check
-                <br />
-                detailed information about XYLO
-              </div>
-              <AnimationLink link="/" name="White Paper" />
+              <PaperContent>
+                <Title size="tertiary">White Paper</Title>
+                <Image src={iconWhitePaper} alt="WhitePaper" />
+                <InfoContentText>
+                  An official white paper where you can check
+                  <br />
+                  detailed information about XYLO
+                </InfoContentText>
+              </PaperContent>
+              <AnimationLinkContainer>
+                <AnimationLink link="/" name="White Paper" />
+              </AnimationLinkContainer>
             </PaperContainer>
           </InfoContent>
         </InfoSectionContent>

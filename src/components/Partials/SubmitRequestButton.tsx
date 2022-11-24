@@ -2,7 +2,15 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 const SubmitBtn = styled.input<ISubmitBtn>`
-  background-color: ${({ color = `#ffffff` }) => color};
+  ${({ color }) => {
+    if (color === `black`) {
+      return `
+        background-color: ${color};
+        color: white;
+      `;
+    }
+    return ``;
+  }}
   width: 168px;
   height: 43px;
   padding: 12px 20px;
@@ -14,7 +22,7 @@ const SubmitBtn = styled.input<ISubmitBtn>`
 `;
 
 interface ISubmitBtn {
-  color?: string;
+  color?: 'black' | 'white';
 }
 
 const SubmitRequestButton: FC<ISubmitBtn> = ({ color }) => {

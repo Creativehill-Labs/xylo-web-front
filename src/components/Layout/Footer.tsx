@@ -15,6 +15,7 @@ const BottomFooter = styled.footer`
 `;
 
 const QuestionContainer = styled.div`
+  width: 100%;
   display: flex;
   margin-right: 15%;
   justify-content: space-between;
@@ -37,18 +38,6 @@ const FooterContent = styled.div<IContent>`
     }
     return ``;
   }}
-`;
-
-const FooterButton = styled.input`
-  width: 168px;
-  height: 43px;
-  padding: 12px 20px;
-  background-color: #ffffff;
-  border: none;
-  border-radius: 40px;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
 `;
 
 interface IContent {
