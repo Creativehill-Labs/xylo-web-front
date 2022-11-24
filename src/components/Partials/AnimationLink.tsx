@@ -6,7 +6,7 @@ const MainContainer = styled.div`
   font-size: 16px;
   font-weight: 700;
 
-  //! DOWNLOAD Arrow Animation Style
+  //! Arrow Link Animation Style
   ul {
     padding: 0;
     list-style: none;
@@ -16,13 +16,9 @@ const MainContainer = styled.div`
   }
   .the-arrow.-left {
     width: 0;
-    margin-left: -50px;
+    margin-left: -18px;
     position: absolute;
     background-position: center;
-  }
-  .the-arrow.-left:before,
-  .the-arrow.-left:after {
-    width: 0;
   }
   .the-arrow.-right {
     background-position: center;
@@ -47,9 +43,6 @@ const MainContainer = styled.div`
     font-size: 16px;
     transition: all 0.7s;
   }
-  .animated-arrow:hover {
-    color: #202020; // animate될때 글씨색
-  }
   .animated-arrow:hover > .the-arrow.-left {
     width: 80px;
     height: 20px;
@@ -62,7 +55,7 @@ const MainContainer = styled.div`
     transition-delay: 0.1s;
   }
   .animated-arrow:hover > .main {
-    transform: translateX(40px);
+    transform: translateX(60px);
   }
   .animated-arrow:hover > .main > .the-arrow.-right {
     width: 0;
@@ -75,7 +68,7 @@ const MainContainer = styled.div`
     transition: all 0.7s;
   }
   .animated-arrow > .main > .text {
-    margin: 0 16px 0 0;
+    margin: 0 12px 0 0;
     line-height: 1;
   }
   .animated-arrow > .main > .the-arrow {

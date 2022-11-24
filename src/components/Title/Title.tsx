@@ -5,6 +5,7 @@ const Text = styled.div<ITitle>`
   font-family: 'Montserrat', sans-serif;
   color: #202020;
   font-weight: 700;
+  white-space: pre-line;
 
   ${({ size }) => {
     if (size === `primary`) {

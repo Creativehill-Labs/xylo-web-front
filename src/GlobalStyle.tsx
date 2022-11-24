@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 29px;
     color: #202020;
     min-height: 100%;
+    min-width: 370px;
   }
   html {
     position: relative;
