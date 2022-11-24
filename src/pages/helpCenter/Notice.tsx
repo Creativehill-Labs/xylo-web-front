@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import CustomPagination, {
@@ -37,20 +37,7 @@ const ArticleBox = styled.div<{ promoted?: boolean }>`
 `;
 
 const Notice: FC = () => {
-  const [activePage, setActivePage] = useState(1);
   const [currentItems, setCurrentItems] = useState<CurrentItemProps[]>([]);
-  const [itemOffset, setItemOffset] = useState(0);
-
-  useEffect(() => {
-    const endOffset = itemOffset + 8;
-    setCurrentItems(articleData.slice(itemOffset, endOffset));
-  }, [itemOffset]);
-
-  const handlePageClick = (e: number) => {
-    const newOffset = (e - 1) * 8;
-    setItemOffset(newOffset);
-    setActivePage(e);
-  };
 
   return (
     <>
@@ -122,10 +109,9 @@ const Notice: FC = () => {
           })}
         </Box>
         <CustomPagination
-          articleData={articleData}
-          activePage={activePage}
-          handlePageClick={handlePageClick}
-          itemsCountPerPage={8}
+          data={articleData}
+          setCurrentItems={setCurrentItems}
+          itemsPerPage={8}
         />
       </NoticeLayout>
     </>

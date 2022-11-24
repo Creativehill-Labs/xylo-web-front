@@ -286,7 +286,7 @@ const NoticeDetail: FC = () => {
             </Text>
             <Line />
             {recentlyData.map((data) => (
-              <ArticleList>
+              <ArticleList key={data.id}>
                 <Flex>
                   <Icon
                     url={iconPaper}
@@ -307,7 +307,7 @@ const NoticeDetail: FC = () => {
             </Text>
             <Line />
             {recentlyData.map((data) => (
-              <ArticleList>
+              <ArticleList key={data.id}>
                 <Flex>
                   <Icon
                     url={iconPaper}

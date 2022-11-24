@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 import CustomPagination, {
   CurrentItemProps,
@@ -27,25 +27,13 @@ const ArticleBox = styled.div`
 `;
 
 const SearchResults: FC = () => {
-  const [activePage, setActivePage] = useState(1);
   const [currentItems, setCurrentItems] = useState<CurrentItemProps[]>([]);
-  const [itemOffset, setItemOffset] = useState(0);
 
-  useEffect(() => {
-    const endOffset = itemOffset + 5;
-    setCurrentItems(searchData.slice(itemOffset, endOffset));
-  }, [itemOffset]);
-
-  const handlePageClick = (e: number) => {
-    const newOffset = (e - 1) * 5;
-    setItemOffset(newOffset);
-    setActivePage(e);
-  };
   return (
     <>
       <HelpCenterLayout />
       <NoticeLayout>
-        <BreadCrumbs />
+        <BreadCrumbs search />
         <Flex>
           <Box width="820px">
             <Text size="24px" weight="700">
@@ -53,7 +41,7 @@ const SearchResults: FC = () => {
             </Text>
             <Line margin="30px 0 0 0" />
             {currentItems.map((data) => (
-              <>
+              <div key={data.id}>
                 <Box margin="24px 0 24px 0">
                   <Flex justifyContent="space-between">
                     <Text size="14px">
@@ -74,7 +62,7 @@ const SearchResults: FC = () => {
                   </Box>
                 </Box>
                 <Line color="#e3e3e3" />
-              </>
+              </div>
             ))}
             <Line color="#000" />
           </Box>
@@ -97,10 +85,9 @@ const SearchResults: FC = () => {
         </Flex>
         <Box margin="80px 0 0 0">
           <CustomPagination
-            articleData={searchData}
-            activePage={activePage}
-            handlePageClick={handlePageClick}
-            itemsCountPerPage={5}
+            data={searchData}
+            setCurrentItems={setCurrentItems}
+            itemsPerPage={5}
           />
         </Box>
       </NoticeLayout>
