@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import backgroundImg from '../assets/png/background.png';
 import Title from '../components/Title/Title';
@@ -17,8 +18,19 @@ import iconY from '../assets/png/icon-Y.png';
 import iconL from '../assets/png/icon-L.png';
 import iconO from '../assets/png/icon-O.png';
 import RoadmapCard from '../components/Card/RoadmapCard';
+import { selectCommonSlice } from '../store';
+import { setNavIsOpen } from '../features/commonSlice';
 
-const MainStyled = styled.div``;
+const MainStyled = styled.div<MainStyleProps>`
+  ${({ backDark }) => {
+    if (backDark) {
+      return `
+        filter: brightness(40%)
+      `;
+    }
+    return ``;
+  }}
+`;
 
 const BackgroundSection = styled.div`
   display: flex;
@@ -41,23 +53,31 @@ const BackgroundContent = styled.div`
   margin: 0 auto;
   height: 100%;
   div {
-    width: 50%;
     color: #ffffff;
   }
 
-  @media screen and (max-width: 1400px) {
+  /* @media screen and (min-width: 1400px) {
+    div {
+      width: 50%;
+    }
+  } */
+
+  @media screen and (max-width: 1400px) and (min-width: 769px) {
     width: 768px;
+    div {
+      width: 50%;
+    }
   }
 
   @media screen and (max-width: 768px) {
     /* flex-direction: column; */
     align-items: flex-start;
-    /* justify-content: baseline; */
+    justify-content: center;
     & > div {
-      padding: 50px 30px 0 30px;
+      padding: 150px 30px 0 30px;
       font-size: 24px;
       line-height: 29px;
-      width: 100%;
+      width: none;
     }
   }
 `;
@@ -67,11 +87,14 @@ const ScrollDownAttach = styled.span`
   flex-direction: column;
   position: absolute;
   left: 50%;
-  top: 21.5%;
+  top: 17.5%;
   transform: translate(-50%);
   div {
     color: #aae112;
     width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    top: 13.5%;
   }
 `;
 
@@ -107,7 +130,7 @@ const DonutImg = styled.span`
   @media screen and (max-width: 768px) {
     width: 100%;
     left: 50%;
-    top: 5%;
+    top: 20vh;
     transform: translate(-50%);
   }
 `;
@@ -132,10 +155,18 @@ const CoinImg = styled.span`
       margin-top: 5px;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    width: 30%;
+    left: 30%;
+    top: 38vh;
+    transform: translate(-50%);
+  }
 `;
 
 const ProductSectionStyle = styled.div`
   display: flex;
+  justify-content: center;
   height: inherit;
   background-image: url('${phoneBackgroundImg}');
   background-repeat: no-repeat;
@@ -158,10 +189,12 @@ const SliceLeft = styled.div`
   justify-content: flex-start;
   gap: 70px;
   height: inherit;
-  width: 50%;
+  width: 100%;
 `;
 
-const SliceRight = styled.div``;
+const SliceRight = styled.div`
+  width: 100%;
+`;
 
 const PhoneImg = styled.div`
   position: absolute;
@@ -169,9 +202,9 @@ const PhoneImg = styled.div`
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 17%;
-  height: 14%;
+  height: 11.5%;
   left: 67%;
-  top: 26%;
+  top: 20.7%;
 `;
 
 const ProductContent = styled.div`
@@ -181,9 +214,68 @@ const ProductContent = styled.div`
   margin-top: -25px;
 `;
 
+const MobileProductSectionStyle = styled.div``;
+
+const MobileProductSectionContent = styled.div`
+  width: 85%;
+  margin: 0 auto;
+`;
+
+const MobileProductTop = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 50vh;
+  @media screen and (max-width: 768px) {
+    span {
+      font-size: 12px;
+    }
+  }
+`;
+
+const MobileTopTitleContainer = styled.div`
+  text-align: center;
+  margin-top: 50px;
+`;
+
+const MobileProductTopContent = styled.div`
+  font-size: 14px;
+  line-height: 17px;
+  white-space: pre-line;
+  div {
+    margin-bottom: 10px;
+  }
+`;
+
+const MobileProductBottom = styled.div`
+  background-image: url('${phoneBackgroundImg}');
+  background-size: 150% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100vh;
+`;
+
+const MobilePhoneImg = styled.div`
+  position: relative;
+  background-size: 100% 100%;
+  width: 56%;
+  height: 53%;
+  left: 23%;
+  top: 15%;
+  background-image: url('${iconPhone}');
+`;
+
+const AppExampleSectionStyle = styled.div`
+  height: calc(100vh + 7px);
+  display: flex; //!
+  justify-content: center; //!
+  align-items: center; //!
+  background-color: powderblue; //!
+`;
+
 const InfoSectionStyle = styled.div<ScrollType>`
   height: calc(100vh + 7px);
-
   transition: background 1.4s ease-in-out;
 
   ${({ scrollPosition }) => {
@@ -199,6 +291,10 @@ const InfoSectionStyle = styled.div<ScrollType>`
     }
     return ``;
   }}
+
+  @media screen and (max-width: 768px) {
+    height: 100%;
+  }
 `;
 
 const InfoContent = styled.div`
@@ -207,6 +303,11 @@ const InfoContent = styled.div`
   justify-content: space-around;
   font-size: 20px;
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    gap: 70px;
+  }
 `;
 
 const InfoSectionContent = styled.div`
@@ -218,11 +319,27 @@ const InfoSectionContent = styled.div`
   justify-content: center;
   gap: 100px;
   height: 100%;
+
+  @media screen and (max-width: 768px) {
+    justify-content: space-around;
+    gap: 80px;
+  }
+`;
+
+const InfoTitleContainer = styled.div`
+  @media screen and (max-width: 768px) {
+    padding-top: 70px;
+  }
 `;
 
 const Image = styled.img`
   width: 230px;
   height: 230px;
+
+  @media screen and (max-width: 768px) {
+    width: 60%;
+    height: 75%;
+  }
 `;
 
 const DocsContainer = styled.div`
@@ -233,6 +350,11 @@ const DocsContainer = styled.div`
     width: 440px;
     text-align: center;
   } */
+  @media screen and (max-width: 768px) {
+    span {
+      font-size: 12px;
+    }
+  }
 `;
 
 const HelpContainer = styled(DocsContainer)``;
@@ -241,6 +363,11 @@ const PaperContainer = styled(DocsContainer)``;
 
 const InfoContentText = styled.div`
   text-align: center;
+
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    line-height: 17px;
+  }
 `;
 
 const DocsContent = styled.div`
@@ -296,39 +423,69 @@ const XyloAnimation = styled.div<IXyloAnimation>`
   ${({ src }) => {
     if (src.includes(`icon-X`)) {
       return `
-        background-image: url(${src});
-        width: 33% !important;
-        left: 0;
-        top: 330vh;
+      background-image: url(${src});
+      width: 40%;
+      height: 20%;
+      left: 0;
+      top: 413vh;
+      
+      @media screen and (max-width: 768px) {
+          background-size: 100% 100%;
+          top: 499vh;
+          width: 40%;
+          height: 5%;
+        }
       `;
     }
     if (src.includes(`icon-Y`)) {
       return `
         background-image: url(${src});
-        left: 19%;
-        top: 333vh;
+        left: 8%;
+        top: 426vh;
+        width: 50%;
+        height: 18%;
+
+        @media screen and (max-width: 768px) {
+          top: 533vh; 
+          width: 100%;
+          height: 8%;
+        }
       `;
     }
     if (src.includes(`icon-L`)) {
       return `
         background-image: url(${src});
-        left: 50%;
-        top: 332vh;
+        left: 38%;
+        top: 416vh;
+        width: 50%;
+        height: 20%;
+
+        @media screen and (max-width: 768px) {
+          top: 532vh;
+          width: 100%;
+          height: 10%;
+        }
       `;
     }
     if (src.includes(`icon-O`)) {
       return `
         background-image: url(${src});
-        left: 73%;
-        top: 328vh;
+        right: 0;
+        width: 33%;
+        height: 20%;
+        top: 416vh;
+
+        @media screen and (max-width: 768px) {
+          top: 528vh;
+          width: 100%;
+          height: 5%;
+        }
       `;
     }
     return ``;
   }}
-  width: 27%;
-  height: 20%;
   position: absolute;
-  background-size: cover;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
   ${({ level }) => {
@@ -356,7 +513,13 @@ interface ScrollType {
   scrollPosition: number;
 }
 
+interface MainStyleProps {
+  backDark: boolean;
+}
+
 const Main = () => {
+  const dispatch = useDispatch();
+  const { navIsOpen } = useSelector(selectCommonSlice);
   const isMobile = useMediaQuery({
     query: `(max-width: 768px)`,
   });
@@ -373,9 +536,16 @@ const Main = () => {
       window.removeEventListener(`scroll`, updateScroll);
     };
   }, []);
+  const mobileProductText = `An official wallet that can store XYLO
+  ecosystem tokens and blockchain platform
+  that anyone can participate in governance
+  through Community pool investment.`;
 
   return (
-    <MainStyled>
+    <MainStyled
+      backDark={navIsOpen}
+      onClick={() => (navIsOpen ? dispatch(setNavIsOpen(!navIsOpen)) : null)}
+    >
       <BackgroundSection>
         <BackgroundContent>
           <Title size="primary">
@@ -389,31 +559,61 @@ const Main = () => {
           </ScrollDownAttach>
         </BackgroundContent>
       </BackgroundSection>
-      <ProductSectionStyle>
-        <ProductSectionContent>
-          <SliceLeft>
-            <Title size="primary">PRODUCT</Title>
-            <ProductContent>
-              <Title size="tertiary">XYLO Application</Title>
-              An official wallet that can store XYLO ecosystem tokens
-              <br />
-              and blockchain platform that anyone can participate in
-              <br /> governance through Community pool investment.
-            </ProductContent>
-            <AnimationLink link="/helpcenter/faq" name="DOWNLOAD" />
-          </SliceLeft>
-          <SliceRight>
+      {isMobile ? (
+        <MobileProductSectionStyle>
+          <MobileProductSectionContent>
+            <MobileProductTop>
+              <MobileTopTitleContainer>
+                <Title size="quaternary">PRODUCT</Title>
+              </MobileTopTitleContainer>
+              <MobileProductTopContent>
+                <Title size="senary">XYLO Application</Title>
+                An official wallet that can store XYLO
+                <br />
+                ecosystem tokens and blockchain platform
+                <br />
+                that anyone can participate in governance
+                <br />
+                through Community pool investment.
+              </MobileProductTopContent>
+              <AnimationLink link="/helpcenter/faq" name="DOWNLOAD" />
+            </MobileProductTop>
+          </MobileProductSectionContent>
+          <MobileProductBottom>
+            <MobilePhoneImg />
+          </MobileProductBottom>
+        </MobileProductSectionStyle>
+      ) : (
+        <ProductSectionStyle>
+          <ProductSectionContent>
             <PhoneImg />
-          </SliceRight>
-        </ProductSectionContent>
-      </ProductSectionStyle>
+            <SliceLeft>
+              <Title size="primary">PRODUCT</Title>
+              <ProductContent>
+                <Title size="tertiary">XYLO Application</Title>
+                An official wallet that can store XYLO ecosystem tokens
+                <br />
+                and blockchain platform that anyone can participate in
+                <br /> governance through Community pool investment.
+              </ProductContent>
+              <AnimationLink link="/helpcenter/faq" name="DOWNLOAD" />
+            </SliceLeft>
+            <SliceRight />
+          </ProductSectionContent>
+        </ProductSectionStyle>
+      )}
+      <AppExampleSectionStyle>
+        <Title size="primary">App Example</Title>
+      </AppExampleSectionStyle>
       <InfoSectionStyle scrollPosition={scrollPosition}>
         <InfoSectionContent>
-          <Title size="primary">INFO</Title>
+          <InfoTitleContainer>
+            <Title size={isMobile ? `quaternary` : `primary`}>INFO</Title>
+          </InfoTitleContainer>
           <InfoContent>
             <DocsContainer>
               <DocsContent>
-                <Title size="tertiary">XYLO Docs</Title>
+                <Title size={isMobile ? `senary` : `tertiary`}>XYLO Docs</Title>
                 <Image src={iconFolder} alt="folder" />
                 <InfoContentText>
                   An official document that provides concepts
@@ -427,7 +627,9 @@ const Main = () => {
             </DocsContainer>
             <HelpContainer>
               <HelpContent>
-                <Title size="tertiary">Help Center</Title>
+                <Title size={isMobile ? `senary` : `tertiary`}>
+                  Help Center
+                </Title>
                 <Image src={iconHelpCenter} alt="HelpCenter" />
                 <InfoContentText>
                   You can check the news and FAQs(Frequently
@@ -441,7 +643,9 @@ const Main = () => {
             </HelpContainer>
             <PaperContainer>
               <PaperContent>
-                <Title size="tertiary">White Paper</Title>
+                <Title size={isMobile ? `senary` : `tertiary`}>
+                  White Paper
+                </Title>
                 <Image src={iconWhitePaper} alt="WhitePaper" />
                 <InfoContentText>
                   An official white paper where you can check

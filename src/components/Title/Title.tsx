@@ -28,11 +28,17 @@ const Text = styled.div<ITitle>`
     }
     if (size === `quaternary`) {
       return `
-        font-size: 20px;
-        line-height: 24px;
+        font-size: 24px;
+        line-height: 29px;
       `;
     }
     if (size === `quinary`) {
+      return `
+        font-size: 20px;
+        line-height: 19.5px;
+      `;
+    }
+    if (size === `senary`) {
       return `
         font-size: 16px;
         line-height: 19.5px;
@@ -43,7 +49,13 @@ const Text = styled.div<ITitle>`
 `;
 
 interface ITitle {
-  size: 'primary' | 'secondary' | 'tertiary' | 'quaternary' | 'quinary';
+  size:
+    | 'primary'
+    | 'secondary'
+    | 'tertiary'
+    | 'quaternary'
+    | 'quinary'
+    | 'senary';
   children: ReactNode;
 }
 
