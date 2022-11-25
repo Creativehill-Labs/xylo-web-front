@@ -15,6 +15,11 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100%;
     min-width: 370px;
   }
+  body {
+    @media screen and (max-width: 768px) {
+      overflow-x: hidden;
+    }
+  }
   html {
     position: relative;
   }

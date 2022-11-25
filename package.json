@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -17,6 +18,11 @@
     "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.5",
+<<<<<<< Updated upstream
+=======
+    "react-js-pagination": "^3.0.3",
+    "react-redux": "^8.0.5",
+>>>>>>> Stashed changes
     "react-responsive": "^9.0.0",
     "react-paginate": "^8.1.4",
     "react-router-dom": "^6.4.3",

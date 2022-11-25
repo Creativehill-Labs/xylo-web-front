@@ -12,21 +12,23 @@ import SearchResults from './pages/helpCenter/SearchResults';
 
 const App: FC = () => {
   return (
-    <CommonLayout>
+    <>
       <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/helpcenter/faq" element={<HelpCenter />} />
-        <Route path="/helpcenter/notice" element={<Notice />} />
-        <Route
-          path="/helpcenter/notice/promoted/:id"
-          element={<NoticeDetail />}
-        />
-        <Route path="/helpcenter/policy" element={<Policy />} />
-        <Route path="/helpcenter/submit" element={<Submit />} />
-        <Route path="/helpcenter/search" element={<SearchResults />} />
-      </Routes>
-    </CommonLayout>
+      <CommonLayout>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/helpcenter/faq" element={<HelpCenter />} />
+          <Route path="/helpcenter/notice" element={<Notice />} />
+          <Route
+            path="/helpcenter/notice/promoted/:id"
+            element={<NoticeDetail />}
+          />
+          <Route path="/helpcenter/policy" element={<Policy />} />
+          <Route path="/helpcenter/submit" element={<Submit />} />
+          <Route path="/helpcenter/search" element={<SearchResults />} />
+        </Routes>
+      </CommonLayout>
+    </>
   );
 };
 

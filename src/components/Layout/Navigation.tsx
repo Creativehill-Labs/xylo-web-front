@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import { setNavIsOpen } from '../../features/commonSlice';
 import iconLogo from '../../assets/png/icon-logo@2x-8.png';
-import iconMenuBar from '../../assets/png/icon-menuBar.png';
+import HamburgerMenu from '../Partials/HamburgerMenu';
+import { selectCommonSlice } from '../../store';
 
 const NavStyle = styled.div`
   background-color: #000000;
@@ -48,18 +51,13 @@ const LinkContainer = styled.div`
   }
 `;
 
-const MenuBarContainer = styled.div`
-  background-image: url('${iconMenuBar}');
-  width: 22px;
-  height: 22px;
-  cursor: pointer;
-`;
-
 const Navigation = () => {
+  const dispatch = useDispatch();
+  const { navIsOpen } = useSelector(selectCommonSlice);
   const isMobile = useMediaQuery({
     query: `(max-width: 768px)`,
   });
-  console.log(isMobile);
+
   return (
     <NavStyle>
       <Navheader>
@@ -67,7 +65,10 @@ const Navigation = () => {
           <Logo src={iconLogo} />
         </Link>
         {isMobile ? (
-          <MenuBarContainer />
+          <HamburgerMenu
+            onClick={() => dispatch(setNavIsOpen(!navIsOpen))}
+            isOpen={navIsOpen}
+          />
         ) : (
           <LinkContainer>
             <Link to="/">Main</Link>
