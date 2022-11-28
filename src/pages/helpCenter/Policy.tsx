@@ -8,7 +8,7 @@ import Flex from '../../components/Flex';
 import Line from '../../components/Line';
 import Text from '../../components/Text';
 import iconPaper from '../../assets/svg/icon-paper.svg';
-import { promotedData } from '../../dummy/noticeData';
+import { policyData } from '../../dummy/noticeData';
 import NoticeLayout from '../../components/Layout/NoticeLayout';
 import Icon from '../../components/Icon';
 
@@ -46,9 +46,9 @@ const Policy: FC = () => {
             </Text>
           </Flex>
           <Line margin="24px 0 0 0" />
-          {promotedData.map((data) => {
+          {policyData.map((data) => {
             return (
-              <Link to={`promoted/${data.id}`} key={data.id}>
+              <Link to={`/helpcenter/policy/${data.id}`} key={data.id}>
                 <ArticleBox>
                   <Flex>
                     <Icon
