@@ -14,7 +14,7 @@ const Text = styled.span<TextProps>`
   font-weight: ${({ weight }) => weight};
   margin: ${({ margin }) => margin};
   color: ${({ color }) => color};
-  line-height: 1;
+  line-height: normal;
 `;
 
 export default Text;

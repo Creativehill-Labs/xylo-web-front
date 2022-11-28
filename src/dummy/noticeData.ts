@@ -288,3 +288,10 @@ export const searchData = [
     title: `Can anyone register a proposal? (누구나 제안을 등록할 수 있나요?)`,
   },
 ];
+
+export const policyData = [
+  {
+    id: 1,
+    title: `[Policy Discussion] Adjustment of SO delegation withdrawal and change penalty / [정책변경 토론] SO위임 철회 및 변경 페널티 관련 조정 건`,
+  },
+];

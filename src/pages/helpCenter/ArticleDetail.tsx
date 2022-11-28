@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
-import { promotedData, recentlyData } from '../../dummy/noticeData';
+import { articleData, policyData, promotedData } from '../../dummy/noticeData';
 import Text from '../../components/Text';
 import Line from '../../components/Line';
 import Box from '../../components/Box';
@@ -39,6 +40,11 @@ const ShareArticleBox = styled.div`
   margin-top: 24px;
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 767px) {
+    margin-top: 16px;
+    width: 320px;
+  }
 `;
 
 const CopyLinkButton = styled.button`
@@ -49,6 +55,11 @@ const CopyLinkButton = styled.button`
   background-color: #fff;
   margin-left: 40px;
   cursor: pointer;
+  @media screen and (max-width: 767px) {
+    width: 119px;
+    height: 36px;
+    margin-left: 16px;
+  }
 `;
 
 const ShareButton = styled.div`
@@ -61,6 +72,11 @@ const ShareButton = styled.div`
   align-items: center;
   margin-left: 32px;
   cursor: pointer;
+  @media screen and (max-width: 767px) {
+    width: 36px;
+    height: 36px;
+    margin-left: 20px;
+  }
 `;
 
 const MoveButton = styled.div`
@@ -78,6 +94,9 @@ const ArticleBox = styled.div`
   border-radius: 8px;
   box-shadow: 4px 4px 8px 0 rgba(143, 143, 143, 0.1);
   margin-bottom: 16px;
+  @media screen and (max-width: 767px) {
+    margin-bottom: 12px;
+  }
   :last-child {
     margin-bottom: 0;
   }
@@ -97,6 +116,14 @@ const HelpfulButton = styled.button`
     background-color: #aae112;
     transition: 0.5s;
   }
+  @media screen and (max-width: 767px) {
+    width: 66px;
+    height: 33px;
+    margin: 0 8px;
+    :first-child {
+      margin-left: 0;
+    }
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -111,6 +138,12 @@ const SubmitButton = styled.button`
   cursor: pointer;
   color: #fff;
   font-weight: 700;
+  @media screen and (max-width: 767px) {
+    font-size: 14px;
+    font-weight: 400;
+    width: 129px;
+    height: 33px;
+  }
 `;
 
 const ArticleList = styled.div`
@@ -118,19 +151,62 @@ const ArticleList = styled.div`
   font-size: 20px;
   font-weight: 400;
   cursor: pointer;
+  a {
+    color: #000;
+  }
+  @media screen and (max-width: 767px) {
+    margin-top: 24px;
+  }
 `;
 
-const NoticeDetail: FC = () => {
+interface RecentlyViewedProps {
+  id: number;
+  title: string;
+  url: string;
+}
+
+const ArticleDetail: FC = () => {
+  const [recentlyData, setRecentlyData] = useState<RecentlyViewedProps[]>([]);
+  const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
   const noticeId = Number(useParams().id);
-  const filteredData = promotedData.filter((data) => data.id === noticeId)[0];
+  const { pathname } = useLocation();
+  let linkData: { id: number; title: string }[] = [];
+  if (pathname.includes(`promoted`)) {
+    linkData = promotedData;
+  } else if (pathname.includes(`article`)) {
+    linkData = articleData;
+  } else if (pathname.includes(`policy`)) {
+    linkData = policyData;
+  }
+  const filteredData = linkData.filter((data) => data.id === noticeId)[0];
+  const relatedData = linkData.filter((data) => data.id !== filteredData.id);
+
+  useEffect(() => {
+    const newRecently = {
+      id: filteredData.id,
+      title: filteredData.title,
+      url: pathname,
+    };
+    const recently = [
+      newRecently,
+      ...JSON.parse(localStorage.getItem(`recently`) || `[]`),
+    ]
+      .filter(
+        (data, idx, callback) =>
+          idx === callback.findIndex((t) => t.title === data.title),
+      )
+      .slice(0, 6);
+    localStorage.setItem(`recently`, JSON.stringify(recently));
+    setRecentlyData(recently);
+  }, [filteredData.id, filteredData.title, pathname]);
 
   return (
     <>
       <HelpCenterLayout />
       <NoticeLayout>
         <BreadCrumbs />
-        <Flex>
-          <Box width="820px">
+        <Flex flexDirection={isMobile ? `column` : `row`}>
+          <Box>
             <Flex>
               <Icon
                 url={iconStar}
@@ -139,11 +215,11 @@ const NoticeDetail: FC = () => {
                 backgroundSize="contain"
                 margin="0 8px 0 0"
               />
-              <Text size="24px" weight="700">
+              <Text size={isMobile ? `16px` : `24px`} weight="700">
                 {filteredData.title}
               </Text>
             </Flex>
-            <Flex margin="24px 0 58px 0">
+            <Flex margin={isMobile ? `16px 0 20px 0` : `24px 0 58px 0`}>
               <UserIconBox>
                 <Icon
                   url={iconUser}
@@ -153,7 +229,11 @@ const NoticeDetail: FC = () => {
                 />
               </UserIconBox>
               <Flex flexDirection="column" justifyContent="center">
-                <Text size="16px" weight="400" color="#202020">
+                <Text
+                  size={isMobile ? `14px` : `16px`}
+                  weight="400"
+                  color="#202020"
+                >
                   XYLO Team
                 </Text>
                 <Text size="12px" weight="400" color="#202020">
@@ -161,7 +241,7 @@ const NoticeDetail: FC = () => {
                 </Text>
               </Flex>
             </Flex>
-            <Text size="20px">
+            <Text size={isMobile ? `14px` : `20px`}>
               Greetings from XYLO Team! The XYLO App reflecting the DAO-based
               community feature will be updated soon. You can directly
               participate in XYLO’s proposals and vote through this update. The
@@ -183,8 +263,11 @@ const NoticeDetail: FC = () => {
               will do our best to meet your expectations. XYLO Team
             </Text>
           </Box>
-          <Box width="460px" margin="0 0 0 32px">
-            <Text size="20px" weight="700">
+          <Box
+            width={isMobile ? `` : `460px`}
+            margin={isMobile ? `64px 0 0 0` : `0 0 0 32px`}
+          >
+            <Text size={isMobile ? `16px` : `20px`} weight="700">
               Share this Articles
             </Text>
             <ShareArticleBox>
@@ -196,7 +279,11 @@ const NoticeDetail: FC = () => {
                     height="18px"
                     margin="0 12px 0 0"
                   />
-                  <Text size="16px" weight="700" color="#acacac">
+                  <Text
+                    size={isMobile ? `14px` : `16px`}
+                    weight="700"
+                    color="#acacac"
+                  >
                     Copy link
                   </Text>
                 </Flex>
@@ -226,23 +313,29 @@ const NoticeDetail: FC = () => {
                 />
               </ShareButton>
             </ShareArticleBox>
-            <Flex justifyContent="space-between" margin="60px 0 24px 0">
+
+            <Flex
+              justifyContent="space-between"
+              margin={isMobile ? `60px 0 16px 0` : `60px 0 24px 0`}
+            >
               <Box>
-                <Text size="20px" weight="700">
+                <Text size={isMobile ? `16px` : `20px`} weight="700">
                   Articles in this section
                 </Text>
               </Box>
-              <MoveButton>
-                <Text size="16px" weight="700" margin="0 12px 0 0">
-                  Move
-                </Text>
-                <Icon
-                  url={iconArrowRight}
-                  width="42px"
-                  height="20px"
-                  backgroundSize="contain"
-                />
-              </MoveButton>
+              {isMobile ? null : (
+                <MoveButton>
+                  <Text size="16px" weight="700" margin="0 12px 0 0">
+                    Move
+                  </Text>
+                  <Icon
+                    url={iconArrowRight}
+                    width="42px"
+                    height="20px"
+                    backgroundSize="contain"
+                  />
+                </MoveButton>
+              )}
             </Flex>
             {promotedData.map((data) => (
               <ArticleBox key={data.id}>
@@ -253,60 +346,90 @@ const NoticeDetail: FC = () => {
                     height="20px"
                     margin="0 14px 0 0"
                   />
-                  <Text size="16px">{data.title}</Text>
+                  <Text size={isMobile ? `14px` : `16px`}>{data.title}</Text>
                 </Flex>
               </ArticleBox>
             ))}
           </Box>
         </Flex>
-        <Box margin="80px 0 100px 0">
-          <Text size="24px" weight="700">
+        <Box margin={isMobile ? `68px 0 60px 0` : `80px 0 100px 0`}>
+          <Text size={isMobile ? `16px` : `24px`} weight="700">
             Was this article helpful?
           </Text>
-          <Line margin="16px 0 24px 0" />
-          <Flex justifyContent="space-between">
-            <Box>
-              <Text size="20px">0 out of 0 found this helpful</Text>
-              <HelpfulButton>YES</HelpfulButton>
-              <Text size="20px">or</Text>
-              <HelpfulButton>NO</HelpfulButton>
-            </Box>
-            <Box>
-              <Text size="20px">Have more questions?</Text>
+          <Line margin={isMobile ? `18px 0` : `16px 0 24px 0`} />
+          <Flex
+            flexDirection={isMobile ? `column` : `row`}
+            justifyContent="space-between"
+          >
+            <Flex
+              flexDirection={isMobile ? `column` : `row`}
+              alignItems={isMobile ? `` : `center`}
+            >
+              <Text size={isMobile ? `14px` : `20px`}>
+                0 out of 0 found this helpful
+              </Text>
+              <Box margin={isMobile ? `8px 0 0 0` : `0`}>
+                <HelpfulButton>
+                  <Text size={isMobile ? `14px` : `20px`}>YES</Text>
+                </HelpfulButton>
+                <Text size={isMobile ? `16px` : `20px`}>or</Text>
+                <HelpfulButton>
+                  <Text size={isMobile ? `14px` : `20px`}>NO</Text>
+                </HelpfulButton>
+              </Box>
+            </Flex>
+            <Flex
+              justifyContent="space-between"
+              alignItems="center"
+              margin={isMobile ? `25px 0 0 0` : `0`}
+            >
+              <Text size={isMobile ? `14px` : `20px`}>
+                Have more questions?
+              </Text>
               <SubmitButton>
                 <Link to="/helpcenter/submit">Submit a request</Link>
               </SubmitButton>
-            </Box>
+            </Flex>
           </Flex>
         </Box>
-        <Flex margin="0 0 121px 0">
-          <Box width="624px">
-            <Text size="24px" weight="700">
+        <Flex
+          margin={isMobile ? `0 0 60px 0` : `0 0 121px 0`}
+          flexDirection={isMobile ? `column` : `row`}
+        >
+          <Box width={isMobile ? `320px` : `624px`}>
+            <Text size={isMobile ? `16px` : `24px`} weight="700">
               Recently viewed articles
             </Text>
-            <Line />
-            {recentlyData.map((data) => (
-              <ArticleList key={data.id}>
-                <Flex>
-                  <Icon
-                    url={iconPaper}
-                    width="16px"
-                    height="20px"
-                    backgroundSize="cover"
-                    margin="0 14px 0 0"
-                  />
-                  <Text size="20px">{data.title}</Text>
-                </Flex>
-              </ArticleList>
-            ))}
+            <Line margin={isMobile ? `18px 0 24px 0` : `16px 0`} />
+            {recentlyData &&
+              recentlyData.slice(1).map((data) => (
+                <ArticleList key={data.id}>
+                  <Link to={`${data.url}`}>
+                    <Flex>
+                      <Icon
+                        url={iconPaper}
+                        width="16px"
+                        height="20px"
+                        backgroundSize="cover"
+                        margin="0 14px 0 0"
+                      />
+                      <Text size={isMobile ? `14px` : `20px`}>
+                        {data.title}
+                      </Text>
+                    </Flex>
+                  </Link>
+                </ArticleList>
+              ))}
           </Box>
-          <Box width="32px"> </Box>
-          <Box width="624px">
-            <Text size="24px" weight="700">
+          <Box width="32px" height="60px">
+            {` `}
+          </Box>
+          <Box width={isMobile ? `320px` : `624px`}>
+            <Text size={isMobile ? `16px` : `24px`} weight="700">
               Related articles
             </Text>
-            <Line />
-            {recentlyData.map((data) => (
+            <Line margin={isMobile ? `18px 0 24px 0` : `16px 0`} />
+            {relatedData.map((data) => (
               <ArticleList key={data.id}>
                 <Flex>
                   <Icon
@@ -316,7 +439,7 @@ const NoticeDetail: FC = () => {
                     backgroundSize="cover"
                     margin="0 14px 0 0"
                   />
-                  <Text size="20px">{data.title}</Text>
+                  <Text size={isMobile ? `14px` : `20px`}>{data.title}</Text>
                 </Flex>
               </ArticleList>
             ))}
@@ -327,4 +450,4 @@ const NoticeDetail: FC = () => {
   );
 };
 
-export default NoticeDetail;
+export default ArticleDetail;

@@ -11,6 +11,10 @@ const StyledPage = styled.div`
     list-style: none;
     padding: 0;
     font-size: 20px;
+    @media screen and (max-width: 767px) {
+      margin-bottom: 60px;
+    }
+
     li {
       width: 48px;
       height: 48px;
@@ -22,6 +26,11 @@ const StyledPage = styled.div`
       border-radius: 4px;
       :last-child {
         margin-right: 0;
+      }
+      @media screen and (max-width: 767px) {
+        width: 40px;
+        height: 40px;
+        margin-right: 8px;
       }
     }
     a {
