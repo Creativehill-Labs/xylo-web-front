@@ -46,6 +46,9 @@ const LinkContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 42%;
+  a:hover {
+    opacity: 0.5;
+  }
   @media screen and (max-width: 1400px) {
     width: 58%;
   }

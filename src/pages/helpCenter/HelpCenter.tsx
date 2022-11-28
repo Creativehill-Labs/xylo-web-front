@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
 import CategoryCard from './CategoryCard';
 import { faqCardData } from '../../dummy/faqCardData';
@@ -23,6 +24,12 @@ const HelpCenterStyle = styled.div`
       justify-content: space-evenly;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    height: 100%;
+    padding: 40px 0;
+    gap: 10px;
+  }
 `;
 
 const TitleContainer = styled.div``;
@@ -34,15 +41,27 @@ const HelpCenterCardContainer = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   row-gap: 30px;
+
+  @media screen and (max-width: 768px) {
+    justify-content: space-around;
+    row-gap: 20px;
+    padding: 20px 20px;
+  }
 `;
 
 const HelpCenter = () => {
+  const isMobile = useMediaQuery({
+    query: `(max-width: 768px)`,
+  });
+
   return (
     <>
       <HelpCenterLayout />
       <HelpCenterStyle>
         <TitleContainer>
-          <Title size="secondary">We&apos;re standing by to help!</Title>
+          <Title size={isMobile ? `senary` : `secondary`}>
+            We&apos;re standing by to help!
+          </Title>
         </TitleContainer>
         <HelpCenterCardContainer>
           {faqCardData.map((el) => {

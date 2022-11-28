@@ -6,6 +6,10 @@ import backgroundImg from '../../assets/png/roadmapCardBackground.png';
 const RoadmapCardStyle = styled.div`
   display: flex;
   gap: 30px;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const ContentStyle = styled.div`
@@ -23,6 +27,11 @@ const RoadmapContentCard = styled.div`
   height: 600px;
   z-index: 1;
   padding: 30px 20px;
+
+  @media screen and (max-width: 768px) {
+    height: auto;
+    background-image: none;
+  }
 `;
 
 const MonthlyTitle = styled.li`
@@ -37,11 +46,22 @@ const MonthlyTitle = styled.li`
     left: -12px;
     color: #ffffff;
   }
+
+  @media screen and (max-width: 768px) {
+    span {
+      font-size: 16px;
+      margin-left: 5px;
+    }
+  }
 `;
 
 const SubTitle = styled.div`
   font-size: 16px;
   line-height: 20px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 const Content = styled.li`
@@ -55,9 +75,21 @@ const Content = styled.li`
     left: -12px;
     white-space: pre-wrap;
   }
+
+  @media screen and (max-width: 768px) {
+    span {
+      font-size: 14px;
+      opacity: 0.5;
+      margin-left: 5px;
+    }
+  }
 `;
 
-const MonthlyContainer = styled.div``;
+const MonthlyContainer = styled.div`
+  div {
+    margin-bottom: 10px;
+  }
+`;
 
 const FirstQuarterContainer = styled.div`
   display: flex;
@@ -65,6 +97,13 @@ const FirstQuarterContainer = styled.div`
   gap: 15px;
   span {
     text-align: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    span > div {
+      font-size: 20px;
+      text-align: left;
+    }
   }
 `;
 const SecondQuarterContainer = styled(FirstQuarterContainer)``;

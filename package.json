@@ -18,11 +18,8 @@
     "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.5",
-<<<<<<< Updated upstream
-=======
     "react-js-pagination": "^3.0.3",
     "react-redux": "^8.0.5",
->>>>>>> Stashed changes
     "react-responsive": "^9.0.0",
     "react-paginate": "^8.1.4",
     "react-router-dom": "^6.4.3",
