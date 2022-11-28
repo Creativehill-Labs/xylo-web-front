@@ -39,8 +39,7 @@ export const faqCardData = [
   {
     id: 3,
     title: `Community
-    
-    `,
+    Pool`,
     link: `/`,
     src: communityIcon,
     activeSrc: communityActiveIcon,

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import Title from '../../components/Title/Title';
 import AnimationLink from '../../components/Partials/AnimationLink';
 
@@ -32,6 +33,14 @@ const CategoryCardStyle = styled.div<StyleProps>`
       }
     }
   }
+  @media screen and (max-width: 768px) {
+    //!
+    width: 150px;
+    height: 195px;
+    border-radius: 12px;
+    background-position: center;
+    background-size: 70% 60%;
+  }
 `;
 
 const CategoryCardContent = styled.div`
@@ -41,6 +50,14 @@ const CategoryCardContent = styled.div`
   height: calc(100% - 64px);
   padding: 32px 28px;
   gap: 55px;
+
+  @media screen and (max-width: 768px) {
+    padding: 20px 18px;
+    gap: 80px;
+    span {
+      font-size: 12px;
+    }
+  }
 `;
 
 interface StyleProps {
@@ -53,10 +70,14 @@ interface ICategoryCard extends StyleProps {
 }
 
 const CategoryCard: FC<ICategoryCard> = ({ title, link, src, activeSrc }) => {
+  const isMobile = useMediaQuery({
+    query: `(max-width: 768px)`,
+  });
+
   return (
     <CategoryCardStyle src={src} activeSrc={activeSrc}>
       <CategoryCardContent>
-        <Title size="quaternary">{title}</Title>
+        <Title size={isMobile ? `senary` : `quaternary`}>{title}</Title>
         <AnimationLink name="Move" link={link} />
       </CategoryCardContent>
     </CategoryCardStyle>

@@ -12,10 +12,10 @@ const NavContent = styled.div<INavbutton>`
   margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: inherit;
   height: 79px;
   a {
+    display: flex;
     height: calc(100% - 5px);
     width: 100%;
   }
@@ -27,12 +27,23 @@ const NavContent = styled.div<INavbutton>`
       a:nth-child(${currentClick}) {
         background-color: #313131;
         border-bottom: 5px solid #aae112;
+        
         button {
          color: #aae112;
         }
       }
     `;
   }}
+
+  @media screen and (max-width: 768px) {
+    height: 48px;
+    white-space: pre-line;
+    button {
+      color: #ffffff;
+      font-weight: 700;
+      height: 100%;
+    }
+  }
 `;
 
 const NavButton = styled.button`
@@ -70,7 +81,8 @@ const HelpCenterNavigation = () => {
         </Link>
         <Link to="/helpcenter/policy">
           <NavButton onClick={() => setCurrentClick(`3`)}>
-            Operation Policy
+            {`Operation
+            Policy`}
           </NavButton>
         </Link>
       </NavContent>

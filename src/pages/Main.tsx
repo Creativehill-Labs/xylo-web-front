@@ -70,11 +70,11 @@ const BackgroundContent = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    /* flex-direction: column; */
-    align-items: flex-start;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
     & > div {
-      padding: 150px 30px 0 30px;
+      /* padding: 150px 30px 0 30px; */
       font-size: 24px;
       line-height: 29px;
       width: none;
@@ -94,7 +94,13 @@ const ScrollDownAttach = styled.span`
     width: 100%;
   }
   @media screen and (max-width: 768px) {
-    top: 13.5%;
+    left: 0;
+    transform: none;
+    position: relative;
+    top: 20%;
+  }
+  @media screen and (max-width: 1400px) and (min-width: 769px) {
+    top: 16%;
   }
 `;
 
@@ -201,10 +207,14 @@ const PhoneImg = styled.div`
   background-image: url('${iconPhone}');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  width: 17%;
+  width: 16%;
   height: 11.5%;
-  left: 67%;
-  top: 20.7%;
+  left: 67.5%;
+  top: 20.5%;
+
+  @media screen and (max-width: 1400px) and (min-width: 769px) {
+    height: 8.5%;
+  }
 `;
 
 const ProductContent = styled.div`
@@ -262,7 +272,7 @@ const MobilePhoneImg = styled.div`
   width: 56%;
   height: 53%;
   left: 23%;
-  top: 15%;
+  top: 13%;
   background-image: url('${iconPhone}');
 `;
 
@@ -279,12 +289,12 @@ const InfoSectionStyle = styled.div<ScrollType>`
   transition: background 1.4s ease-in-out;
 
   ${({ scrollPosition }) => {
-    if (scrollPosition > 1400 && scrollPosition < 2400) {
+    if (scrollPosition > 2100) {
       return `
       background-color: #FAFAFA;
       `;
     }
-    if (scrollPosition < 1400) {
+    if (scrollPosition < 2100) {
       return `
       background-color: #FFFFFF;
       `;
@@ -294,6 +304,20 @@ const InfoSectionStyle = styled.div<ScrollType>`
 
   @media screen and (max-width: 768px) {
     height: 100%;
+
+    ${({ scrollPosition }) => {
+      if (scrollPosition > 2250) {
+        return `
+      background-color: #fafafa;
+      `;
+      }
+      if (scrollPosition < 2250) {
+        return `
+      background-color: #FFFFFF;
+      `;
+      }
+      return ``;
+    }}
   }
 `;
 
@@ -323,14 +347,11 @@ const InfoSectionContent = styled.div`
   @media screen and (max-width: 768px) {
     justify-content: space-around;
     gap: 80px;
+    padding: 80px 0;
   }
 `;
 
-const InfoTitleContainer = styled.div`
-  @media screen and (max-width: 768px) {
-    padding-top: 70px;
-  }
-`;
+const InfoTitleContainer = styled.div``;
 
 const Image = styled.img`
   width: 230px;
@@ -388,18 +409,38 @@ const RoadmapSectionStyle = styled.div<ScrollType>`
   transition: background 1s ease-in-out;
 
   ${({ scrollPosition }) => {
-    if (scrollPosition > 2400) {
+    if (scrollPosition > 3000) {
       return `
       background-color: #222222;
       `;
     }
     return `
-      background-color: #fafafa;
+      background-color: #ffffff;
     `;
   }}
 
   div {
     color: #ffffff;
+  }
+
+  @media screen and (max-width: 1400px) and (min-width: 768px) {
+    height: 150vh;
+  }
+
+  @media screen and (max-width: 768px) {
+    height: 100%;
+    padding: 80px 0px;
+
+    ${({ scrollPosition }) => {
+      if (scrollPosition > 3550) {
+        return `
+      background-color: #222222;
+      `;
+      }
+      return `
+      background-color: #ffffff;
+    `;
+    }}
   }
 `;
 
@@ -414,12 +455,19 @@ const RoadmapSectionContent = styled.div`
   height: inherit;
 `;
 
+const RoadmapTitleContainer = styled.div`
+  div {
+    font-size: 24px;
+  }
+`;
+
 const RoadmapContent = styled.div`
   display: flex;
   gap: 20px;
 `;
 
 const XyloAnimation = styled.div<IXyloAnimation>`
+  position: relative;
   ${({ src }) => {
     if (src.includes(`icon-X`)) {
       return `
@@ -430,10 +478,9 @@ const XyloAnimation = styled.div<IXyloAnimation>`
       top: 413vh;
       
       @media screen and (max-width: 768px) {
-          background-size: 100% 100%;
-          top: 499vh;
+          top: 95.3%;
           width: 40%;
-          height: 5%;
+          height: 3%;
         }
       `;
     }
@@ -446,24 +493,24 @@ const XyloAnimation = styled.div<IXyloAnimation>`
         height: 18%;
 
         @media screen and (max-width: 768px) {
-          top: 533vh; 
-          width: 100%;
-          height: 8%;
+          top: 95.4%; 
+          width: 50%;
+          height: 3%;
         }
       `;
     }
     if (src.includes(`icon-L`)) {
       return `
         background-image: url(${src});
-        left: 38%;
+        left: 39%;
         top: 416vh;
         width: 50%;
         height: 20%;
 
         @media screen and (max-width: 768px) {
-          top: 532vh;
-          width: 100%;
-          height: 10%;
+          top: 95.4%;
+          width: 50%;
+          height: 3%;
         }
       `;
     }
@@ -476,9 +523,9 @@ const XyloAnimation = styled.div<IXyloAnimation>`
         top: 416vh;
 
         @media screen and (max-width: 768px) {
-          top: 528vh;
-          width: 100%;
-          height: 5%;
+          top: 95.4%;
+          width: 30%;
+          height: 3%;
         }
       `;
     }
@@ -536,10 +583,6 @@ const Main = () => {
       window.removeEventListener(`scroll`, updateScroll);
     };
   }, []);
-  const mobileProductText = `An official wallet that can store XYLO
-  ecosystem tokens and blockchain platform
-  that anyone can participate in governance
-  through Community pool investment.`;
 
   return (
     <MainStyled
@@ -662,7 +705,9 @@ const Main = () => {
       </InfoSectionStyle>
       <RoadmapSectionStyle scrollPosition={scrollPosition}>
         <RoadmapSectionContent>
-          <Title size="primary">ROADMAP</Title>
+          <RoadmapTitleContainer>
+            <Title size="primary">ROADMAP</Title>
+          </RoadmapTitleContainer>
           <RoadmapContent>
             <RoadmapCard />
           </RoadmapContent>
