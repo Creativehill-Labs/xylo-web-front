@@ -9,6 +9,7 @@ import ArticleDetail from './pages/helpCenter/ArticleDetail';
 import Policy from './pages/helpCenter/Policy';
 import Submit from './pages/helpCenter/Submit';
 import SearchResults from './pages/helpCenter/SearchResults';
+import ArticleList from './pages/helpCenter/ArticleList';
 
 const App: FC = () => {
   return (
@@ -22,6 +23,23 @@ const App: FC = () => {
           <Route path="/helpcenter/policy" element={<Policy />} />
           <Route path="/helpcenter/submit" element={<Submit />} />
           <Route path="/helpcenter/search" element={<SearchResults />} />
+          {/* list page */}
+          {[
+            `/helpcenter/faq/account`,
+            `/helpcenter/faq/wallet`,
+            `/helpcenter/faq/pool`,
+            `/helpcenter/faq/delegate`,
+            `/helpcenter/faq/owner`,
+            `/helpcenter/faq/proposal`,
+            `/helpcenter/faq/vote`,
+            `/helpcenter/faq/reward`,
+            `/helpcenter/faq/products`,
+            `/helpcenter/notice/promoted`,
+            `/helpcenter/notice/article`,
+            `/helpcenter/policy/policy`,
+          ].map((path) => (
+            <Route path={path} key={path} element={<ArticleList />} />
+          ))}
           {/* detail page */}
           {[
             `/helpcenter/faq/account/:id`,
@@ -35,7 +53,7 @@ const App: FC = () => {
             `/helpcenter/faq/products/:id`,
             `/helpcenter/notice/promoted/:id`,
             `/helpcenter/notice/article/:id`,
-            `/helpcenter/policy/:id`,
+            `/helpcenter/policy/policy/:id`,
           ].map((path) => (
             <Route path={path} key={path} element={<ArticleDetail />} />
           ))}

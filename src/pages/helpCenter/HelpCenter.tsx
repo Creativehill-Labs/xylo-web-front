@@ -68,7 +68,7 @@ const HelpCenter = () => {
             return (
               <CategoryCard
                 title={el.title}
-                link="/"
+                link={el.link}
                 src={el.src}
                 activeSrc={el.activeSrc}
               />
