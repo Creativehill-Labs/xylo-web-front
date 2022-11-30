@@ -15,6 +15,8 @@ const Text = styled.span<TextProps>`
   margin: ${({ margin }) => margin};
   color: ${({ color }) => color};
   line-height: normal;
+  word-break: keep-all;
+  white-space: pre-line;
 `;
 
 export default Text;

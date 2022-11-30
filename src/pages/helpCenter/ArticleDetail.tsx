@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
-import { articleData, policyData, promotedData } from '../../dummy/noticeData';
 import Text from '../../components/Text';
 import Line from '../../components/Line';
 import Box from '../../components/Box';
@@ -19,6 +18,8 @@ import iconPaper from '../../assets/svg/icon-paper.svg';
 import BreadCrumbs from '../../components/Partials/BreadCrumbs';
 import NoticeLayout from '../../components/Layout/NoticeLayout';
 import Icon from '../../components/Icon';
+import { faqData } from '../../dummy/faqData';
+import { policyData } from '../../dummy/policyData';
 
 const UserIconBox = styled.div`
   width: 40px;
@@ -35,7 +36,7 @@ const ShareArticleBox = styled.div`
   border: 1px solid #f4f4f4;
   border-radius: 16px;
   box-shadow: 4px 4px 8px 0 rgba(143, 143, 143, 0.1);
-  width: 460px;
+  /* width: 460px; */
   height: 108px;
   margin-top: 24px;
   display: flex;
@@ -43,7 +44,7 @@ const ShareArticleBox = styled.div`
 
   @media screen and (max-width: 767px) {
     margin-top: 16px;
-    width: 320px;
+    /* width: 320px; */
   }
 `;
 
@@ -80,9 +81,16 @@ const ShareButton = styled.div`
 `;
 
 const MoveButton = styled.div`
-  display: flex;
-  align-items: center;
   cursor: pointer;
+  a {
+    display: flex;
+    color: #000;
+    align-items: center;
+    div {
+      display: flex;
+      align-items: center;
+    }
+  }
 `;
 
 const ArticleBox = styled.div`
@@ -99,6 +107,9 @@ const ArticleBox = styled.div`
   }
   :last-child {
     margin-bottom: 0;
+  }
+  a {
+    color: #000;
   }
 `;
 
@@ -159,27 +170,33 @@ const ArticleList = styled.div`
   }
 `;
 
-interface RecentlyViewedProps {
+interface DataProps {
   id: number;
   title: string;
+}
+
+interface RecentlyViewedProps extends DataProps {
   url: string;
 }
 
 const ArticleDetail: FC = () => {
-  const [recentlyData, setRecentlyData] = useState<RecentlyViewedProps[]>([]);
   const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
-  const noticeId = Number(useParams().id);
+  const [recentlyData, setRecentlyData] = useState<RecentlyViewedProps[]>([]);
   const { pathname } = useLocation();
-  let linkData: { id: number; title: string }[] = [];
-  if (pathname.includes(`promoted`)) {
-    linkData = promotedData;
-  } else if (pathname.includes(`article`)) {
-    linkData = articleData;
-  } else if (pathname.includes(`policy`)) {
-    linkData = policyData;
-  }
-  const filteredData = linkData.filter((data) => data.id === noticeId)[0];
-  const relatedData = linkData.filter((data) => data.id !== filteredData.id);
+  const paramsId = Number(useParams().id);
+
+  const AllData = [...faqData, ...policyData];
+  const dataUrl = pathname.split(`/`)[2];
+  const dataCategory = pathname.split(`/`)[3];
+  const filteredData = AllData.filter(
+    (data) => data.category === dataCategory,
+  ).filter((data) => data.id === paramsId)[0];
+  const inSectionData = AllData.filter(
+    (data) => data.category === filteredData.category,
+  );
+  const relatedData = inSectionData.filter(
+    (data) => data.id !== filteredData.id,
+  );
 
   useEffect(() => {
     const newRecently = {
@@ -198,7 +215,28 @@ const ArticleDetail: FC = () => {
       .slice(0, 6);
     localStorage.setItem(`recently`, JSON.stringify(recently));
     setRecentlyData(recently);
-  }, [filteredData.id, filteredData.title, pathname]);
+  }, [filteredData.id, filteredData.title, pathname, filteredData]);
+
+  const clickCopyWallet = async () => {
+    if (!navigator.clipboard) {
+      console.warn(`navigator clipboard is not supported`);
+      return;
+    }
+    await navigator.clipboard.writeText(window.location.href);
+  };
+
+  const clickShare = (sns: string) => {
+    const url = encodeURI(window.location.href);
+    if (sns === `facebook`) {
+      window.open(`http://www.facebook.com/sharer.php?u=${url}`);
+    }
+    if (sns === `twitter`) {
+      window.open(`http://twitter.com/intent/tweet?url=${url}`);
+    }
+    if (sns === `linkedin`) {
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
+    }
+  };
 
   return (
     <>
@@ -206,17 +244,17 @@ const ArticleDetail: FC = () => {
       <NoticeLayout>
         <BreadCrumbs />
         <Flex flexDirection={isMobile ? `column` : `row`}>
-          <Box>
+          <Box width={isMobile ? `` : `788px`}>
             <Flex>
               <Icon
                 url={iconStar}
                 width="16px"
                 height="16px"
                 backgroundSize="contain"
-                margin="0 8px 0 0"
+                margin={isMobile ? `0 4px 0 0` : `6px 8px 0 0`}
               />
               <Text size={isMobile ? `16px` : `24px`} weight="700">
-                {filteredData.title}
+                {filteredData?.title}
               </Text>
             </Flex>
             <Flex margin={isMobile ? `16px 0 20px 0` : `24px 0 58px 0`}>
@@ -242,25 +280,7 @@ const ArticleDetail: FC = () => {
               </Flex>
             </Flex>
             <Text size={isMobile ? `14px` : `20px`}>
-              Greetings from XYLO Team! The XYLO App reflecting the DAO-based
-              community feature will be updated soon. You can directly
-              participate in XYLO’s proposals and vote through this update. The
-              community pool’s fund management plan or XYLO-related policies are
-              decided on the voting results. The first agenda is ‘Penalty
-              adjustment related to the withdrawal and change of the SO
-              delegation’. This policy regarding the penalty was the matter that
-              many SOM have been curious about and suggested. It is significant
-              for the SOM to agree and decide on this essential policy within
-              XYLO Agenda: Adjustment of SO delegation withdrawal and change
-              penalty Content: Change the current penalty from 10% to 1% After a
-              significant discussion in the forum, the final decision-making
-              process for policy changes will be made through voting in the
-              community within the XYLO App. We ask for your interest and
-              participation from SO and SOM in this first policy discussion so
-              that we can get one step closer to the true DAO pursued by XYLO
-              through the governance agreement. After the discussion, details of
-              the voting methods can be found in Docs on the XYLO website. We
-              will do our best to meet your expectations. XYLO Team
+              {filteredData.content}
             </Text>
           </Box>
           <Box
@@ -271,7 +291,7 @@ const ArticleDetail: FC = () => {
               Share this Articles
             </Text>
             <ShareArticleBox>
-              <CopyLinkButton>
+              <CopyLinkButton onClick={clickCopyWallet}>
                 <Flex justifyContent="center">
                   <Icon
                     url={iconCopy}
@@ -288,7 +308,7 @@ const ArticleDetail: FC = () => {
                   </Text>
                 </Flex>
               </CopyLinkButton>
-              <ShareButton>
+              <ShareButton onClick={() => clickShare(`facebook`)}>
                 <Icon
                   url={iconFacebook}
                   width="20px"
@@ -296,7 +316,7 @@ const ArticleDetail: FC = () => {
                   backgroundSize="contain"
                 />
               </ShareButton>
-              <ShareButton>
+              <ShareButton onClick={() => clickShare(`twitter`)}>
                 <Icon
                   url={iconTwitter}
                   width="20px"
@@ -304,7 +324,7 @@ const ArticleDetail: FC = () => {
                   backgroundSize="contain"
                 />
               </ShareButton>
-              <ShareButton>
+              <ShareButton onClick={() => clickShare(`linkedin`)}>
                 <Icon
                   url={iconLinked}
                   width="20px"
@@ -325,29 +345,33 @@ const ArticleDetail: FC = () => {
               </Box>
               {isMobile ? null : (
                 <MoveButton>
-                  <Text size="16px" weight="700" margin="0 12px 0 0">
-                    Move
-                  </Text>
-                  <Icon
-                    url={iconArrowRight}
-                    width="42px"
-                    height="20px"
-                    backgroundSize="contain"
-                  />
+                  <Link to={`/helpcenter/${dataUrl}/${dataCategory}`}>
+                    <Text size="16px" weight="700" margin="0 12px 0 0">
+                      Move
+                    </Text>
+                    <Icon
+                      url={iconArrowRight}
+                      width="42px"
+                      height="20px"
+                      backgroundSize="contain"
+                    />
+                  </Link>
                 </MoveButton>
               )}
             </Flex>
-            {promotedData.map((data) => (
+            {inSectionData.map((data) => (
               <ArticleBox key={data.id}>
-                <Flex>
-                  <Icon
-                    url={iconPaper}
-                    width="16px"
-                    height="20px"
-                    margin="0 14px 0 0"
-                  />
-                  <Text size={isMobile ? `14px` : `16px`}>{data.title}</Text>
-                </Flex>
+                <Link to={`/helpcenter/${dataUrl}/${dataCategory}/${data.id}`}>
+                  <Flex>
+                    <Icon
+                      url={iconPaper}
+                      width="16px"
+                      height="20px"
+                      margin="0 14px 0 0"
+                    />
+                    <Text size={isMobile ? `14px` : `16px`}>{data.title}</Text>
+                  </Flex>
+                </Link>
               </ArticleBox>
             ))}
           </Box>
@@ -401,25 +425,22 @@ const ArticleDetail: FC = () => {
               Recently viewed articles
             </Text>
             <Line margin={isMobile ? `18px 0 24px 0` : `16px 0`} />
-            {recentlyData &&
-              recentlyData.slice(1).map((data) => (
-                <ArticleList key={data.id}>
-                  <Link to={`${data.url}`}>
-                    <Flex>
-                      <Icon
-                        url={iconPaper}
-                        width="16px"
-                        height="20px"
-                        backgroundSize="cover"
-                        margin="0 14px 0 0"
-                      />
-                      <Text size={isMobile ? `14px` : `20px`}>
-                        {data.title}
-                      </Text>
-                    </Flex>
-                  </Link>
-                </ArticleList>
-              ))}
+            {recentlyData.slice(1).map((data) => (
+              <ArticleList key={data.title}>
+                <Link to={`${data.url}`}>
+                  <Flex>
+                    <Icon
+                      url={iconPaper}
+                      width="16px"
+                      height="20px"
+                      backgroundSize="cover"
+                      margin="0 14px 0 0"
+                    />
+                    <Text size={isMobile ? `14px` : `20px`}>{data.title}</Text>
+                  </Flex>
+                </Link>
+              </ArticleList>
+            ))}
           </Box>
           <Box width="32px" height="60px">
             {` `}
@@ -431,16 +452,18 @@ const ArticleDetail: FC = () => {
             <Line margin={isMobile ? `18px 0 24px 0` : `16px 0`} />
             {relatedData.map((data) => (
               <ArticleList key={data.id}>
-                <Flex>
-                  <Icon
-                    url={iconPaper}
-                    width="16px"
-                    height="20px"
-                    backgroundSize="cover"
-                    margin="0 14px 0 0"
-                  />
-                  <Text size={isMobile ? `14px` : `20px`}>{data.title}</Text>
-                </Flex>
+                <Link to={`/helpcenter/${dataUrl}/${dataCategory}/${data.id}`}>
+                  <Flex>
+                    <Icon
+                      url={iconPaper}
+                      width="16px"
+                      height="20px"
+                      backgroundSize="cover"
+                      margin="0 14px 0 0"
+                    />
+                    <Text size={isMobile ? `14px` : `20px`}>{data.title}</Text>
+                  </Flex>
+                </Link>
               </ArticleList>
             ))}
           </Box>

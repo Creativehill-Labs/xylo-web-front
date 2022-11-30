@@ -1,19 +1,20 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
+import NoticeLayout from '../../components/Layout/NoticeLayout';
 import Title from '../../components/Title/Title';
 import Box from '../../components/Box';
 import Flex from '../../components/Flex';
-import Line from '../../components/Line';
 import Text from '../../components/Text';
-import iconPaper from '../../assets/svg/icon-paper.svg';
-import { policyData } from '../../dummy/policyData';
-import NoticeLayout from '../../components/Layout/NoticeLayout';
+import Line from '../../components/Line';
 import Icon from '../../components/Icon';
+import iconPaper from '../../assets/svg/icon-paper.svg';
+import { faqData } from '../../dummy/faqData';
+import { policyData } from '../../dummy/policyData';
 
-const PolicyTitle = styled.div`
+const ArticleListTitle = styled.div`
   margin: 80px 0;
   text-align: center;
 `;
@@ -29,27 +30,37 @@ const ArticleBox = styled.div`
   margin-top: 20px;
 `;
 
-const Policy: FC = () => {
+const Faq: FC = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
+  const { pathname } = useLocation();
+
+  const dataUrl = pathname.split(`/`)[2];
+  const dataCategory = pathname.split(`/`)[3];
+  const allData = [...faqData, ...policyData];
+  const articleData = allData.filter((data) => data.category === dataCategory);
+
   return (
     <>
       <HelpCenterLayout />
       <NoticeLayout>
-        <PolicyTitle>
+        <ArticleListTitle>
           <Title size={isMobile ? `quinary` : `secondary`}>
-            Operating standards and specific regulations
+            We’re standing by to help!
           </Title>
-        </PolicyTitle>
+        </ArticleListTitle>
         <Box margin={isMobile ? `0 0 53px 0` : `0 0 120px 0`}>
           <Flex>
             <Text size={isMobile ? `16px` : `24px`} weight="700">
-              Operation Policy
+              {dataCategory.replace(/\b[a-z]/g, (char) => char.toUpperCase())}
             </Text>
           </Flex>
           <Line margin={isMobile ? `12px 0 0 0` : `24px 0 0 0`} />
-          {policyData.map((data) => {
+          {articleData.map((data) => {
             return (
-              <Link to={`/helpcenter/policy/policy/${data.id}`} key={data.id}>
+              <Link
+                to={`/helpcenter/${dataUrl}/${dataCategory}/${data.id}`}
+                key={data.id}
+              >
                 <ArticleBox>
                   <Flex>
                     <Icon
@@ -71,4 +82,4 @@ const Policy: FC = () => {
   );
 };
 
-export default Policy;
+export default Faq;
