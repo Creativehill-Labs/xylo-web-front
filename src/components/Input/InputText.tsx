@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+// import React, { FC } from 'react';
 import styled from 'styled-components';
 
 const InputStyle = styled.input`
@@ -14,12 +14,14 @@ const InputStyle = styled.input`
   caret-color: rgba(170, 225, 18, 1);
 `;
 
-interface IInputText {
-  placeholder?: string;
-}
+// interface IInputText {
+//   placeholder?: string;
+// }
 
-const InputText: FC<IInputText> = ({ placeholder }) => {
-  return <InputStyle type="text" placeholder={placeholder} />;
-};
+// const InputText: FC<IInputText> = ({ placeholder }) => {
+//   return <InputStyle type="text" placeholder={placeholder} />;
+// };
 
-export default InputText;
+// export default InputText;
+
+export default InputStyle;

@@ -48,14 +48,16 @@ const StyledPage = styled.div`
   }
 `;
 
-export interface CurrentItemProps {
+interface DataProps {
   id: number;
   title: string;
+  content: string;
+  category: string;
 }
 
 interface CustomPaginationProps {
-  data: CurrentItemProps[];
-  setCurrentItems: Dispatch<SetStateAction<CurrentItemProps[]>>;
+  data: DataProps[];
+  setCurrentItems: Dispatch<SetStateAction<DataProps[]>>;
   itemsPerPage: number;
 }
 

@@ -1,6 +1,7 @@
 import { FC, useState, ChangeEvent, useCallback } from 'react';
 import styled from 'styled-components';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useMediaQuery } from 'react-responsive';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
 import Text from '../../components/Text';
 import Flex from '../../components/Flex';
@@ -11,11 +12,17 @@ import Icon from '../../components/Icon';
 const SubmitSection = styled.section`
   max-width: 618px;
   margin: 0 auto;
+  @media screen and (max-width: 767px) {
+    max-width: 320px;
+  }
 `;
 
 const SubmitTitle = styled.div`
   margin: 80px 0;
   text-align: center;
+  @media screen and (max-width: 767px) {
+    margin: 40px 0 53px 0;
+  }
 `;
 
 const SubmitText = styled.input`
@@ -24,7 +31,7 @@ const SubmitText = styled.input`
   font-size: 20px;
   border: 1px solid #fff;
   background-color: #f9f9f9;
-  padding: 0 0 0 22px;
+  padding-left: 16px;
   caret-color: #aae112;
   outline: none;
   border-radius: 8px;
@@ -37,6 +44,12 @@ const SubmitText = styled.input`
     border: 1px solid #000;
     border-radius: 8px;
   }
+  @media screen and (max-width: 767px) {
+    width: 296px;
+    height: 54px;
+    margin: 8px 0 24px 0;
+    font-size: 14px;
+  }
 `;
 
 const SubmitSelect = styled.select`
@@ -46,13 +59,21 @@ const SubmitSelect = styled.select`
   margin: 12px 0 40px 0;
   outline: none;
   border: 1px solid #fff;
-  padding-left: 22px;
+  padding-left: 16px;
   background-color: #f9f9f9;
   border-radius: 8px;
-  color: rgba(32, 32, 32, 0.3);
-
+  color: black;
   :focus {
     border: 1px solid #202020;
+  }
+  :required:invalid {
+    color: rgba(32, 32, 32, 0.3);
+  }
+  @media screen and (max-width: 767px) {
+    width: 320px;
+    height: 54px;
+    margin: 8px 0 24px 0;
+    font-size: 14px;
   }
 `;
 
@@ -67,8 +88,20 @@ const SubmitTextarea = styled.textarea`
   border-radius: 8px;
   overflow: hidden;
   font-size: 20px;
+  font-family: 'Pretendard';
+  caret-color: #aae112;
   :focus {
     outline: 1px solid #000;
+  }
+  ::placeholder {
+    color: #202020;
+    opacity: 0.3;
+  }
+  @media screen and (max-width: 767px) {
+    width: 286px;
+    height: 214px;
+    margin: 8px 0 24px 0;
+    font-size: 14px;
   }
 `;
 
@@ -90,6 +123,14 @@ const SubmitFile = styled.div`
   input {
     display: none;
   }
+  @media screen and (max-width: 767px) {
+    margin: 8px 0 12px 0;
+    label {
+      width: 318px;
+      height: 54px;
+      font-size: 14px;
+    }
+  }
 `;
 
 const SubmitFileList = styled.div`
@@ -104,6 +145,9 @@ const SubmitFileList = styled.div`
   :last-child {
     margin-bottom: 0;
   }
+  @media screen and (max-width: 767px) {
+    font-size: 14px;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -117,6 +161,11 @@ const SubmitButton = styled.button`
   border-radius: 8px;
   background-color: #000;
   cursor: pointer;
+  @media screen and (max-width: 767px) {
+    width: 320px;
+    margin: 44px 0 60px 0;
+    font-size: 16px;
+  }
 `;
 
 interface SubmitFormData {
@@ -127,6 +176,7 @@ interface SubmitFormData {
 }
 
 const Submit: FC = () => {
+  const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
   const { register, handleSubmit } = useForm<SubmitFormData>();
   const [fileList, setFileList] = useState<File[]>([]);
 
@@ -155,12 +205,12 @@ const Submit: FC = () => {
       <HelpCenterLayout />
       <SubmitSection>
         <SubmitTitle>
-          <Text size="48px" weight="700">
+          <Text size={isMobile ? `16px` : `48px`} weight="700">
             Submit a request
           </Text>
         </SubmitTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Text size="24px" weight="700">
+          <Text size={isMobile ? `14px` : `24px`} weight="700" display="block">
             Email address
           </Text>
           <SubmitText
@@ -175,14 +225,19 @@ const Submit: FC = () => {
             })}
           />
           <Flex flexDirection="column">
-            <Text size="24px" weight="700">
+            <Text
+              size={isMobile ? `14px` : `24px`}
+              weight="700"
+              display="block"
+            >
               Type
             </Text>
             <SubmitSelect
               defaultValue=""
+              required
               {...register(`type`, { required: true })}
             >
-              <option value="" disabled hidden>
+              <option value="" disabled selected hidden>
                 Select a type
               </option>
               <option value="test">test</option>
@@ -191,7 +246,7 @@ const Submit: FC = () => {
               <option value="zxc">zxc</option>
             </SubmitSelect>
           </Flex>
-          <Text size="24px" weight="700">
+          <Text size={isMobile ? `14px` : `24px`} weight="700" display="block">
             Subject
           </Text>
           <SubmitText
@@ -202,7 +257,11 @@ const Submit: FC = () => {
             {...register(`subject`, { required: true })}
           />
           <Flex flexDirection="column">
-            <Text size="24px" weight="700">
+            <Text
+              size={isMobile ? `14px` : `24px`}
+              weight="700"
+              display="block"
+            >
               Description
             </Text>
             <SubmitTextarea
@@ -211,7 +270,11 @@ const Submit: FC = () => {
             />
           </Flex>
           <Flex flexDirection="column">
-            <Text size="24px" weight="700">
+            <Text
+              size={isMobile ? `14px` : `24px`}
+              weight="700"
+              display="block"
+            >
               Attachments(optional)
             </Text>
             <SubmitFile>
@@ -224,9 +287,10 @@ const Submit: FC = () => {
                 <Flex alignItems="center">
                   <Icon
                     url={iconClip}
-                    width="21px"
-                    height="22px"
+                    width={isMobile ? `12px` : `21px`}
+                    height={isMobile ? `12px` : `22px`}
                     margin="0 9px 0 0"
+                    backgroundSize="cover"
                   />
                   {file.name}
                 </Flex>
@@ -235,7 +299,12 @@ const Submit: FC = () => {
                   onClick={() => onFileDelete(idx)}
                   className="close-btn"
                 >
-                  <Icon url={iconClose} width="12px" height="12px" />
+                  <Icon
+                    url={iconClose}
+                    width={isMobile ? `10px` : `12px`}
+                    height={isMobile ? `10px` : `12px`}
+                    backgroundSize="cover"
+                  />
                 </Flex>
               </SubmitFileList>
             ))}
