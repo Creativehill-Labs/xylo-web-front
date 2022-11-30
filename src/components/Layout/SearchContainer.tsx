@@ -1,10 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import styled from 'styled-components';
 import BackgroundImg from '../../assets/png/background.png';
 import Button from '../Input/Button';
-import InputText from '../Input/InputText';
+import InputStyle from '../Input/InputText';
 import Title from '../Title/Title';
 
 const MainContainer = styled.div`
@@ -62,6 +62,7 @@ const SearchContainer = () => {
   const isMobile = useMediaQuery({
     query: `(max-width: 768px)`,
   });
+  const [keyword, setKeyword] = useState(``);
   return (
     <MainContainer>
       <ContentContainer>
@@ -69,8 +70,12 @@ const SearchContainer = () => {
           How can we help you?
         </Title>
         <InputContainer>
-          <InputText placeholder="What are you looking for?" />
-          <Link to="/helpcenter/search">
+          <InputStyle
+            type="text"
+            placeholder="What are you looking for?"
+            onChange={(e) => setKeyword(e.target.value)}
+          />
+          <Link to="/helpcenter/search" state={keyword}>
             <Button
               width={isMobile ? `91px` : undefined}
               height={isMobile ? `47px` : undefined}
