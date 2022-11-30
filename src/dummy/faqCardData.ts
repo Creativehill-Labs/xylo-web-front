@@ -20,79 +20,64 @@ import productActiveIcon from '../assets/png/HelpCenterCard/icon-product-active.
 export const faqCardData = [
   {
     id: 1,
-    title: `Account
-
-    `,
-    link: `/`,
+    title: `Account`,
+    link: `/helpcenter/faq/account`,
     src: accountIcon,
     activeSrc: accountActiveIcon,
   },
   {
     id: 2,
-    title: `Wallet
-    
-    `,
-    link: `/`,
+    title: `Wallet`,
+    link: `/helpcenter/faq/wallet`,
     src: walletIcon,
     activeSrc: walletActiveIcon,
   },
   {
     id: 3,
-    title: `Community
-    Pool`,
-    link: `/`,
+    title: `Community Pool`,
+    link: `/helpcenter/faq/pool`,
     src: communityIcon,
     activeSrc: communityActiveIcon,
   },
   {
     id: 4,
-    title: `Delegate
-    
-    `,
-    link: `/`,
+    title: `Delegate`,
+    link: `/helpcenter/faq/delegate`,
     src: delegateIcon,
     activeSrc: delegateActiveIcon,
   },
   {
     id: 5,
-    title: `Stadium 
-    Owner`,
-    link: `/`,
+    title: `Stadium Owner`,
+    link: `/helpcenter/faq/owner`,
     src: ownerIcon,
     activeSrc: ownerActiveIcon,
   },
   {
     id: 6,
-    title: `Proposal
-    
-    `,
-    link: `/`,
+    title: `Proposal`,
+    link: `/helpcenter/faq/proposal`,
     src: proposalIcon,
     activeSrc: proposalActiveIcon,
   },
   {
     id: 7,
-    title: `Vote
-    
-    `,
-    link: `/`,
+    title: `Vote`,
+    link: `/helpcenter/faq/vote`,
     src: voteIcon,
     activeSrc: voteActiveIcon,
   },
   {
     id: 8,
-    title: `Reward
-    
-    `,
-    link: `/`,
+    title: `Reward`,
+    link: `/helpcenter/faq/reward`,
     src: rewardIcon,
     activeSrc: rewardActiveIcon,
   },
   {
     id: 9,
-    title: `Supported 
-    Products`,
-    link: `/`,
+    title: `Supported Products`,
+    link: `/helpcenter/faq/products`,
     src: productIcon,
     activeSrc: productActiveIcon,
   },
