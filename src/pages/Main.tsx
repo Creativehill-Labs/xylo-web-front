@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import backgroundImg from '../assets/png/background.png';
 import Title from '../components/Title/Title';
 import AnimationLink from '../components/Partials/AnimationLink';
@@ -575,6 +577,11 @@ const Main = () => {
     setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   };
   useEffect(() => {
+    AOS.init({
+      duration: 800,
+      offset: 100,
+      easing: `ease`,
+    });
     const scrollListener = () => {
       window.addEventListener(`scroll`, updateScroll);
     };
@@ -592,13 +599,18 @@ const Main = () => {
       <BackgroundSection>
         <BackgroundContent>
           <Title size="primary">
-            Outgrowing Blockchain, <br /> Rocketing rewards
+            <div data-aos="fade-up">Outgrowing Blockchain,</div>
+            <div data-aos="fade-up" data-aos-delay="300">
+              Rocketing rewards
+            </div>
           </Title>
-          <DonutImg />
-          <CoinImg />
+          <DonutImg data-aos="fade-left" data-aos-duration="2500" />
+          <CoinImg data-aos="fade-right" data-aos-duration="2000" />
           <ScrollDownAttach>
-            <Title size="quinary">Scroll Down</Title>
-            <ScrollDown />
+            <div data-aos="fade-down" data-aos-once="true">
+              <Title size="quinary">Scroll Down</Title>
+              <ScrollDown />
+            </div>
           </ScrollDownAttach>
         </BackgroundContent>
       </BackgroundSection>
@@ -607,39 +619,61 @@ const Main = () => {
           <MobileProductSectionContent>
             <MobileProductTop>
               <MobileTopTitleContainer>
-                <Title size="quaternary">PRODUCT</Title>
+                <Title size="quaternary">
+                  <div data-aos="fade-up">PRODUCT</div>
+                </Title>
               </MobileTopTitleContainer>
               <MobileProductTopContent>
-                <Title size="senary">XYLO Application</Title>
-                An official wallet that can store XYLO
-                <br />
-                ecosystem tokens and blockchain platform
-                <br />
-                that anyone can participate in governance
-                <br />
-                through Community pool investment.
+                <Title size="senary">
+                  <div data-aos="fade-up">XYLO Application</div>
+                </Title>
+                <div data-aos="fade-up">
+                  An official wallet that can store XYLO
+                  <br />
+                  ecosystem tokens and blockchain platform
+                  <br />
+                  that anyone can participate in governance
+                  <br />
+                  through Community pool investment.
+                </div>
               </MobileProductTopContent>
-              <AnimationLink link="/helpcenter/faq" name="DOWNLOAD" />
+              <div data-aos="fade-up">
+                <AnimationLink link="/helpcenter/faq" name="DOWNLOAD" />
+              </div>
             </MobileProductTop>
           </MobileProductSectionContent>
           <MobileProductBottom>
-            <MobilePhoneImg />
+            <MobilePhoneImg data-aos="flip-right" />
           </MobileProductBottom>
         </MobileProductSectionStyle>
       ) : (
         <ProductSectionStyle>
           <ProductSectionContent>
-            <PhoneImg />
+            <PhoneImg
+              data-aos="flip-right"
+              data-aos-delay="500"
+              data-aos-duration="1400"
+            />
             <SliceLeft>
-              <Title size="primary">PRODUCT</Title>
+              <Title size="primary">
+                <div data-aos="fade-right">PRODUCT</div>
+              </Title>
               <ProductContent>
-                <Title size="tertiary">XYLO Application</Title>
-                An official wallet that can store XYLO ecosystem tokens
-                <br />
-                and blockchain platform that anyone can participate in
-                <br /> governance through Community pool investment.
+                <Title size="tertiary">
+                  <div data-aos="fade-right" data-aos-delay="100">
+                    XYLO Application
+                  </div>
+                </Title>
+                <div data-aos="fade-right" data-aos-delay="200">
+                  An official wallet that can store XYLO ecosystem tokens
+                  <br />
+                  and blockchain platform that anyone can participate in
+                  <br /> governance through Community pool investment.
+                </div>
               </ProductContent>
-              <AnimationLink link="/helpcenter/faq" name="DOWNLOAD" />
+              <div data-aos="fade-right" data-aos-delay="300">
+                <AnimationLink link="/helpcenter/faq" name="DOWNLOAD" />
+              </div>
             </SliceLeft>
             <SliceRight />
           </ProductSectionContent>
@@ -651,10 +685,12 @@ const Main = () => {
       <InfoSectionStyle scrollPosition={scrollPosition}>
         <InfoSectionContent>
           <InfoTitleContainer>
-            <Title size={isMobile ? `quaternary` : `primary`}>INFO</Title>
+            <Title size={isMobile ? `quaternary` : `primary`}>
+              <div data-aos="fade-up">INFO</div>
+            </Title>
           </InfoTitleContainer>
           <InfoContent>
-            <DocsContainer>
+            <DocsContainer data-aos="fade-up">
               <DocsContent>
                 <Title size={isMobile ? `senary` : `tertiary`}>XYLO Docs</Title>
                 <Image src={iconFolder} alt="folder" />
@@ -664,11 +700,11 @@ const Main = () => {
                   and guides related to XYLO
                 </InfoContentText>
               </DocsContent>
-              <AnimationLinkContainer>
+              <AnimationLinkContainer data-aos="fade-right">
                 <AnimationLink link="/" name="XYLO DOCS" />
               </AnimationLinkContainer>
             </DocsContainer>
-            <HelpContainer>
+            <HelpContainer data-aos="fade-up" data-aos-delay="100">
               <HelpContent>
                 <Title size={isMobile ? `senary` : `tertiary`}>
                   Help Center
@@ -680,11 +716,11 @@ const Main = () => {
                   asked questions) about XYLO
                 </InfoContentText>
               </HelpContent>
-              <AnimationLinkContainer>
+              <AnimationLinkContainer data-aos="fade-right">
                 <AnimationLink link="/helpcenter/faq" name="Help Center" />
               </AnimationLinkContainer>
             </HelpContainer>
-            <PaperContainer>
+            <PaperContainer data-aos="fade-up" data-aos-delay="200">
               <PaperContent>
                 <Title size={isMobile ? `senary` : `tertiary`}>
                   White Paper
@@ -696,7 +732,7 @@ const Main = () => {
                   detailed information about XYLO
                 </InfoContentText>
               </PaperContent>
-              <AnimationLinkContainer>
+              <AnimationLinkContainer data-aos="fade-right">
                 <AnimationLink link="/" name="White Paper" />
               </AnimationLinkContainer>
             </PaperContainer>
@@ -706,7 +742,9 @@ const Main = () => {
       <RoadmapSectionStyle scrollPosition={scrollPosition}>
         <RoadmapSectionContent>
           <RoadmapTitleContainer>
-            <Title size="primary">ROADMAP</Title>
+            <Title size="primary">
+              <div data-aos="fade-up">ROADMAP</div>
+            </Title>
           </RoadmapTitleContainer>
           <RoadmapContent>
             <RoadmapCard />

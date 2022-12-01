@@ -1,11 +1,15 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import styled from 'styled-components';
+import AOS from 'aos';
 import Title from '../Title/Title';
+import 'aos/dist/aos.css';
 import backgroundImg from '../../assets/png/roadmapCardBackground.png';
 
 const RoadmapCardStyle = styled.div`
   display: flex;
   gap: 30px;
+  position: relative;
+  z-index: 1;
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
@@ -111,6 +115,13 @@ const ThirdQuarterContainer = styled(FirstQuarterContainer)``;
 const FourthQuarterContainer = styled(FirstQuarterContainer)``;
 
 const RoadmapCard: FC = () => {
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      offset: 80,
+      easing: `ease`,
+    });
+  }, []);
   const SecondMayContent = `Acquire SOP through community
       pool investment. First round
       implementation of basic reward
@@ -119,7 +130,7 @@ const RoadmapCard: FC = () => {
       to obtain basic reward.`;
   return (
     <RoadmapCardStyle>
-      <FirstQuarterContainer>
+      <FirstQuarterContainer data-aos="flip-right">
         <span>
           <Title size="tertiary">1Q, 2023</Title>
         </span>
@@ -137,7 +148,7 @@ const RoadmapCard: FC = () => {
           </RoadmapContentCard>
         </ContentStyle>
       </FirstQuarterContainer>
-      <SecondQuarterContainer>
+      <SecondQuarterContainer data-aos="flip-right" data-aos-delay="100">
         <span>
           <Title size="tertiary">2Q, 2023</Title>
         </span>
@@ -181,7 +192,7 @@ const RoadmapCard: FC = () => {
           </RoadmapContentCard>
         </ContentStyle>
       </SecondQuarterContainer>
-      <ThirdQuarterContainer>
+      <ThirdQuarterContainer data-aos="flip-right" data-aos-delay="200">
         <span>
           <Title size="tertiary">3Q, 2023</Title>
         </span>
@@ -206,7 +217,7 @@ const RoadmapCard: FC = () => {
           </RoadmapContentCard>
         </ContentStyle>
       </ThirdQuarterContainer>
-      <FourthQuarterContainer>
+      <FourthQuarterContainer data-aos="flip-right" data-aos-delay="300">
         <span>
           <Title size="tertiary">4Q, 2023</Title>
         </span>
