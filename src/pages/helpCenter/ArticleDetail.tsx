@@ -40,7 +40,7 @@ const ShareArticleBox = styled.div`
   margin-top: 24px;
   display: flex;
   align-items: center;
-
+  justify-content: space-evenly;
   @media screen and (max-width: 767px) {
     margin-top: 16px;
   }
@@ -52,7 +52,7 @@ const CopyLinkButton = styled.button`
   border: 1px solid #e2e2e2;
   border-radius: 999px;
   background-color: #fff;
-  margin-left: 40px;
+  margin-left: 10px;
   cursor: pointer;
   @media screen and (max-width: 767px) {
     width: 119px;
@@ -69,8 +69,11 @@ const ShareButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 32px;
+  margin-left: 10px;
   cursor: pointer;
+  :last-child {
+    margin-right: 10px;
+  }
   @media screen and (max-width: 767px) {
     width: 36px;
     height: 36px;
@@ -80,14 +83,11 @@ const ShareButton = styled.div`
 
 const MoveButton = styled.div`
   cursor: pointer;
+  display: flex;
   a {
     display: flex;
     color: #000;
     align-items: center;
-    div {
-      display: flex;
-      align-items: center;
-    }
   }
 `;
 
@@ -341,7 +341,11 @@ const ArticleDetail: FC = () => {
               margin={isMobile ? `60px 0 16px 0` : `60px 0 24px 0`}
             >
               <Box>
-                <Text size={isMobile ? `16px` : `20px`} weight="700">
+                <Text
+                  size={isMobile ? `16px` : `20px`}
+                  weight="700"
+                  display="block"
+                >
                   Articles in this section
                 </Text>
               </Box>
@@ -354,7 +358,7 @@ const ArticleDetail: FC = () => {
                     <Icon
                       url={iconArrowRight}
                       width="42px"
-                      height="20px"
+                      height="16px"
                       backgroundSize="contain"
                     />
                   </Link>
