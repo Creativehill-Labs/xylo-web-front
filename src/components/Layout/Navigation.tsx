@@ -22,6 +22,13 @@ const Navheader = styled.header`
   max-width: 1280px;
   margin: 0 auto;
 
+  a {
+    z-index: 999;
+  }
+  & > div {
+    z-index: 998;
+  }
+
   @media screen and (max-width: 1400px) {
     width: 768px;
   }

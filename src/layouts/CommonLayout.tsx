@@ -5,7 +5,6 @@ import Navigation from '../components/Layout/Navigation';
 
 const CommonLayoutContainer = styled.div`
   padding-bottom: 200px;
-
   @media screen and (max-width: 768px) {
     padding-bottom: 138px;
   }

@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import backgroundImg from '../assets/png/background.png';
 import Title from '../components/Title/Title';
 import AnimationLink from '../components/Partials/AnimationLink';
+import RoadmapCard from '../components/Card/RoadmapCard';
+import { selectCommonSlice } from '../store';
 import iconArrowDown from '../assets/png/arrow-down.png';
+import iconArrowRight from '../assets/png/arrow-right.png';
+import iconArrowLeft from '../assets/png/arrow-left.png';
 import donut from '../assets/png/donut.png';
 import coin from '../assets/png/coin.png';
 import phoneBackgroundImg from '../assets/png/background-phone.png';
 import iconPhone from '../assets/png/phoneMock.png';
+import serviceBackgroundImg from '../assets/png/serviceBackground.png';
 import iconFolder from '../assets/png/icon-folder.png';
 import iconHelpCenter from '../assets/png/icon-message.png';
 import iconWhitePaper from '../assets/png/icon-paper.png';
@@ -19,20 +27,10 @@ import iconX from '../assets/png/icon-X.png';
 import iconY from '../assets/png/icon-Y.png';
 import iconL from '../assets/png/icon-L.png';
 import iconO from '../assets/png/icon-O.png';
-import RoadmapCard from '../components/Card/RoadmapCard';
-import { selectCommonSlice } from '../store';
-import { setNavIsOpen } from '../features/commonSlice';
+import KeyServiceMock from '../components/Partials/KeyServiceMock';
+import { CommunityData, WalletData, XoData } from '../dummy/KeyServiceMockData';
 
-const MainStyled = styled.div<MainStyleProps>`
-  ${({ backDark }) => {
-    if (backDark) {
-      return `
-        filter: brightness(40%)
-      `;
-    }
-    return ``;
-  }}
-`;
+const MainStyled = styled.div<MainStyleProps>``;
 
 const BackgroundSection = styled.div`
   display: flex;
@@ -283,12 +281,151 @@ const MobilePhoneImg = styled.div`
   background-image: url('${iconPhone}');
 `;
 
-const AppExampleSectionStyle = styled.div`
-  height: calc(100vh + 7px);
-  display: flex; //!
-  justify-content: center; //!
+const KeyServiceSectionStyle = styled.div`
+  background-image: url('${serviceBackgroundImg}');
+`;
+
+const KeyServiceSection = styled.div`
+  width: 1280px;
+  height: 1080px;
+  margin: 0 auto;
+  /* padding: 30px 0; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; //!
   align-items: center; //!
-  background-color: powderblue; //!
+
+  @media screen and (max-width: 768px) {
+    width: 80%;
+  }
+`;
+
+const ServiceContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 0;
+  gap: 20px;
+  height: 10%; //!
+`;
+
+const ServiceTitleContainer = styled.div`
+  div {
+    color: #ffffff;
+  }
+
+  @media screen and (max-width: 768px) {
+    div {
+      font-size: 24px;
+    }
+  }
+`;
+
+const SwiperContainer = styled.div`
+  width: 100%;
+  height: 80%;
+`;
+
+const MobileXoImage = styled.img`
+  margin: auto;
+  height: 80%;
+
+  @media screen and (max-width: 320px) {
+    height: 70%;
+  }
+`;
+const MobileWalletImage = styled(MobileXoImage)``;
+const MobileCommunityImage = styled(MobileXoImage)``;
+
+const MainPaging = styled.div`
+  height: 90%;
+  div {
+    height: 100%;
+  }
+  div > div {
+    display: flex !important;
+    width: 100%;
+  }
+  .slick-arrow {
+    display: none !important;
+  }
+`;
+
+const SubPaging = styled.div`
+  height: 20%;
+  width: 30%;
+  margin: 0 auto;
+  color: #ffffff;
+  div {
+    width: 100%;
+    height: 90%;
+  }
+
+  .slick-track {
+    text-align: center;
+  }
+
+  .slick-arrow::before {
+    display: none !important;
+  }
+
+  .slick-arrow.slick-prev {
+    background: url('${iconArrowLeft}') no-repeat;
+    width: 50px;
+    top: 10%;
+    left: -15%;
+  }
+
+  .slick-arrow.slick-next {
+    background: url('${iconArrowRight}') no-repeat;
+    width: 50px;
+    top: 10%;
+    left: 105%;
+  }
+
+  .slick-active.slick-current + div {
+    color: #ffffff;
+  }
+  color: #3f3e3c;
+
+  @media screen and (max-width: 768px) {
+    width: 80%;
+    font-size: 16px;
+    .slick-slider.slick-initialized {
+      width: 100%;
+      margin: 0 auto;
+    }
+    .slick-list {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      margin: 0 auto;
+      width: 200px;
+    }
+    .slick-track {
+    }
+    .slick-arrow.slick-prev {
+      left: -10%;
+    }
+
+    .slick-arrow.slick-next {
+      left: 93%;
+    }
+
+    .slick-current {
+      /* background-color: red; */
+    }
+  }
+`;
+
+const ServiceText = styled.div`
+  color: #ffffff;
+
+  @media screen and (max-width: 768px) {
+    text-align: center;
+    font-size: 14px;
+    line-height: 17px;
+  }
 `;
 
 const InfoSectionStyle = styled.div<ScrollType>`
@@ -364,6 +501,10 @@ const Image = styled.img`
   width: 230px;
   height: 230px;
 
+  @media screen and (max-width: 768px) {
+    width: 60%;
+    height: 75%;
+  }
   @media screen and (max-width: 768px) {
     width: 60%;
     height: 75%;
@@ -575,7 +716,6 @@ interface MainStyleProps {
 }
 
 const Main = () => {
-  const dispatch = useDispatch();
   const { navIsOpen } = useSelector(selectCommonSlice);
   const isMobile = useMediaQuery({
     query: `(max-width: 768px)`,
@@ -598,12 +738,10 @@ const Main = () => {
       window.removeEventListener(`scroll`, updateScroll);
     };
   }, []);
-
+  const [contentPaging, setContentPaging] = useState<Slider>();
+  const [navPaging, setNavPaging] = useState<Slider>();
   return (
-    <MainStyled
-      backDark={navIsOpen}
-      onClick={() => (navIsOpen ? dispatch(setNavIsOpen(!navIsOpen)) : null)}
-    >
+    <MainStyled backDark={navIsOpen}>
       <BackgroundSection>
         <BackgroundContent>
           <Title size="primary">
@@ -687,9 +825,109 @@ const Main = () => {
           </ProductSectionContent>
         </ProductSectionStyle>
       )}
-      <AppExampleSectionStyle>
-        <Title size="primary">App Example</Title>
-      </AppExampleSectionStyle>
+      <KeyServiceSectionStyle>
+        <KeyServiceSection>
+          <ServiceContent>
+            <ServiceTitleContainer>
+              <Title size="primary">Key Services</Title>
+            </ServiceTitleContainer>
+            <ServiceText>
+              Experience various blockchain services in xylo such as XO, Wallet
+              and Community
+            </ServiceText>
+          </ServiceContent>
+          <SwiperContainer>
+            <MainPaging>
+              {isMobile ? (
+                <Slider
+                  asNavFor={navPaging}
+                  ref={(slider) => {
+                    if (slider) setContentPaging(slider);
+                  }}
+                  slidesToShow={1}
+                  slidesToScroll={1}
+                >
+                  <div>
+                    <MobileXoImage src={XoData[0].src} />
+                  </div>
+                  <div>
+                    <MobileWalletImage src={WalletData[0].src} />
+                  </div>
+                  <div>
+                    <MobileCommunityImage src={CommunityData[0].src} />
+                  </div>
+                  <div>
+                    <MobileXoImage src={XoData[0].src} />
+                  </div>
+                  <div>
+                    <MobileWalletImage src={WalletData[0].src} />
+                  </div>
+                  <div>
+                    <MobileCommunityImage src={CommunityData[0].src} />
+                  </div>
+                </Slider>
+              ) : (
+                <Slider
+                  asNavFor={navPaging}
+                  ref={(slider) => {
+                    if (slider) setContentPaging(slider);
+                  }}
+                  slidesToShow={1}
+                  slidesToScroll={1}
+                >
+                  <div>
+                    {XoData.map((el) => (
+                      <KeyServiceMock src={el.src} key={el.id} />
+                    ))}
+                  </div>
+                  <div>
+                    {WalletData.map((el) => (
+                      <KeyServiceMock src={el.src} key={el.id} />
+                    ))}
+                  </div>
+                  <div>
+                    {CommunityData.map((el) => (
+                      <KeyServiceMock src={el.src} key={el.id} />
+                    ))}
+                  </div>
+                  <div>
+                    {XoData.map((el) => (
+                      <KeyServiceMock src={el.src} key={el.id} />
+                    ))}
+                  </div>
+                  <div>
+                    {WalletData.map((el) => (
+                      <KeyServiceMock src={el.src} key={el.id} />
+                    ))}
+                  </div>
+                  <div>
+                    {CommunityData.map((el) => (
+                      <KeyServiceMock src={el.src} key={el.id} />
+                    ))}
+                  </div>
+                </Slider>
+              )}
+            </MainPaging>
+            <SubPaging>
+              <Slider
+                asNavFor={contentPaging}
+                ref={(slider) => {
+                  if (slider) setNavPaging(slider);
+                }}
+                slidesToShow={3}
+                slidesToScroll={1}
+              >
+                <div>Community</div>
+                <div>XO</div>
+                <div>Wallet</div>
+                <div>Community</div>
+                <div>XO</div>
+                <div>Wallet</div>
+              </Slider>
+            </SubPaging>
+          </SwiperContainer>
+        </KeyServiceSection>
+      </KeyServiceSectionStyle>
       <InfoSectionStyle scrollPosition={scrollPosition}>
         <InfoSectionContent>
           <InfoTitleContainer>

@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     line-height: 29px;
     color: #202020;
     min-height: 100%;
+    
   }
   body {
     @media screen and (max-width: 768px) {
