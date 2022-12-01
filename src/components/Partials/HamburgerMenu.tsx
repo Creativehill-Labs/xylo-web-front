@@ -1,13 +1,26 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import iconMenuBar from '../../assets/png/icon-menuBar.png';
+import { selectCommonSlice } from '../../store';
+import { setNavIsOpen } from '../../features/commonSlice';
 
-const MenuBarContainer = styled.div`
+const MenuBarStyle = styled.div`
   background-image: url('${iconMenuBar}');
   width: 22px;
   height: 22px;
   cursor: pointer;
+`;
+
+const MenuBarContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
 `;
 
 const MenuBarListContainer = styled.ul<IHamburgerMenu>`
@@ -27,8 +40,8 @@ const MenuBarListContainer = styled.ul<IHamburgerMenu>`
   list-style: none;
   width: 100%;
   height: 40vh;
-  left: 0;
-  margin-left: -30px;
+  left: 0%;
+  margin-left: -29px;
   top: 69px;
   z-index: 1;
 `;
@@ -55,23 +68,35 @@ interface IHamburgerMenu {
 }
 
 const HamburgerMenu: FC<IHamburgerMenu> = ({ onClick, isOpen }) => {
+  const dispatch = useDispatch();
+  const { navIsOpen } = useSelector(selectCommonSlice);
+
   return (
-    <MenuBarContainer onClick={onClick}>
-      <MenuBarListContainer isOpen={isOpen}>
-        <MenuBarList>
-          <Link to="/">Main</Link>
-        </MenuBarList>
-        <MenuBarList>
-          <Link to="/">Docs</Link>
-        </MenuBarList>
-        <MenuBarList>
-          <Link to="/helpcenter/faq">Help Center</Link>
-        </MenuBarList>
-        <MenuBarList>
-          <Link to="/">White Paper</Link>
-        </MenuBarList>
-      </MenuBarListContainer>
-    </MenuBarContainer>
+    <>
+      {isOpen ? (
+        <MenuBarContainer
+          onClick={() =>
+            navIsOpen ? dispatch(setNavIsOpen(!navIsOpen)) : null
+          }
+        />
+      ) : null}
+      <MenuBarStyle onClick={onClick}>
+        <MenuBarListContainer isOpen={isOpen}>
+          <MenuBarList>
+            <Link to="/">Main</Link>
+          </MenuBarList>
+          <MenuBarList>
+            <Link to="/">Docs</Link>
+          </MenuBarList>
+          <MenuBarList>
+            <Link to="/helpcenter/faq">Help Center</Link>
+          </MenuBarList>
+          <MenuBarList>
+            <Link to="/">White Paper</Link>
+          </MenuBarList>
+        </MenuBarListContainer>
+      </MenuBarStyle>
+    </>
   );
 };
 

@@ -37,14 +37,19 @@ const TitleContainer = styled.div``;
 const HelpCenterCardContainer = styled.div`
   max-width: 1280px;
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  row-gap: 30px;
+  display: grid;
+  /* justify-content: space-between; */
+  /* flex-wrap: wrap; */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+
+  @media screen and (max-width: 1400px) and (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   @media screen and (max-width: 768px) {
-    justify-content: space-around;
-    row-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
     padding: 20px 20px;
   }
 `;
