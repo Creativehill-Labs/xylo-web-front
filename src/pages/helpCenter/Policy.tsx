@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
@@ -12,34 +11,21 @@ import iconPaper from '../../assets/svg/icon-paper.svg';
 import { policyData } from '../../dummy/policyData';
 import NoticeLayout from '../../components/Layout/NoticeLayout';
 import Icon from '../../components/Icon';
-
-const PolicyTitle = styled.div`
-  margin: 80px 0;
-  text-align: center;
-`;
-
-const ArticleBox = styled.div`
-  padding: 24px 20px;
-  font-size: 20px;
-  cursor: pointer;
-  color: #000;
-  border: 1px solid #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 4px 4px 8px 0 rgba(143, 143, 143, 0.1);
-  margin-top: 20px;
-`;
+import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
+import HelpCenterArticleBox from '../../components/Partials/HelpCenterArticleBox';
 
 const Policy: FC = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
+
   return (
     <>
       <HelpCenterLayout />
       <NoticeLayout>
-        <PolicyTitle>
+        <HelpCenterTitleBox>
           <Title size={isMobile ? `quinary` : `secondary`}>
             Operating standards and specific regulations
           </Title>
-        </PolicyTitle>
+        </HelpCenterTitleBox>
         <Box margin={isMobile ? `0 0 53px 0` : `0 0 120px 0`}>
           <Flex>
             <Text size={isMobile ? `16px` : `24px`} weight="700">
@@ -50,7 +36,7 @@ const Policy: FC = () => {
           {policyData.map((data) => {
             return (
               <Link to={`/helpcenter/policy/policy/${data.id}`} key={data.id}>
-                <ArticleBox>
+                <HelpCenterArticleBox>
                   <Flex>
                     <Icon
                       url={iconPaper}
@@ -61,7 +47,7 @@ const Policy: FC = () => {
                     />
                     <Text size={isMobile ? `14px` : `20px`}>{data.title}</Text>
                   </Flex>
-                </ArticleBox>
+                </HelpCenterArticleBox>
               </Link>
             );
           })}

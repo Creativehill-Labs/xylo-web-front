@@ -8,20 +8,13 @@ import Flex from '../../components/Flex';
 import iconClip from '../../assets/svg/icon-clip.svg';
 import iconClose from '../../assets/svg/icon-close.svg';
 import Icon from '../../components/Icon';
+import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
 
 const SubmitSection = styled.section`
   max-width: 618px;
   margin: 0 auto;
   @media screen and (max-width: 767px) {
     max-width: 320px;
-  }
-`;
-
-const SubmitTitle = styled.div`
-  margin: 80px 0;
-  text-align: center;
-  @media screen and (max-width: 767px) {
-    margin: 40px 0 53px 0;
   }
 `;
 
@@ -163,6 +156,7 @@ const SubmitButton = styled.button`
   cursor: pointer;
   @media screen and (max-width: 767px) {
     width: 320px;
+    height: 56px;
     margin: 44px 0 60px 0;
     font-size: 16px;
   }
@@ -204,11 +198,11 @@ const Submit: FC = () => {
     <>
       <HelpCenterLayout />
       <SubmitSection>
-        <SubmitTitle>
+        <HelpCenterTitleBox>
           <Text size={isMobile ? `16px` : `48px`} weight="700">
             Submit a request
           </Text>
-        </SubmitTitle>
+        </HelpCenterTitleBox>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Text size={isMobile ? `14px` : `24px`} weight="700" display="block">
             Email address
@@ -240,10 +234,15 @@ const Submit: FC = () => {
               <option value="" disabled selected hidden>
                 Select a type
               </option>
-              <option value="test">test</option>
-              <option value="qwe">qwe</option>
-              <option value="asd">asd</option>
-              <option value="zxc">zxc</option>
+              <option value="account">Account</option>
+              <option value="wallet">Wallet</option>
+              <option value="pool">Community Pool</option>
+              <option value="delegate">Delegate</option>
+              <option value="owner">Stadium Owner</option>
+              <option value="proposal">Proposal</option>
+              <option value="vote">Vote</option>
+              <option value="reward">Reward</option>
+              <option value="products">Supported Products</option>
             </SubmitSelect>
           </Flex>
           <Text size={isMobile ? `14px` : `24px`} weight="700" display="block">

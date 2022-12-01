@@ -2,7 +2,7 @@ import { FC, useEffect, useState, Dispatch, SetStateAction } from 'react';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
 
-const StyledPage = styled.div`
+const StyledPage = styled.div<{ emptyData?: boolean }>`
   .pagination {
     display: flex;
     justify-content: center;
@@ -14,11 +14,10 @@ const StyledPage = styled.div`
     @media screen and (max-width: 767px) {
       margin-bottom: 60px;
     }
-
     li {
+      ${(props) => (props.emptyData ? `display: none;` : `display: flex;`)}
       width: 48px;
       height: 48px;
-      display: flex;
       justify-content: center;
       align-items: center;
       border: 1px solid #f4f4f4;
@@ -27,6 +26,7 @@ const StyledPage = styled.div`
       :last-child {
         margin-right: 0;
       }
+      cursor: pointer;
       @media screen and (max-width: 767px) {
         width: 40px;
         height: 40px;
@@ -87,7 +87,7 @@ const CustomPagination: FC<CustomPaginationProps> = ({
   }, [data.length, itemOffset, setCurrentItems, data, itemsPerPage]);
 
   return (
-    <StyledPage>
+    <StyledPage emptyData={data.length === 0}>
       <ReactPaginate
         breakLabel="..."
         nextLabel=">"

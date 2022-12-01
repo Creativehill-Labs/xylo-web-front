@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
@@ -36,7 +36,6 @@ const ShareArticleBox = styled.div`
   border: 1px solid #f4f4f4;
   border-radius: 16px;
   box-shadow: 4px 4px 8px 0 rgba(143, 143, 143, 0.1);
-  /* width: 460px; */
   height: 108px;
   margin-top: 24px;
   display: flex;
@@ -44,7 +43,6 @@ const ShareArticleBox = styled.div`
 
   @media screen and (max-width: 767px) {
     margin-top: 16px;
-    /* width: 320px; */
   }
 `;
 
@@ -173,9 +171,13 @@ const ArticleList = styled.div`
 interface DataProps {
   id: number;
   title: string;
+  content: string;
+  category: string;
 }
 
 interface RecentlyViewedProps extends DataProps {
+  id: number;
+  title: string;
   url: string;
 }
 
@@ -185,13 +187,13 @@ const ArticleDetail: FC = () => {
   const { pathname } = useLocation();
   const paramsId = Number(useParams().id);
 
-  const AllData = [...faqData, ...policyData];
+  const allData = [...faqData, ...policyData];
   const dataUrl = pathname.split(`/`)[2];
   const dataCategory = pathname.split(`/`)[3];
-  const filteredData = AllData.filter(
-    (data) => data.category === dataCategory,
-  ).filter((data) => data.id === paramsId)[0];
-  const inSectionData = AllData.filter(
+  const filteredData = allData
+    .filter((data) => data.category === dataCategory)
+    .filter((data) => data.id === paramsId)[0];
+  const inSectionData = allData.filter(
     (data) => data.category === filteredData.category,
   );
   const relatedData = inSectionData.filter(
@@ -225,7 +227,7 @@ const ArticleDetail: FC = () => {
     await navigator.clipboard.writeText(window.location.href);
   };
 
-  const clickShare = (sns: string) => {
+  const clickShare = useCallback((sns: string) => {
     const url = encodeURI(window.location.href);
     if (sns === `facebook`) {
       window.open(`http://www.facebook.com/sharer.php?u=${url}`);
@@ -236,7 +238,7 @@ const ArticleDetail: FC = () => {
     if (sns === `linkedin`) {
       window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
     }
-  };
+  }, []);
 
   return (
     <>
@@ -425,8 +427,9 @@ const ArticleDetail: FC = () => {
               Recently viewed articles
             </Text>
             <Line margin={isMobile ? `18px 0 24px 0` : `16px 0`} />
-            {recentlyData.slice(1).map((data) => (
-              <ArticleList key={data.title}>
+            {recentlyData.slice(1).map((data, idx) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <ArticleList key={idx}>
                 <Link to={`${data.url}`}>
                   <Flex>
                     <Icon
