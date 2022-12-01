@@ -54,6 +54,7 @@ const BackgroundContent = styled.div`
   width: 1280px;
   margin: 0 auto;
   height: 100%;
+  overflow: hidden;
   div {
     color: #ffffff;
   }
@@ -75,6 +76,7 @@ const BackgroundContent = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    width: 100%;
     & > div {
       /* padding: 150px 30px 0 30px; */
       font-size: 24px;
@@ -136,8 +138,8 @@ const DonutImg = styled.span`
   }
 
   @media screen and (max-width: 768px) {
-    width: 100%;
-    left: 50%;
+    width: 80%;
+    left: 10%;
     top: 20vh;
     transform: translate(-50%);
   }
@@ -166,7 +168,7 @@ const CoinImg = styled.span`
 
   @media screen and (max-width: 768px) {
     width: 30%;
-    left: 30%;
+    left: 10%;
     top: 38vh;
     transform: translate(-50%);
   }
@@ -188,6 +190,9 @@ const ProductSectionContent = styled.div`
   max-width: 1280px;
   margin: 0 auto;
   flex: 1 1 0;
+  @media screen and (max-width: 1280px) {
+    max-width: auto;
+  }
 `;
 
 const SliceLeft = styled.div`
@@ -466,6 +471,9 @@ const RoadmapTitleContainer = styled.div`
 const RoadmapContent = styled.div`
   display: flex;
   gap: 20px;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
 `;
 
 const XyloAnimation = styled.div<IXyloAnimation>`

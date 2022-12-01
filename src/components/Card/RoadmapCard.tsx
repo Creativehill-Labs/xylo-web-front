@@ -10,6 +10,7 @@ const RoadmapCardStyle = styled.div`
   gap: 30px;
   position: relative;
   z-index: 1;
+  width: 100%;
 
   @media screen and (max-width: 768px) {
     flex-direction: column;

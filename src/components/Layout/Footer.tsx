@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import styled from 'styled-components';
 import SubmitRequestButton from '../Partials/SubmitRequestButton';
+import InnerSection from './InnerSection';
+
+const Inner = styled(InnerSection)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
 const BottomFooter = styled.footer`
   display: flex;
@@ -13,6 +20,7 @@ const BottomFooter = styled.footer`
   width: 100%;
   height: 206px;
   background-color: #151515;
+  font-size: 16px;
 
   @media screen and (max-width: 768px) {
     height: 139px;
@@ -20,16 +28,14 @@ const BottomFooter = styled.footer`
 `;
 
 const QuestionContainer = styled.div`
-  width: 100%;
+  width: 50%;
   display: flex;
-  margin-right: 15%;
-  justify-content: space-between;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
 `;
 
 const FooterContent = styled.div<IContent>`
-  white-space: pre-wrap;
-  margin-left: 15%;
-  width: 300px;
   ${({ color }) => {
     if (color === `grey`) {
       return `
@@ -63,25 +69,25 @@ const Footer = () => {
   const isMobile = useMediaQuery({
     query: `(max-width: 768px)`,
   });
-  const reservedContent = `© 2022 XYLO. All Rights
-   Reserved.`;
-  const questionContent = `  Have more 
-  questions?`;
+  const reservedContent = `© 2022 XYLO. All Rights Reserved.`;
+  const questionContent = `  Have more questions?`;
   return (
     <BottomFooter>
-      {isMobile ? (
-        <FooterContent color="grey">{reservedContent}</FooterContent>
-      ) : (
-        <>
+      <Inner>
+        {isMobile ? (
           <FooterContent color="grey">{reservedContent}</FooterContent>
-          <QuestionContainer>
-            <FooterContent color="white">{questionContent}</FooterContent>
-            <Link to="/helpcenter/submit">
-              <SubmitRequestButton />
-            </Link>
-          </QuestionContainer>
-        </>
-      )}
+        ) : (
+          <>
+            <FooterContent color="grey">{reservedContent}</FooterContent>
+            <QuestionContainer>
+              <FooterContent color="white">{questionContent}</FooterContent>
+              <Link to="/helpcenter/submit">
+                <SubmitRequestButton />
+              </Link>
+            </QuestionContainer>
+          </>
+        )}
+      </Inner>
     </BottomFooter>
   );
 };
