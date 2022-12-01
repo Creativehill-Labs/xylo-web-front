@@ -12,6 +12,7 @@ const ButtonStyle = styled.button<IButton>`
   font-size: 16px;
   line-height: 20px;
   color: #000000;
+  cursor: pointer;
 `;
 
 interface IButton {

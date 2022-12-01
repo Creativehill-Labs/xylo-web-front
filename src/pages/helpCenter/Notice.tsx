@@ -7,12 +7,11 @@ import Text from '../../components/Text';
 import Flex from '../../components/Flex';
 import NoticeLayout from '../../components/Layout/NoticeLayout';
 import EmptyNotice from '../../assets/png/empty-notice.png';
+import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
 
-const NoticeTitle = styled.div`
-  margin: 80px 0;
-  text-align: center;
+const NoticeTitle = styled(HelpCenterTitleBox)`
   @media screen and (max-width: 767px) {
-    margin: 53px 0;
+    margin: 40px 0 20px 0;
   }
 `;
 
@@ -24,9 +23,8 @@ const NoticeEmptyImage = styled.div`
   img {
     max-width: 332px;
   }
-
   @media screen and (max-width: 767px) {
-    margin-top: 20px;
+    margin-top: 0px;
     img {
       max-width: 166px;
     }

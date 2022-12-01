@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import styled from 'styled-components';
 import { Link, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
@@ -13,24 +12,10 @@ import Icon from '../../components/Icon';
 import iconPaper from '../../assets/svg/icon-paper.svg';
 import { faqData } from '../../dummy/faqData';
 import { policyData } from '../../dummy/policyData';
+import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
+import HelpCenterArticleBox from '../../components/Partials/HelpCenterArticleBox';
 
-const ArticleListTitle = styled.div`
-  margin: 80px 0;
-  text-align: center;
-`;
-
-const ArticleBox = styled.div`
-  padding: 24px 20px;
-  font-size: 20px;
-  cursor: pointer;
-  color: #000;
-  border: 1px solid #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 4px 4px 8px 0 rgba(143, 143, 143, 0.1);
-  margin-top: 20px;
-`;
-
-const Faq: FC = () => {
+const ArticleList: FC = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
   const { pathname } = useLocation();
 
@@ -43,25 +28,25 @@ const Faq: FC = () => {
     <>
       <HelpCenterLayout />
       <NoticeLayout>
-        <ArticleListTitle>
+        <HelpCenterTitleBox>
           <Title size={isMobile ? `quinary` : `secondary`}>
             We’re standing by to help!
           </Title>
-        </ArticleListTitle>
+        </HelpCenterTitleBox>
         <Box margin={isMobile ? `0 0 53px 0` : `0 0 120px 0`}>
           <Flex>
             <Text size={isMobile ? `16px` : `24px`} weight="700">
               {dataCategory.replace(/\b[a-z]/g, (char) => char.toUpperCase())}
             </Text>
           </Flex>
-          <Line margin={isMobile ? `12px 0 0 0` : `24px 0 0 0`} />
+          <Line margin={isMobile ? `12px 0` : `24px 0`} />
           {articleData.map((data) => {
             return (
               <Link
                 to={`/helpcenter/${dataUrl}/${dataCategory}/${data.id}`}
                 key={data.id}
               >
-                <ArticleBox>
+                <HelpCenterArticleBox>
                   <Flex>
                     <Icon
                       url={iconPaper}
@@ -72,7 +57,7 @@ const Faq: FC = () => {
                     />
                     <Text size={isMobile ? `14px` : `20px`}>{data.title}</Text>
                   </Flex>
-                </ArticleBox>
+                </HelpCenterArticleBox>
               </Link>
             );
           })}
@@ -82,4 +67,4 @@ const Faq: FC = () => {
   );
 };
 
-export default Faq;
+export default ArticleList;

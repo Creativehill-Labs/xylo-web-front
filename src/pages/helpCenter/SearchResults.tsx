@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useMemo } from 'react';
+import { FC, useState, useEffect, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import { useLocation, Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
@@ -25,7 +25,6 @@ const ArticleBox = styled.div`
   :last-child {
     margin-bottom: 0;
   }
-
   @media screen and (max-width: 767px) {
     font-size: 14px;
   }
@@ -48,12 +47,18 @@ const SearchResults: FC = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
   const [currentItems, setCurrentItems] = useState<DataProps[]>([]);
   const [searchData, setSearchData] = useState<DataProps[]>([]);
+  const [categoryText, setCategoryText] = useState(`All Categories`);
+  const [categoryCount, setCategoryCount] = useState(0);
+  const [categoryData, setCategoryData] = useState<DataProps[]>([]);
+  const [isClickCategory, setIsClickCategory] = useState(false);
   const { state } = useLocation();
 
   useEffect(() => {
     const allData = [...faqData, ...policyData];
     const search = allData.filter((data) => data.title.includes(`${state}`));
     setSearchData(search);
+    setCategoryCount(search.length);
+    setIsClickCategory(false);
   }, [state]);
 
   const responsiveData = useMemo(() => {
@@ -63,15 +68,47 @@ const SearchResults: FC = () => {
     return currentItems;
   }, [currentItems, isMobile, searchData]);
 
-  const calNum = (count: string) => {
-    const result = searchData.filter((data) => data.category === count).length;
-    return result;
-  };
+  const calNum = useCallback(
+    (count: string) => {
+      const result = searchData.filter(
+        (data) => data.category === count,
+      ).length;
+      return result;
+    },
+    [searchData],
+  );
 
-  const clickCategory = (category: string) => {
-    const result = searchData.filter((data) => data.category === category);
-    setCurrentItems(result);
-  };
+  const sliceContent = useCallback((content: string) => {
+    let result;
+    if (content.length > 60) {
+      result = content.slice(0, 65);
+    } else {
+      result = content;
+    }
+    return `${result}...`;
+  }, []);
+
+  const clickCategory = useCallback(
+    (category: string) => {
+      const result = searchData.filter((data) => data.category === category);
+      setCurrentItems(result);
+      setCategoryData(result);
+      setIsClickCategory(true);
+      let text = category;
+      if (category === `pool`) {
+        text = `Community Pool`;
+      }
+      if (category === `owner`) {
+        text = `Stadium Owner`;
+      }
+      if (category === `products`) {
+        text = `Supported Products`;
+      }
+      setCategoryText(text.replace(/\b[a-z]/g, (char) => char.toUpperCase()));
+      setCategoryCount(result.length);
+    },
+    [searchData],
+  );
 
   return (
     <>
@@ -82,7 +119,7 @@ const SearchResults: FC = () => {
           <Flex flexDirection={isMobile ? `column` : `row`}>
             <Box width={isMobile ? `320px` : `820px`}>
               <Text size={isMobile ? `16px` : `24px`} weight="700">
-                {searchData.length} Results for “ABC” in All Categories
+                {categoryCount} Results for “{state}” in {categoryText}
               </Text>
               <Line margin={isMobile ? `12px 0` : `30px 0 0 0`} />
               {responsiveData.map((data) => (
@@ -109,21 +146,25 @@ const SearchResults: FC = () => {
                     </Flex>
                     <Link to={`/helpcenter/faq/${data.category}/${data.id}`}>
                       <Box margin={isMobile ? `12px 0 0 0` : `8px 0 0 0`}>
-                        <Text size={isMobile ? `14px` : `20px`} weight="700">
+                        <Text
+                          size={isMobile ? `14px` : `20px`}
+                          weight="700"
+                          display="block"
+                        >
                           {data.title}
                         </Text>
                       </Box>
-                      <Box margin={isMobile ? `0` : `24px 0`}>
-                        <Text size={isMobile ? `14px` : `20px`}>
-                          {data.content.slice(0, 60)}...
+                      <Box margin={isMobile ? `4px 0 0 0` : `24px 0`}>
+                        <Text size={isMobile ? `14px` : `20px`} display="block">
+                          {sliceContent(data.content)}
                         </Text>
                       </Box>
                     </Link>
                   </Box>
 
                   {isMobile ? (
-                    <Flex justifyContent="flex-end">
-                      <Text size="14px" color="rgba(32, 32, 32, 0.5)">
+                    <Flex justifyContent="flex-end" margin="16px 0 0 0">
+                      <Text size="12px" color="rgba(32, 32, 32, 0.5)">
                         March 20.2022 16:04
                       </Text>
                     </Flex>
@@ -137,7 +178,7 @@ const SearchResults: FC = () => {
               width={isMobile ? `320px` : `460px`}
               margin={isMobile ? `0` : `0 0 0 32px`}
             >
-              <Box margin={isMobile ? `60px 0 16px 0` : `0 0 24px 0`}>
+              <Box margin={isMobile ? `48px 0 16px 0` : `0 0 24px 0`}>
                 <Text size={isMobile ? `16px` : `20px`} weight="700">
                   By Category
                 </Text>
@@ -177,7 +218,7 @@ const SearchResults: FC = () => {
         <Box margin={isMobile ? `60px 0 0 0` : `80px 0 0 0`}>
           {isMobile ? null : (
             <CustomPagination
-              data={searchData}
+              data={isClickCategory ? categoryData : searchData}
               setCurrentItems={setCurrentItems}
               itemsPerPage={5}
             />
