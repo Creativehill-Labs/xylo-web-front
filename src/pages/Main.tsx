@@ -29,6 +29,7 @@ import iconL from '../assets/png/icon-L.png';
 import iconO from '../assets/png/icon-O.png';
 import KeyServiceMock from '../components/Partials/KeyServiceMock';
 import { CommunityData, WalletData, XoData } from '../dummy/KeyServiceMockData';
+import InnerSection from '../components/Layout/InnerSection';
 
 const MainStyled = styled.div<MainStyleProps>``;
 
@@ -39,6 +40,7 @@ const BackgroundSection = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
   height: calc(100vh - 114px);
   background-size: cover;
+  position: relative;
 
   @media screen and (max-width: 768px) {
     height: calc(100vh - 69px);
@@ -89,7 +91,8 @@ const ScrollDownAttach = styled.span`
   flex-direction: column;
   position: absolute;
   left: 50%;
-  top: 17.5%;
+  bottom: 20px;
+  margin-left: -62px;
   transform: translate(-50%);
   div {
     color: #aae112;
@@ -174,51 +177,49 @@ const CoinImg = styled.span`
 
 const ProductSectionStyle = styled.div`
   display: flex;
-  justify-content: center;
-  height: inherit;
-  background-image: url('${phoneBackgroundImg}');
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: 50% 100%;
-  height: calc(100vh + 7px);
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+  position: relative;
 `;
 
-const ProductSectionContent = styled.div`
+const ProductSectionContent = styled(InnerSection)`
+  position: absolute;
+  left: 50%;
+  margin-left: -640px;
+  padding-right: 640px;
+  box-sizing: border-box;
+  height: 100%;
   display: flex;
-  max-width: 1280px;
-  margin: 0 auto;
-  flex: 1 1 0;
+  align-items: flex-start;
+  margin-top: 150px;
   @media screen and (max-width: 1280px) {
     max-width: auto;
   }
 `;
 
 const SliceLeft = styled.div`
-  margin-top: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  display: grid;
   gap: 70px;
-  height: inherit;
   width: 100%;
 `;
 
-const SliceRight = styled.div`
-  width: 100%;
+const PhoneLayout = styled.div`
+  position: relative;
+  img {
+    vertical-align: top;
+  }
 `;
-
-const PhoneImg = styled.div`
+const PhoneBackground = styled.img`
+  width: 926px;
+`;
+const PhoneImg = styled.img`
   position: absolute;
-  background-image: url('${iconPhone}');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  width: 16%;
-  height: 11.5%;
-  left: 67.5%;
-  top: 20.5%;
-
+  left: 50%;
+  margin-left: -148px;
+  top: 120px;
+  width: 297px;
   @media screen and (max-width: 1400px) and (min-width: 769px) {
-    height: 8.5%;
+    top: 285px;
   }
 `;
 
@@ -282,13 +283,12 @@ const MobilePhoneImg = styled.div`
 `;
 
 const KeyServiceSectionStyle = styled.div`
+  padding: 100px 0;
+  overflow: hidden;
   background-image: url('${serviceBackgroundImg}');
 `;
 
-const KeyServiceSection = styled.div`
-  width: 1280px;
-  height: 1080px;
-  margin: 0 auto;
+const KeyServiceSection = styled(InnerSection)`
   /* padding: 30px 0; */
   display: flex;
   flex-direction: column;
@@ -306,7 +306,6 @@ const ServiceContent = styled.div`
   align-items: center;
   padding: 30px 0;
   gap: 20px;
-  height: 10%; //!
 `;
 
 const ServiceTitleContainer = styled.div`
@@ -336,14 +335,21 @@ const MobileXoImage = styled.img`
 `;
 const MobileWalletImage = styled(MobileXoImage)``;
 const MobileCommunityImage = styled(MobileXoImage)``;
-
+const SliderItem = styled.div`
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr;
+  img {
+    align-self: center;
+    justify-self: center;
+    width: 258px;
+  }
+`;
 const MainPaging = styled.div`
   height: 90%;
   div {
     height: 100%;
   }
   div > div {
-    display: flex !important;
     width: 100%;
   }
   .slick-arrow {
@@ -352,41 +358,37 @@ const MainPaging = styled.div`
 `;
 
 const SubPaging = styled.div`
-  height: 20%;
-  width: 30%;
   margin: 0 auto;
-  color: #ffffff;
-  div {
-    width: 100%;
-    height: 90%;
+  text-align: center;
+  color: #3f3e3c;
+  .slick-slider {
+    width: 340px;
+    margin: 0 auto;
+    display: inline-block;
+    position: relative;
   }
-
   .slick-track {
     text-align: center;
   }
-
-  .slick-arrow::before {
-    display: none !important;
+  .slick-arrow {
+    top: 16px;
+    &::before {
+      display: none !important;
+    }
+    &.slick-prev {
+      background: url('${iconArrowLeft}') no-repeat;
+      width: 50px;
+      left: -70px;
+    }
+    &.slick-next {
+      background: url('${iconArrowRight}') no-repeat;
+      width: 50px;
+      right: -70px;
+    }
   }
-
-  .slick-arrow.slick-prev {
-    background: url('${iconArrowLeft}') no-repeat;
-    width: 50px;
-    top: 10%;
-    left: -15%;
-  }
-
-  .slick-arrow.slick-next {
-    background: url('${iconArrowRight}') no-repeat;
-    width: 50px;
-    top: 10%;
-    left: 105%;
-  }
-
   .slick-active.slick-current + div {
     color: #ffffff;
   }
-  color: #3f3e3c;
 
   @media screen and (max-width: 768px) {
     width: 80%;
@@ -429,7 +431,7 @@ const ServiceText = styled.div`
 `;
 
 const InfoSectionStyle = styled.div<ScrollType>`
-  height: calc(100vh + 7px);
+  padding: 106px 0 250px 0;
   transition: background 1.4s ease-in-out;
 
   ${({ scrollPosition }) => {
@@ -478,15 +480,12 @@ const InfoContent = styled.div`
   }
 `;
 
-const InfoSectionContent = styled.div`
-  max-width: 1280px;
-  margin: 0 auto;
+const InfoSectionContent = styled(InnerSection)`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 100px;
-  height: 100%;
 
   @media screen and (max-width: 768px) {
     justify-content: space-around;
@@ -553,8 +552,8 @@ const AnimationLinkContainer = styled.span`
 `;
 
 const RoadmapSectionStyle = styled.div<ScrollType>`
-  height: calc(100vh + 7px);
   transition: background 1s ease-in-out;
+  padding: 150px 0 100px 0;
 
   ${({ scrollPosition }) => {
     if (scrollPosition > 3000) {
@@ -603,11 +602,7 @@ const RoadmapSectionContent = styled.div`
   height: inherit;
 `;
 
-const RoadmapTitleContainer = styled.div`
-  div {
-    font-size: 24px;
-  }
-`;
+const RoadmapTitleContainer = styled.div``;
 
 const RoadmapContent = styled.div`
   display: flex;
@@ -626,7 +621,7 @@ const XyloAnimation = styled.div<IXyloAnimation>`
       width: 40%;
       height: 20%;
       left: 0;
-      top: 413vh;
+      bottom: 0;
       
       @media screen and (max-width: 768px) {
           top: 95.3%;
@@ -639,7 +634,7 @@ const XyloAnimation = styled.div<IXyloAnimation>`
       return `
         background-image: url(${src});
         left: 8%;
-        top: 426vh;
+        bottom: 0;
         width: 50%;
         height: 18%;
 
@@ -654,7 +649,7 @@ const XyloAnimation = styled.div<IXyloAnimation>`
       return `
         background-image: url(${src});
         left: 39%;
-        top: 416vh;
+        bottom: 0;
         width: 50%;
         height: 20%;
 
@@ -671,7 +666,7 @@ const XyloAnimation = styled.div<IXyloAnimation>`
         right: 0;
         width: 33%;
         height: 20%;
-        top: 416vh;
+        bottom: 0;
 
         @media screen and (max-width: 768px) {
           top: 95.4%;
@@ -694,10 +689,10 @@ const XyloAnimation = styled.div<IXyloAnimation>`
 
   @keyframes up-down {
     0% {
-      margin-top: 5px;
+      margin-bottom: 5px;
     }
     100% {
-      margin-top: -10px;
+      margin-bottom: -10px;
     }
   }
 `;
@@ -794,12 +789,16 @@ const Main = () => {
         </MobileProductSectionStyle>
       ) : (
         <ProductSectionStyle>
-          <ProductSectionContent>
+          <PhoneLayout>
+            <PhoneBackground src={phoneBackgroundImg} />
             <PhoneImg
               data-aos="flip-right"
               data-aos-delay="500"
               data-aos-duration="1400"
+              src={iconPhone}
             />
+          </PhoneLayout>
+          <ProductSectionContent>
             <SliceLeft>
               <Title size="primary">
                 <div data-aos="fade-right">PRODUCT</div>
@@ -821,7 +820,6 @@ const Main = () => {
                 <AnimationLink link="/helpcenter/faq" name="DOWNLOAD" />
               </div>
             </SliceLeft>
-            <SliceRight />
           </ProductSectionContent>
         </ProductSectionStyle>
       )}
@@ -875,36 +873,36 @@ const Main = () => {
                   slidesToShow={1}
                   slidesToScroll={1}
                 >
-                  <div>
+                  <SliderItem>
                     {XoData.map((el) => (
                       <KeyServiceMock src={el.src} key={el.id} />
                     ))}
-                  </div>
-                  <div>
+                  </SliderItem>
+                  <SliderItem>
                     {WalletData.map((el) => (
                       <KeyServiceMock src={el.src} key={el.id} />
                     ))}
-                  </div>
-                  <div>
+                  </SliderItem>
+                  <SliderItem>
                     {CommunityData.map((el) => (
                       <KeyServiceMock src={el.src} key={el.id} />
                     ))}
-                  </div>
-                  <div>
+                  </SliderItem>
+                  <SliderItem>
                     {XoData.map((el) => (
                       <KeyServiceMock src={el.src} key={el.id} />
                     ))}
-                  </div>
-                  <div>
+                  </SliderItem>
+                  <SliderItem>
                     {WalletData.map((el) => (
                       <KeyServiceMock src={el.src} key={el.id} />
                     ))}
-                  </div>
-                  <div>
+                  </SliderItem>
+                  <SliderItem>
                     {CommunityData.map((el) => (
                       <KeyServiceMock src={el.src} key={el.id} />
                     ))}
-                  </div>
+                  </SliderItem>
                 </Slider>
               )}
             </MainPaging>
