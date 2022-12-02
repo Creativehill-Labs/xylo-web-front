@@ -1,14 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 
-const KeyServiceMockStyle = styled.div<IKeyServiceMock>`
-  background-image: url('${({ src }) => src}');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 70% 80%;
-  width: 100%;
-  height: 100%;
-`;
+const KeyServiceMockStyle = styled.img<IKeyServiceMock>``;
 
 interface IKeyServiceMock {
   src: string;
