@@ -9,10 +9,10 @@ import Line from '../../components/Line';
 import Text from '../../components/Text';
 import iconPaper from '../../assets/svg/icon-paper.svg';
 import { policyData } from '../../dummy/policyData';
-import NoticeLayout from '../../components/Layout/NoticeLayout';
 import Icon from '../../components/Icon';
 import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
 import HelpCenterArticleBox from '../../components/Partials/HelpCenterArticleBox';
+import InnerSection from '../../components/Layout/InnerSection';
 
 const Policy: FC = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
@@ -20,7 +20,7 @@ const Policy: FC = () => {
   return (
     <>
       <HelpCenterLayout />
-      <NoticeLayout>
+      <InnerSection>
         <HelpCenterTitleBox>
           <Title size={isMobile ? `quinary` : `secondary`}>
             Operating standards and specific regulations
@@ -52,7 +52,7 @@ const Policy: FC = () => {
             );
           })}
         </Box>
-      </NoticeLayout>
+      </InnerSection>
     </>
   );
 };

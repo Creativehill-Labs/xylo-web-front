@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
-import NoticeLayout from '../../components/Layout/NoticeLayout';
 import Title from '../../components/Title/Title';
 import Box from '../../components/Box';
 import Flex from '../../components/Flex';
@@ -14,6 +13,7 @@ import { faqData } from '../../dummy/faqData';
 import { policyData } from '../../dummy/policyData';
 import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
 import HelpCenterArticleBox from '../../components/Partials/HelpCenterArticleBox';
+import InnerSection from '../../components/Layout/InnerSection';
 
 const ArticleList: FC = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
@@ -27,7 +27,7 @@ const ArticleList: FC = () => {
   return (
     <>
       <HelpCenterLayout />
-      <NoticeLayout>
+      <InnerSection>
         <HelpCenterTitleBox>
           <Title size={isMobile ? `quinary` : `secondary`}>
             We’re standing by to help!
@@ -62,7 +62,7 @@ const ArticleList: FC = () => {
             );
           })}
         </Box>
-      </NoticeLayout>
+      </InnerSection>
     </>
   );
 };

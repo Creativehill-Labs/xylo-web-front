@@ -5,9 +5,9 @@ import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
 import Title from '../../components/Title/Title';
 import Text from '../../components/Text';
 import Flex from '../../components/Flex';
-import NoticeLayout from '../../components/Layout/NoticeLayout';
 import EmptyNotice from '../../assets/png/empty-notice.png';
 import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
+import InnerSection from '../../components/Layout/InnerSection';
 
 const NoticeTitle = styled(HelpCenterTitleBox)`
   @media screen and (max-width: 767px) {
@@ -37,7 +37,7 @@ const Notice: FC = () => {
   return (
     <>
       <HelpCenterLayout />
-      <NoticeLayout>
+      <InnerSection>
         <NoticeTitle>
           <Title size={isMobile ? `quinary` : `secondary`}>
             You can check the latest news realated to XYLO
@@ -54,7 +54,7 @@ const Notice: FC = () => {
             There are no notices
           </Text>
         </Flex>
-      </NoticeLayout>
+      </InnerSection>
     </>
   );
 };

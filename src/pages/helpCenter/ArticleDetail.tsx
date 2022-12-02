@@ -16,10 +16,10 @@ import iconLinked from '../../assets/png/icon-linked.png';
 import iconArrowRight from '../../assets/png/arrow-right.png';
 import iconPaper from '../../assets/svg/icon-paper.svg';
 import BreadCrumbs from '../../components/Partials/BreadCrumbs';
-import NoticeLayout from '../../components/Layout/NoticeLayout';
 import Icon from '../../components/Icon';
 import { faqData } from '../../dummy/faqData';
 import { policyData } from '../../dummy/policyData';
+import InnerSection from '../../components/Layout/InnerSection';
 
 const UserIconBox = styled.div`
   width: 40px;
@@ -243,7 +243,7 @@ const ArticleDetail: FC = () => {
   return (
     <>
       <HelpCenterLayout />
-      <NoticeLayout>
+      <InnerSection>
         <BreadCrumbs />
         <Flex flexDirection={isMobile ? `column` : `row`}>
           <Box width={isMobile ? `` : `788px`}>
@@ -475,7 +475,7 @@ const ArticleDetail: FC = () => {
             ))}
           </Box>
         </Flex>
-      </NoticeLayout>
+      </InnerSection>
     </>
   );
 };
