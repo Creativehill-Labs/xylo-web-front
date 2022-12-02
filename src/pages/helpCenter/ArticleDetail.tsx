@@ -426,7 +426,7 @@ const ArticleDetail: FC = () => {
           margin={isMobile ? `0 0 60px 0` : `0 0 121px 0`}
           flexDirection={isMobile ? `column` : `row`}
         >
-          <Box width={isMobile ? `320px` : `624px`}>
+          <Box width={isMobile ? `` : `624px`}>
             <Text size={isMobile ? `16px` : `24px`} weight="700">
               Recently viewed articles
             </Text>
@@ -452,7 +452,7 @@ const ArticleDetail: FC = () => {
           <Box width="32px" height="60px">
             {` `}
           </Box>
-          <Box width={isMobile ? `320px` : `624px`}>
+          <Box width={isMobile ? `` : `624px`}>
             <Text size={isMobile ? `16px` : `24px`} weight="700">
               Related articles
             </Text>
