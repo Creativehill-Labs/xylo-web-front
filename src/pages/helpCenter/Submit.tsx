@@ -13,8 +13,10 @@ import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
 const SubmitSection = styled.section`
   max-width: 618px;
   margin: 0 auto;
-  @media screen and (max-width: 767px) {
-    max-width: 320px;
+  @media screen and (max-width: 1280px) {
+    max-width: none;
+    width: 100%;
+    padding: 0 4%;
   }
 `;
 

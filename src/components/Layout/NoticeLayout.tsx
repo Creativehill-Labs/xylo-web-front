@@ -4,8 +4,10 @@ import styled from 'styled-components';
 const Section = styled.section`
   max-width: 1280px;
   margin: 0 auto;
-  @media screen and (max-width: 767px) {
-    max-width: 320px;
+  @media screen and (max-width: 1280px) {
+    max-width: none;
+    box-sizing: border-box;
+    padding: 0 4%;
   }
 `;
 
