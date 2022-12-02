@@ -57,16 +57,17 @@ const SearchResults: FC = () => {
     const allData = [...faqData, ...policyData];
     const search = allData.filter((data) => data.title.includes(`${state}`));
     setSearchData(search);
+    setCategoryData(search);
     setCategoryCount(search.length);
     setIsClickCategory(false);
   }, [state]);
 
   const responsiveData = useMemo(() => {
     if (isMobile) {
-      return searchData;
+      return categoryData;
     }
     return currentItems;
-  }, [currentItems, isMobile, searchData]);
+  }, [currentItems, isMobile, categoryData]);
 
   const calNum = useCallback(
     (count: string) => {
