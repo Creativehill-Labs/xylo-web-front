@@ -43,8 +43,9 @@ const BackgroundSection = styled.div`
   position: relative;
 
   @media screen and (max-width: 768px) {
-    height: calc(100vh - 69px);
     background-position: 65%;
+    height: auto;
+    padding-bottom: 100px;
   }
 `;
 
@@ -66,23 +67,39 @@ const BackgroundContent = styled.div`
   } */
 
   @media screen and (max-width: 1400px) and (min-width: 769px) {
-    width: 768px;
-    div {
-      width: 50%;
-    }
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 4%;
   }
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
     width: 100%;
+    padding-top: 80px;
     & > div {
       /* padding: 150px 30px 0 30px; */
       font-size: 24px;
       line-height: 29px;
-      width: none;
     }
+  }
+`;
+
+const MainTitle = styled.div`
+  position: relative;
+  z-index: 1;
+`;
+const MainTitleText = styled.h2`
+  font-family: 'Montserrat', sans-serif;
+  font-size: 60px;
+  color: #202020;
+  font-weight: 700;
+  white-space: pre-line;
+  line-height: 1.4;
+  @media screen and (max-width: 1440px) {
+    font-size: 42px !important;
+  }
+  @media screen and (max-width: 520px) {
+    font-size: 24px !important;
   }
 `;
 
@@ -100,12 +117,10 @@ const ScrollDownAttach = styled.span`
   }
   @media screen and (max-width: 768px) {
     left: 0;
+    margin-left: 0;
     transform: none;
-    position: relative;
-    top: 20%;
-  }
-  @media screen and (max-width: 1400px) and (min-width: 769px) {
-    top: 16%;
+    width: 100%;
+    text-align: center;
   }
 `;
 
@@ -127,22 +142,30 @@ const DonutImg = styled.span`
   top: 4%;
   width: 40%;
   height: 710px;
-  animation: up-down 1.4s infinite ease-in-out alternate;
-
-  @keyframes up-down {
+  animation: floatingDonut 1.4s infinite ease-in-out alternate;
+  @keyframes floatingDonut {
     0% {
-      margin-top: -5px;
+      margin-top: 5px;
     }
     100% {
-      margin-top: 15px;
+      margin-top: -10px;
     }
   }
 
   @media screen and (max-width: 768px) {
-    width: 80%;
-    left: 10%;
-    top: 20vh;
-    transform: translate(-50%);
+    width: 100%;
+    height: 310px;
+    position: static;
+    background-size: auto 100%;
+    animation: floatingDonutMobile 1.4s infinite ease-in-out alternate;
+    @keyframes floatingDonutMobile {
+      0% {
+        transform: translate(0, 10px);
+      }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
   }
 `;
 
@@ -156,9 +179,8 @@ const CoinImg = styled.span`
   top: 8%;
   width: 12%;
   height: 243px;
-  animation: up-down 1.2s infinite ease-in-out alternate;
-
-  @keyframes up-down {
+  animation: floatingCoin 1.2s infinite ease-in-out alternate;
+  @keyframes floatingCoin {
     0% {
       margin-top: -10px;
     }
@@ -169,9 +191,23 @@ const CoinImg = styled.span`
 
   @media screen and (max-width: 768px) {
     width: 30%;
+    height: 100px;
+    position: absolute;
+    left: 20%;
+    top: 30%;
+    background-size: auto 100%;
+    animation: floatingCoinMobile 0.7s infinite ease-in-out alternate;
+    @keyframes floatingCoinMobile {
+      0% {
+        top: 37%;
+      }
+      100% {
+        top: 38%;
+      }
+    }
+  }
+  @media screen and (max-width: 520px) {
     left: 10%;
-    top: 38vh;
-    transform: translate(-50%);
   }
 `;
 
@@ -194,6 +230,10 @@ const ProductSectionContent = styled(InnerSection)`
   margin-top: 150px;
   @media screen and (max-width: 1280px) {
     max-width: auto;
+    left: 0;
+    margin-left: 0;
+    width: 100%;
+    height: auto;
   }
 `;
 
@@ -204,13 +244,20 @@ const SliceLeft = styled.div`
 `;
 
 const PhoneLayout = styled.div`
+  width: 50%;
   position: relative;
   img {
     vertical-align: top;
   }
 `;
-const PhoneBackground = styled.img`
-  width: 926px;
+const PhoneBackground = styled.div`
+  width: 100%;
+  height: 1083px;
+  background-image: url(${phoneBackgroundImg});
+  background-position: center top;
+  @media screen and (max-width: 1280px) {
+    height: 850px;
+  }
 `;
 const PhoneImg = styled.img`
   position: absolute;
@@ -218,9 +265,6 @@ const PhoneImg = styled.img`
   margin-left: -148px;
   top: 120px;
   width: 297px;
-  @media screen and (max-width: 1400px) and (min-width: 769px) {
-    top: 285px;
-  }
 `;
 
 const ProductContent = styled.div`
@@ -228,6 +272,12 @@ const ProductContent = styled.div`
   flex-direction: column;
   gap: 11px;
   margin-top: -25px;
+  @media screen and (max-width: 1280px) {
+    word-break: keep-all;
+    br {
+      display: none;
+    }
+  }
 `;
 
 const MobileProductSectionStyle = styled.div``;
@@ -241,7 +291,7 @@ const MobileProductTop = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 50vh;
+  gap: 60px;
   @media screen and (max-width: 768px) {
     span {
       font-size: 12px;
@@ -265,21 +315,20 @@ const MobileProductTopContent = styled.div`
 
 const MobileProductBottom = styled.div`
   background-image: url('${phoneBackgroundImg}');
-  background-size: 150% 100%;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center bottom;
   width: 100%;
-  height: 100vh;
+  height: 600px;
+  text-align: center;
 `;
 
-const MobilePhoneImg = styled.div`
+const MobilePhoneImg = styled.img`
   position: relative;
-  background-size: 100% 100%;
-  width: 56%;
-  height: 53%;
-  left: 23%;
-  top: 13%;
-  background-image: url('${iconPhone}');
+  width: 152px;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 88px;
 `;
 
 const KeyServiceSectionStyle = styled.div`
@@ -322,12 +371,11 @@ const ServiceTitleContainer = styled.div`
 
 const SwiperContainer = styled.div`
   width: 100%;
-  height: 80%;
 `;
 
 const MobileXoImage = styled.img`
-  margin: auto;
-  height: 80%;
+  width: 80%;
+  margin: 0 auto;
 
   @media screen and (max-width: 320px) {
     height: 70%;
@@ -358,7 +406,7 @@ const MainPaging = styled.div`
 `;
 
 const SubPaging = styled.div`
-  margin: 0 auto;
+  margin: 80px auto 0;
   text-align: center;
   color: #3f3e3c;
   .slick-slider {
@@ -449,8 +497,7 @@ const InfoSectionStyle = styled.div<ScrollType>`
   }}
 
   @media screen and (max-width: 768px) {
-    height: 100%;
-
+    padding: 0;
     ${({ scrollPosition }) => {
       if (scrollPosition > 2250) {
         return `
@@ -554,6 +601,8 @@ const AnimationLinkContainer = styled.span`
 const RoadmapSectionStyle = styled.div<ScrollType>`
   transition: background 1s ease-in-out;
   padding: 150px 0 100px 0;
+  overflow: hidden;
+  position: relative;
 
   ${({ scrollPosition }) => {
     if (scrollPosition > 3000) {
@@ -571,11 +620,9 @@ const RoadmapSectionStyle = styled.div<ScrollType>`
   }
 
   @media screen and (max-width: 1400px) and (min-width: 768px) {
-    height: 150vh;
   }
 
   @media screen and (max-width: 768px) {
-    height: 100%;
     padding: 80px 0px;
 
     ${({ scrollPosition }) => {
@@ -612,87 +659,53 @@ const RoadmapContent = styled.div`
   box-sizing: border-box;
 `;
 
-const XyloAnimation = styled.div<IXyloAnimation>`
+const XyloAnimation = styled.img<IXyloAnimation>`
   position: relative;
+  bottom: 0;
+  width: 100%;
+  max-width: 700px;
+  @media screen and (max-width: 1400px) {
+    width: 30%;
+  }
   ${({ src }) => {
     if (src.includes(`icon-X`)) {
       return `
-      background-image: url(${src});
-      width: 40%;
-      height: 20%;
-      left: 0;
-      bottom: 0;
-      
-      @media screen and (max-width: 768px) {
-          top: 95.3%;
-          width: 40%;
-          height: 3%;
-        }
+      left: -10%;
       `;
     }
     if (src.includes(`icon-Y`)) {
       return `
-        background-image: url(${src});
-        left: 8%;
-        bottom: 0;
-        width: 50%;
-        height: 18%;
-
-        @media screen and (max-width: 768px) {
-          top: 95.4%; 
-          width: 50%;
-          height: 3%;
-        }
+        left: 20%;
       `;
     }
     if (src.includes(`icon-L`)) {
       return `
-        background-image: url(${src});
-        left: 39%;
-        bottom: 0;
-        width: 50%;
-        height: 20%;
-
-        @media screen and (max-width: 768px) {
-          top: 95.4%;
-          width: 50%;
-          height: 3%;
-        }
+        left: 48%;
       `;
     }
     if (src.includes(`icon-O`)) {
       return `
-        background-image: url(${src});
-        right: 0;
-        width: 33%;
-        height: 20%;
-        bottom: 0;
-
-        @media screen and (max-width: 768px) {
-          top: 95.4%;
-          width: 30%;
-          height: 3%;
-        }
+        left: 78%;
       `;
     }
     return ``;
   }}
   position: absolute;
-  background-size: 100% 100%;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: 100%;
   ${({ level }) => {
     return `
-      animation: up-down 2.${level}s infinite ease-in-out alternate;
+      animation: floatingXylo 2.${level}s infinite ease-in-out alternate;
     `;
   }}
 
-  @keyframes up-down {
+  @keyframes floatingXylo {
     0% {
-      margin-bottom: 5px;
+      bottom: 0px;
     }
     100% {
-      margin-bottom: -10px;
+      bottom: 15px;
     }
   }
 `;
@@ -739,12 +752,16 @@ const Main = () => {
     <MainStyled backDark={navIsOpen}>
       <BackgroundSection>
         <BackgroundContent>
-          <Title size="primary">
-            <div data-aos="fade-up">Outgrowing Blockchain,</div>
-            <div data-aos="fade-up" data-aos-delay="300">
-              Rocketing rewards
-            </div>
-          </Title>
+          <MainTitle>
+            <InnerSection>
+              <MainTitleText>
+                <div data-aos="fade-up">Outgrowing Blockchain,</div>
+                <div data-aos="fade-up" data-aos-delay="300">
+                  Rocketing rewards
+                </div>
+              </MainTitleText>
+            </InnerSection>
+          </MainTitle>
           <DonutImg data-aos="fade-left" data-aos-duration="2500" />
           <CoinImg data-aos="fade-right" data-aos-duration="2000" />
           <ScrollDownAttach>
@@ -784,19 +801,20 @@ const Main = () => {
             </MobileProductTop>
           </MobileProductSectionContent>
           <MobileProductBottom>
-            <MobilePhoneImg data-aos="flip-right" />
+            <MobilePhoneImg src={iconPhone} data-aos="flip-right" />
           </MobileProductBottom>
         </MobileProductSectionStyle>
       ) : (
         <ProductSectionStyle>
           <PhoneLayout>
-            <PhoneBackground src={phoneBackgroundImg} />
-            <PhoneImg
-              data-aos="flip-right"
-              data-aos-delay="500"
-              data-aos-duration="1400"
-              src={iconPhone}
-            />
+            <PhoneBackground>
+              <PhoneImg
+                data-aos="flip-right"
+                data-aos-delay="500"
+                data-aos-duration="1400"
+                src={iconPhone}
+              />
+            </PhoneBackground>
           </PhoneLayout>
           <ProductSectionContent>
             <SliceLeft>
@@ -826,15 +844,15 @@ const Main = () => {
       <KeyServiceSectionStyle>
         <KeyServiceSection>
           <ServiceContent>
-            <ServiceTitleContainer>
+            <ServiceTitleContainer data-aos="fade-up">
               <Title size="primary">Key Services</Title>
             </ServiceTitleContainer>
-            <ServiceText>
+            <ServiceText data-aos="fade-up">
               Experience various blockchain services in xylo such as XO, Wallet
               and Community
             </ServiceText>
           </ServiceContent>
-          <SwiperContainer>
+          <SwiperContainer data-aos="fade-up">
             <MainPaging>
               {isMobile ? (
                 <Slider
@@ -928,10 +946,8 @@ const Main = () => {
       </KeyServiceSectionStyle>
       <InfoSectionStyle scrollPosition={scrollPosition}>
         <InfoSectionContent>
-          <InfoTitleContainer>
-            <Title size={isMobile ? `quaternary` : `primary`}>
-              <div data-aos="fade-up">INFO</div>
-            </Title>
+          <InfoTitleContainer data-aos="fade-up">
+            <Title size={isMobile ? `quaternary` : `primary`}>INFO</Title>
           </InfoTitleContainer>
           <InfoContent>
             <DocsContainer data-aos="fade-up">
@@ -986,7 +1002,7 @@ const Main = () => {
       <RoadmapSectionStyle scrollPosition={scrollPosition}>
         <RoadmapSectionContent>
           <RoadmapTitleContainer>
-            <Title size="primary">
+            <Title size={isMobile ? `quaternary` : `primary`}>
               <div data-aos="fade-up">ROADMAP</div>
             </Title>
           </RoadmapTitleContainer>
