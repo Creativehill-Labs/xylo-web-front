@@ -6,7 +6,7 @@ import Flex from '../Flex';
 import Text from '../Text';
 import Box from '../Box';
 
-const LinkButton = styled.button<{ color?: string; background?: string }>`
+const LinkButton = styled.button<{ background?: string }>`
   padding: 12px 20px;
   border: none;
   border-radius: 999px;
@@ -36,11 +36,13 @@ const BreadCrumbs: FC<{ search?: boolean }> = ({ search }) => {
     >
       {search ? (
         <>
-          <LinkButton background="#000">
-            <Link to="/helpcenter/faq">
-              <Text size={isMobile ? `14px` : `16px`}>Help Center</Text>
-            </Link>
-          </LinkButton>
+          <Link to="/helpcenter/faq">
+            <LinkButton background="#000">
+              <Text size={isMobile ? `14px` : `16px`} color="#fff">
+                Help Center
+              </Text>
+            </LinkButton>
+          </Link>
           <Box margin={isMobile ? `0 4px` : `0 16px`}>
             <Text size={isMobile ? `14px` : `20px`} display="block">
               /
@@ -52,23 +54,25 @@ const BreadCrumbs: FC<{ search?: boolean }> = ({ search }) => {
         </>
       ) : (
         <>
-          <LinkButton background="#000">
-            <Link to="/helpcenter/faq">
-              <Text size={isMobile ? `14px` : `16px`}>Help Center</Text>
-            </Link>
-          </LinkButton>
+          <Link to="/helpcenter/faq">
+            <LinkButton background="#000">
+              <Text size={isMobile ? `14px` : `16px`} color="#fff">
+                Help Center
+              </Text>
+            </LinkButton>
+          </Link>
           <Box margin={isMobile ? `0 4px` : `0 16px`}>
             <Text size={isMobile ? `14px` : `20px`} display="block">
               /
             </Text>
           </Box>
-          <LinkButton background="#aae112">
-            <Link to={`/helpcenter/${firstPath}`}>
-              <Text size={isMobile ? `14px` : `16px`} color="#000">
+          <Link to={`/helpcenter/${firstPath}`}>
+            <LinkButton background="#aae112">
+              <Text size={isMobile ? `14px` : `16px`}>
                 {firstPath.replace(/\b[a-z]/g, (char) => char.toUpperCase())}
               </Text>
-            </Link>
-          </LinkButton>
+            </LinkButton>
+          </Link>
           <Box margin={isMobile ? `0 4px` : `0 16px`}>
             <Text size={isMobile ? `14px` : `20px`} display="block">
               /

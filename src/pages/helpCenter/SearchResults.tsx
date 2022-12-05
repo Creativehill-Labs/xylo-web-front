@@ -49,7 +49,6 @@ const SearchResults: FC = () => {
   const [currentItems, setCurrentItems] = useState<DataProps[]>([]);
   const [searchData, setSearchData] = useState<DataProps[]>([]);
   const [categoryText, setCategoryText] = useState(`All Categories`);
-  const [categoryCount, setCategoryCount] = useState(0);
   const [categoryData, setCategoryData] = useState<DataProps[]>([]);
   const [isClickCategory, setIsClickCategory] = useState(false);
   const [pageNum, setPageNum] = useState(0);
@@ -61,7 +60,6 @@ const SearchResults: FC = () => {
     setSearchData(search);
     setCategoryData(search);
     setCategoryText(`All Categories`);
-    setCategoryCount(search.length);
   }, [state]);
 
   const responsiveData = useMemo(() => {
@@ -115,7 +113,6 @@ const SearchResults: FC = () => {
         text = `Supported Products`;
       }
       setCategoryText(text.replace(/\b[a-z]/g, (char) => char.toUpperCase()));
-      setCategoryCount(result.length);
       setPageNum(0);
       setItemOffset(0);
       if (isMobile) {
@@ -136,7 +133,7 @@ const SearchResults: FC = () => {
         <Flex flexDirection={isMobile ? `column` : `row`}>
           <Box width={isMobile ? `` : `788px`}>
             <Text size={isMobile ? `16px` : `24px`} weight="700">
-              {categoryCount} Results for “{state}” in {categoryText}
+              {categoryData.length} Results for “{state}” in {categoryText}
             </Text>
             <Line margin={isMobile ? `12px 0` : `30px 0 0 0`} />
             {responsiveData.map((data) => (
