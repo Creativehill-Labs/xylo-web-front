@@ -38,20 +38,21 @@ const BackgroundSection = styled.div`
   align-items: center;
   background-image: url('${backgroundImg}');
   background-color: rgba(0, 0, 0, 0.8);
-  height: calc(100vh - 114px);
+  height: calc(${window.innerHeight}px - 120px);
   background-size: cover;
   background-attachment: fixed;
   position: relative;
 
   @media screen and (max-width: 768px) {
     background-position: 65%;
-    height: auto;
-    padding-bottom: 100px;
+    height: calc(100vh - 69px);
   }
 `;
 
 const BackgroundContent = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   width: 1280px;
   margin: 0 auto;
@@ -76,9 +77,7 @@ const BackgroundContent = styled.div`
   @media screen and (max-width: 768px) {
     flex-direction: column;
     width: 100%;
-    padding-top: 80px;
     & > div {
-      /* padding: 150px 30px 0 30px; */
       font-size: 24px;
       line-height: 29px;
     }
@@ -87,7 +86,12 @@ const BackgroundContent = styled.div`
 
 const MainTitle = styled.div`
   position: relative;
+  width: 100%;
+  top: 15%;
   z-index: 1;
+  @media screen and (max-width: 768px) {
+    left: 5%;
+  }
 `;
 const MainTitleText = styled.h2`
   font-family: 'Montserrat', sans-serif;
@@ -96,6 +100,10 @@ const MainTitleText = styled.h2`
   font-weight: 700;
   white-space: pre-line;
   line-height: 1.4;
+  @media screen and (max-width: 1920px) and (min-width: 768px) {
+    width: 60%;
+    font-size: 42px !important;
+  }
   @media screen and (max-width: 1440px) {
     font-size: 42px !important;
   }
@@ -107,21 +115,20 @@ const MainTitleText = styled.h2`
 const ScrollDownAttach = styled.span`
   display: flex;
   flex-direction: column;
-  position: absolute;
-  left: 50%;
-  bottom: 20px;
-  margin-left: -62px;
-  transform: translate(-50%);
+  position: relative;
+  top: 13%;
   div {
     color: #aae112;
-    width: 100%;
+    width: 130px;
   }
   @media screen and (max-width: 768px) {
+    top: 3%;
     left: 0;
-    margin-left: 0;
-    transform: none;
     width: 100%;
     text-align: center;
+    div {
+      width: 100%;
+    }
   }
 `;
 
@@ -134,10 +141,8 @@ const ScrollDown = styled.div`
 `;
 
 const DonutImg = styled.span`
-  background-image: url('${donut}');
-  background-repeat: no-repeat;
+  background: url('${donut}') no-repeat center;
   background-size: 100%;
-  background-position: center;
   position: absolute;
   left: 57%;
   top: 4%;
@@ -171,13 +176,11 @@ const DonutImg = styled.span`
 `;
 
 const CoinImg = styled.span`
-  background-image: url('${coin}');
-  background-repeat: no-repeat;
+  background: url('${coin}') no-repeat center;
   background-size: 100%;
-  background-position: center;
   position: absolute;
   left: 60%;
-  top: 8%;
+  top: 25%;
   width: 12%;
   height: 243px;
   animation: floatingCoin 1.2s infinite ease-in-out alternate;
@@ -195,20 +198,21 @@ const CoinImg = styled.span`
     height: 100px;
     position: absolute;
     left: 20%;
-    top: 30%;
+    top: 50%;
     background-size: auto 100%;
-    animation: floatingCoinMobile 0.7s infinite ease-in-out alternate;
+    animation: floatingCoinMobile 0.9s infinite ease-in-out alternate;
     @keyframes floatingCoinMobile {
       0% {
-        top: 37%;
+        margin-top: -5px;
       }
       100% {
-        top: 38%;
+        margin-top: 5px;
       }
     }
   }
   @media screen and (max-width: 520px) {
-    left: 10%;
+    top: 40%;
+    left: 15%;
   }
 `;
 
@@ -405,10 +409,13 @@ const MainPaging = styled.div`
   .slick-arrow {
     display: none !important;
   }
+  .slick-track > div {
+    height: 80%;
+  }
 `;
 
 const SubPaging = styled.div`
-  margin: 80px auto 0;
+  margin: 0 auto;
   text-align: center;
   color: #3f3e3c;
   .slick-slider {
@@ -426,22 +433,23 @@ const SubPaging = styled.div`
       display: none !important;
     }
     &.slick-prev {
-      background: url('${iconArrowLeft}') no-repeat;
+      background: url('${iconArrowLeft}') no-repeat left;
       width: 50px;
       left: -70px;
     }
     &.slick-next {
-      background: url('${iconArrowRight}') no-repeat;
+      background: url('${iconArrowRight}') no-repeat right;
       width: 50px;
       right: -70px;
     }
   }
+
   .slick-active.slick-current + div {
     color: #ffffff;
   }
 
   @media screen and (max-width: 768px) {
-    width: 80%;
+    /* width: 100%; */
     font-size: 16px;
     .slick-slider.slick-initialized {
       width: 100%;
@@ -452,20 +460,21 @@ const SubPaging = styled.div`
       flex-direction: column;
       flex-wrap: nowrap;
       margin: 0 auto;
-      width: 200px;
+      width: 95%;
     }
     .slick-track {
     }
     .slick-arrow.slick-prev {
-      left: -10%;
+      width: 30px;
+      left: -15%;
     }
 
     .slick-arrow.slick-next {
-      left: 93%;
+      width: 30px;
+      right: -15%;
     }
 
     .slick-current {
-      /* background-color: red; */
     }
   }
 `;
@@ -750,6 +759,7 @@ const Main = () => {
   }, []);
   const [contentPaging, setContentPaging] = useState<Slider>();
   const [navPaging, setNavPaging] = useState<Slider>();
+
   return (
     <MainStyled backDark={navIsOpen}>
       <BackgroundSection>
@@ -865,24 +875,36 @@ const Main = () => {
                   slidesToShow={1}
                   slidesToScroll={1}
                 >
-                  <div>
-                    <MobileXoImage src={XoData[0].src} />
-                  </div>
-                  <div>
-                    <MobileWalletImage src={WalletData[0].src} />
-                  </div>
-                  <div>
-                    <MobileCommunityImage src={CommunityData[0].src} />
-                  </div>
-                  <div>
-                    <MobileXoImage src={XoData[0].src} />
-                  </div>
-                  <div>
-                    <MobileWalletImage src={WalletData[0].src} />
-                  </div>
-                  <div>
-                    <MobileCommunityImage src={CommunityData[0].src} />
-                  </div>
+                  <Slider autoplay>
+                    {XoData.map((el) => (
+                      <MobileXoImage src={el.src} key={el.id} />
+                    ))}
+                  </Slider>
+                  <Slider autoplay>
+                    {WalletData.map((el) => (
+                      <MobileWalletImage src={el.src} key={el.id} />
+                    ))}
+                  </Slider>
+                  <Slider autoplay>
+                    {CommunityData.map((el) => (
+                      <MobileCommunityImage src={el.src} key={el.id} />
+                    ))}
+                  </Slider>
+                  <Slider autoplay>
+                    {XoData.map((el) => (
+                      <MobileXoImage src={el.src} key={el.id} />
+                    ))}
+                  </Slider>
+                  <Slider autoplay>
+                    {WalletData.map((el) => (
+                      <MobileWalletImage src={el.src} key={el.id} />
+                    ))}
+                  </Slider>
+                  <Slider autoplay>
+                    {CommunityData.map((el) => (
+                      <MobileCommunityImage src={el.src} key={el.id} />
+                    ))}
+                  </Slider>
                 </Slider>
               ) : (
                 <Slider

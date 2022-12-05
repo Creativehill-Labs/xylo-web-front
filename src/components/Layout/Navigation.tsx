@@ -30,7 +30,7 @@ const Navheader = styled.header`
   }
 
   @media screen and (max-width: 1400px) {
-    width: 768px;
+    width: 80%;
   }
   @media screen and (max-width: 768px) {
     width: 85%;
