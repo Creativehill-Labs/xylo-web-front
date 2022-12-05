@@ -86,7 +86,13 @@ const HamburgerMenu: FC<IHamburgerMenu> = ({ onClick, isOpen }) => {
             <Link to="/">Main</Link>
           </MenuBarList>
           <MenuBarList>
-            <Link to="/">Docs</Link>
+            <a
+              href="https://xylo.gitbook.io/xylo/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Docs
+            </a>
           </MenuBarList>
           <MenuBarList>
             <Link to="/helpcenter/faq">Help Center</Link>

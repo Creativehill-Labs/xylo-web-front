@@ -40,6 +40,7 @@ const BackgroundSection = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
   height: calc(100vh - 114px);
   background-size: cover;
+  background-attachment: fixed;
   position: relative;
 
   @media screen and (max-width: 768px) {
@@ -335,6 +336,7 @@ const KeyServiceSectionStyle = styled.div`
   padding: 100px 0;
   overflow: hidden;
   background-image: url('${serviceBackgroundImg}');
+  background-attachment: fixed;
 `;
 
 const KeyServiceSection = styled(InnerSection)`

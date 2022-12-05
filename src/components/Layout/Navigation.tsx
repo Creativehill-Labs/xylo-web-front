@@ -82,7 +82,13 @@ const Navigation = () => {
         ) : (
           <LinkContainer>
             <Link to="/">Main</Link>
-            <Link to="/">Docs</Link>
+            <a
+              href="https://xylo.gitbook.io/xylo/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Docs
+            </a>
             <Link to="/helpcenter/faq">Help Center</Link>
             <Link to="/">White Paper</Link>
           </LinkContainer>
