@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import arrow from '../../assets/png/arrow-right.png';
 
@@ -86,13 +87,13 @@ const AnimationLink: FC<IAnimationLink> = ({ link, name }) => {
     <MainContainer>
       <ul>
         <li>
-          <a className="animated-arrow" href={link}>
+          <Link className="animated-arrow" to={link}>
             <div className="the-arrow -left" />
             <span className="main">
               <span className="text">{name}</span>
               <div className="the-arrow -right" />
             </span>
-          </a>
+          </Link>
         </li>
       </ul>
     </MainContainer>
