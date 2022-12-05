@@ -193,12 +193,12 @@ const ArticleDetail: FC = () => {
   const filteredData = allData
     .filter((data) => data.category === dataCategory)
     .filter((data) => data.id === paramsId)[0];
-  const inSectionData = allData.filter(
-    (data) => data.category === filteredData.category,
-  );
-  const relatedData = inSectionData.filter(
-    (data) => data.id !== filteredData.id,
-  );
+  const inSectionData = allData
+    .filter((data) => data.category === filteredData.category)
+    .slice(0, 5);
+  const relatedData = inSectionData
+    .filter((data) => data.id !== filteredData.id)
+    .slice(0, 5);
 
   useEffect(() => {
     const newRecently = {

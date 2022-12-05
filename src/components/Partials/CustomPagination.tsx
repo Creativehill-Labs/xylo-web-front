@@ -2,12 +2,14 @@ import { FC, useEffect, useState, Dispatch, SetStateAction } from 'react';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
 
-const StyledPage = styled.div<{ emptyData?: boolean }>`
+const StyledPage = styled.div<{
+  emptyData?: boolean;
+}>`
   .pagination {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 120px;
+    margin: 80px 0 120px 0;
     list-style: none;
     padding: 0;
     font-size: 20px;
@@ -34,6 +36,11 @@ const StyledPage = styled.div<{ emptyData?: boolean }>`
       }
     }
     a {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       color: black;
     }
   }
@@ -59,6 +66,10 @@ interface CustomPaginationProps {
   data: DataProps[];
   setCurrentItems: Dispatch<SetStateAction<DataProps[]>>;
   itemsPerPage: number;
+  pageNum: number;
+  setPageNum: Dispatch<SetStateAction<number>>;
+  itemOffset: number;
+  setItemOffset: Dispatch<SetStateAction<number>>;
 }
 
 interface ClickSelected {
@@ -69,15 +80,18 @@ const CustomPagination: FC<CustomPaginationProps> = ({
   data,
   setCurrentItems,
   itemsPerPage,
+  pageNum,
+  setPageNum,
+  itemOffset,
+  setItemOffset,
 }) => {
-  const [pageNum, setPageNum] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
   const [pageCount, setPageCount] = useState<number>(0);
 
   const handlePageClick = (e: ClickSelected) => {
     const newOffset = (e.selected * itemsPerPage) % data.length;
     setItemOffset(newOffset);
     setPageNum(e.selected);
+    window.scrollTo(0, 550);
   };
 
   useEffect(() => {
@@ -99,6 +113,7 @@ const CustomPagination: FC<CustomPaginationProps> = ({
         containerClassName="pagination"
         activeClassName="active"
         disabledClassName="disabled"
+        forcePage={pageNum}
       />
     </StyledPage>
   );
