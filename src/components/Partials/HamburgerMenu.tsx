@@ -40,7 +40,7 @@ const MenuBarListContainer = styled.ul<IHamburgerMenu>`
   list-style: none;
   width: 100%;
   height: 40vh;
-  left: 0%;
+  left: 0;
   margin-left: -29px;
   top: 69px;
   z-index: 1;
