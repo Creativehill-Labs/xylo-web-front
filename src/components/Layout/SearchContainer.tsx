@@ -66,12 +66,12 @@ const SearchContainer = () => {
   const [keyword, setKeyword] = useState(``);
 
   const enterKeyword = (e: KeyboardEvent) => {
-    if (e.key === `Enter`) {
+    if (e.code === `Enter`) {
       window.scrollTo(0, 0);
       navigate(`/helpcenter/search`, {
         state: keyword,
       });
-      window.location.reload();
+      setKeyword(``);
     }
   };
 
@@ -94,7 +94,7 @@ const SearchContainer = () => {
             state={keyword}
             onClick={() => {
               window.scrollTo(0, 0);
-              window.location.reload();
+              setKeyword(``);
             }}
           >
             <Button
