@@ -87,7 +87,7 @@ const SearchContainer = () => {
             placeholder="What are you looking for?"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
-            onKeyUp={(e) => enterKeyword(e)}
+            onKeyPress={(e) => enterKeyword(e)}
           />
           <Link
             to="/helpcenter/search"

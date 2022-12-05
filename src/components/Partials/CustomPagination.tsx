@@ -113,7 +113,7 @@ const CustomPagination: FC<CustomPaginationProps> = ({
         containerClassName="pagination"
         activeClassName="active"
         disabledClassName="disabled"
-        forcePage={pageNum}
+        forcePage={pageCount === 0 ? -1 : pageNum}
       />
     </StyledPage>
   );

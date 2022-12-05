@@ -13,10 +13,8 @@ import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
 const SubmitSection = styled.section`
   max-width: 618px;
   margin: 0 auto;
-  @media screen and (max-width: 1280px) {
-    max-width: none;
-    width: 100%;
-    padding: 0 4%;
+  @media screen and (max-width: 767px) {
+    max-width: 320px;
   }
 `;
 
@@ -233,7 +231,7 @@ const Submit: FC = () => {
               required
               {...register(`type`, { required: true })}
             >
-              <option value="" disabled selected hidden>
+              <option value="" disabled hidden>
                 Select a type
               </option>
               <option value="account">Account</option>
