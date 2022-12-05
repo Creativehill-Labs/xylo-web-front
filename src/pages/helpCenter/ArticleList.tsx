@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
@@ -14,15 +14,33 @@ import { policyData } from '../../dummy/policyData';
 import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
 import HelpCenterArticleBox from '../../components/Partials/HelpCenterArticleBox';
 import InnerSection from '../../components/Layout/InnerSection';
+import CustomPagination from '../../components/Partials/CustomPagination';
+
+interface DataProps {
+  id: number;
+  title: string;
+  content: string;
+  category: string;
+}
 
 const ArticleList: FC = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
   const { pathname } = useLocation();
+  const [currentItems, setCurrentItems] = useState<DataProps[]>([]);
+  const [pageNum, setPageNum] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
 
   const dataUrl = pathname.split(`/`)[2];
   const dataCategory = pathname.split(`/`)[3];
   const allData = [...faqData, ...policyData];
   const articleData = allData.filter((data) => data.category === dataCategory);
+
+  const articleListItems = useMemo(() => {
+    if (articleData.length > 5 && !isMobile) {
+      return currentItems;
+    }
+    return articleData;
+  }, [articleData, currentItems, isMobile]);
 
   return (
     <>
@@ -40,7 +58,7 @@ const ArticleList: FC = () => {
             </Text>
           </Flex>
           <Line margin={isMobile ? `12px 0` : `24px 0`} />
-          {articleData.map((data) => {
+          {articleListItems.map((data) => {
             return (
               <Link
                 to={`/helpcenter/${dataUrl}/${dataCategory}/${data.id}`}
@@ -61,6 +79,17 @@ const ArticleList: FC = () => {
               </Link>
             );
           })}
+          {articleData.length > 5 && !isMobile ? (
+            <CustomPagination
+              data={articleData}
+              setCurrentItems={setCurrentItems}
+              itemsPerPage={5}
+              pageNum={pageNum}
+              setPageNum={setPageNum}
+              itemOffset={itemOffset}
+              setItemOffset={setItemOffset}
+            />
+          ) : null}
         </Box>
       </InnerSection>
     </>

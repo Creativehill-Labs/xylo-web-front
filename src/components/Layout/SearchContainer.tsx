@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, KeyboardEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import styled from 'styled-components';
@@ -65,6 +65,16 @@ const SearchContainer = () => {
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState(``);
 
+  const enterKeyword = (e: KeyboardEvent) => {
+    if (e.key === `Enter`) {
+      window.scrollTo(0, 0);
+      navigate(`/helpcenter/search`, {
+        state: keyword,
+      });
+      window.location.reload();
+    }
+  };
+
   return (
     <MainContainer>
       <ContentContainer>
@@ -77,11 +87,15 @@ const SearchContainer = () => {
             placeholder="What are you looking for?"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
+            onKeyUp={(e) => enterKeyword(e)}
           />
           <Link
             to="/helpcenter/search"
             state={keyword}
-            onClick={() => window.location.replace(`/helpcenter/search`)}
+            onClick={() => {
+              window.scrollTo(0, 0);
+              window.location.reload();
+            }}
           >
             <Button
               width={isMobile ? `91px` : undefined}

@@ -10,10 +10,9 @@ import Text from '../../components/Text';
 import Line from '../../components/Line';
 import Box from '../../components/Box';
 import { faqData } from '../../dummy/faqData';
-import { policyData } from '../../dummy/policyData';
 import InnerSection from '../../components/Layout/InnerSection';
 
-const ArticleBox = styled.div`
+const ArticleBox = styled.div<{ isActive?: boolean }>`
   padding: 24px 20px;
   font-size: 20px;
   color: #000;
@@ -28,6 +27,8 @@ const ArticleBox = styled.div`
   @media screen and (max-width: 767px) {
     font-size: 14px;
   }
+  ${(props) =>
+    props.isActive ? `border: 1px solid #000;` : `border: 1px solid #f4f4f4;`}
 `;
 
 const SearchArticle = styled.div`
@@ -51,15 +52,16 @@ const SearchResults: FC = () => {
   const [categoryCount, setCategoryCount] = useState(0);
   const [categoryData, setCategoryData] = useState<DataProps[]>([]);
   const [isClickCategory, setIsClickCategory] = useState(false);
+  const [pageNum, setPageNum] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
   const { state } = useLocation();
 
   useEffect(() => {
-    const allData = [...faqData, ...policyData];
-    const search = allData.filter((data) => data.title.includes(`${state}`));
+    const search = faqData.filter((data) => data.title.includes(`${state}`));
     setSearchData(search);
     setCategoryData(search);
+    setCategoryText(`All Categories`);
     setCategoryCount(search.length);
-    setIsClickCategory(false);
   }, [state]);
 
   const responsiveData = useMemo(() => {
@@ -68,6 +70,13 @@ const SearchResults: FC = () => {
     }
     return currentItems;
   }, [currentItems, isMobile, categoryData]);
+
+  const clickCategoryData = useMemo(() => {
+    if (isClickCategory) {
+      return categoryData;
+    }
+    return searchData;
+  }, [categoryData, isClickCategory, searchData]);
 
   const calNum = useCallback(
     (count: string) => {
@@ -107,8 +116,15 @@ const SearchResults: FC = () => {
       }
       setCategoryText(text.replace(/\b[a-z]/g, (char) => char.toUpperCase()));
       setCategoryCount(result.length);
+      setPageNum(0);
+      setItemOffset(0);
+      if (isMobile) {
+        window.scrollTo(0, 350);
+      } else {
+        window.scrollTo(0, 550);
+      }
     },
-    [searchData],
+    [searchData, isMobile],
   );
 
   return (
@@ -185,42 +201,73 @@ const SearchResults: FC = () => {
               </Text>
             </Box>
 
-            <ArticleBox onClick={() => clickCategory(`account`)}>
+            <ArticleBox
+              onClick={() => clickCategory(`account`)}
+              isActive={categoryText === `Account`}
+            >
               Account ({calNum(`account`)})
             </ArticleBox>
-            <ArticleBox onClick={() => clickCategory(`wallet`)}>
+            <ArticleBox
+              onClick={() => clickCategory(`wallet`)}
+              isActive={categoryText === `Wallet`}
+            >
               Wallet ({calNum(`wallet`)})
             </ArticleBox>
-            <ArticleBox onClick={() => clickCategory(`pool`)}>
+            <ArticleBox
+              onClick={() => clickCategory(`pool`)}
+              isActive={categoryText === `Community Pool`}
+            >
               Community Pool ({calNum(`pool`)})
             </ArticleBox>
-            <ArticleBox onClick={() => clickCategory(`delegate`)}>
+            <ArticleBox
+              onClick={() => clickCategory(`delegate`)}
+              isActive={categoryText === `Delegate`}
+            >
               Delegate ({calNum(`delegate`)})
             </ArticleBox>
-            <ArticleBox onClick={() => clickCategory(`owner`)}>
+            <ArticleBox
+              onClick={() => clickCategory(`owner`)}
+              isActive={categoryText === `Stadium Owner`}
+            >
               Stadium Owner ({calNum(`owner`)})
             </ArticleBox>
-            <ArticleBox onClick={() => clickCategory(`proposal`)}>
+            <ArticleBox
+              onClick={() => clickCategory(`proposal`)}
+              isActive={categoryText === `Proposal`}
+            >
               Proposal ({calNum(`proposal`)})
             </ArticleBox>
-            <ArticleBox onClick={() => clickCategory(`vote`)}>
+            <ArticleBox
+              onClick={() => clickCategory(`vote`)}
+              isActive={categoryText === `Vote`}
+            >
               Vote ({calNum(`vote`)})
             </ArticleBox>
-            <ArticleBox onClick={() => clickCategory(`reward`)}>
+            <ArticleBox
+              onClick={() => clickCategory(`reward`)}
+              isActive={categoryText === `Reward`}
+            >
               Reward ({calNum(`reward`)})
             </ArticleBox>
-            <ArticleBox onClick={() => clickCategory(`products`)}>
+            <ArticleBox
+              onClick={() => clickCategory(`products`)}
+              isActive={categoryText === `Supported Products`}
+            >
               Supported Products ({calNum(`products`)})
             </ArticleBox>
           </Box>
         </Flex>
 
-        <Box margin={isMobile ? `60px 0 0 0` : `80px 0 0 0`}>
+        <Box>
           {isMobile ? null : (
             <CustomPagination
-              data={isClickCategory ? categoryData : searchData}
+              data={clickCategoryData}
               setCurrentItems={setCurrentItems}
               itemsPerPage={5}
+              pageNum={pageNum}
+              setPageNum={setPageNum}
+              itemOffset={itemOffset}
+              setItemOffset={setItemOffset}
             />
           )}
         </Box>
