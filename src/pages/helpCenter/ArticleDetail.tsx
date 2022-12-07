@@ -196,10 +196,10 @@ const ArticleDetail: FC = () => {
   const inSectionData = allData
     .filter((data) => data.category === filteredData.category)
     .slice(0, 5);
-  const relatedData = inSectionData
+  const relatedData = allData
+    .filter((data) => data.category === dataCategory)
     .filter((data) => data.id !== filteredData.id)
     .slice(0, 5);
-
   useEffect(() => {
     const newRecently = {
       id: filteredData.id,
@@ -220,11 +220,22 @@ const ArticleDetail: FC = () => {
   }, [filteredData.id, filteredData.title, pathname, filteredData]);
 
   const clickCopyWallet = async () => {
-    if (!navigator.clipboard) {
-      console.warn(`navigator clipboard is not supported`);
-      return;
+    if (navigator.clipboard) {
+      // https
+      await navigator.clipboard.writeText(window.location.href);
+    } else {
+      // http
+      const textarea = document.createElement(`textarea`);
+      textarea.value = window.location.href;
+      textarea.style.top = `0`;
+      textarea.style.left = `0`;
+      textarea.style.position = `fixed`;
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      document.execCommand(`copy`);
+      document.body.removeChild(textarea);
     }
-    await navigator.clipboard.writeText(window.location.href);
   };
 
   const clickShare = useCallback((sns: string) => {
@@ -416,9 +427,9 @@ const ArticleDetail: FC = () => {
               <Text size={isMobile ? `14px` : `20px`}>
                 Have more questions?
               </Text>
-              <SubmitButton>
-                <Link to="/helpcenter/submit">Submit a request</Link>
-              </SubmitButton>
+              <Link to="/helpcenter/submit">
+                <SubmitButton>Submit a request</SubmitButton>
+              </Link>
             </Flex>
           </Flex>
         </Box>
