@@ -40,7 +40,7 @@ const BackgroundSection = styled.div`
   background-color: rgba(0, 0, 0, 0.8);
   height: calc(${window.innerHeight}px - 120px);
   background-size: cover;
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
   position: relative;
 
   @media screen and (max-width: 768px) {
@@ -78,6 +78,7 @@ const BackgroundContent = styled.div`
     flex-direction: column;
     width: 100%;
     & > div {
+      margin-top: -50px;
       font-size: 24px;
       line-height: 29px;
     }
@@ -87,8 +88,9 @@ const BackgroundContent = styled.div`
 const MainTitle = styled.div`
   position: relative;
   width: 100%;
-  top: 15%;
+  top: 10%;
   z-index: 1;
+
   @media screen and (max-width: 768px) {
     left: 5%;
   }
@@ -100,15 +102,30 @@ const MainTitleText = styled.h2`
   font-weight: 700;
   white-space: pre-line;
   line-height: 1.4;
-  @media screen and (max-width: 1920px) and (min-width: 768px) {
+
+  @media screen and (max-width: 1440px) {
     width: 60%;
     font-size: 42px !important;
   }
-  @media screen and (max-width: 1440px) {
-    font-size: 42px !important;
-  }
-  @media screen and (max-width: 520px) {
+  @media screen and (max-width: 768px) {
+    width: 90%;
     font-size: 24px !important;
+  }
+`;
+
+const MainSubTitleText = styled.div`
+  font-size: 24px;
+  width: 50%;
+  line-height: 29px;
+
+  @media screen and (max-width: 1440px) {
+    width: 50%;
+    font-size: 18px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    font-size: 14px;
+    line-height: 17px;
   }
 `;
 
@@ -116,13 +133,13 @@ const ScrollDownAttach = styled.span`
   display: flex;
   flex-direction: column;
   position: relative;
-  top: 13%;
+  top: 8%;
   div {
     color: #aae112;
     width: 130px;
   }
   @media screen and (max-width: 768px) {
-    top: 3%;
+    top: 2%;
     left: 0;
     width: 100%;
     text-align: center;
@@ -135,9 +152,7 @@ const ScrollDownAttach = styled.span`
 const ScrollDown = styled.div`
   width: inherit;
   height: 30px;
-  background-image: url('${iconArrowDown}');
-  background-repeat: no-repeat;
-  background-position: center;
+  background: url('${iconArrowDown}') no-repeat center;
 `;
 
 const DonutImg = styled.span`
@@ -145,9 +160,9 @@ const DonutImg = styled.span`
   background-size: 100%;
   position: absolute;
   left: 57%;
-  top: 4%;
+  top: 0;
   width: 40%;
-  height: 710px;
+  height: 100%;
   animation: floatingDonut 1.4s infinite ease-in-out alternate;
   @keyframes floatingDonut {
     0% {
@@ -416,6 +431,7 @@ const MainPaging = styled.div`
 
 const SubPaging = styled.div`
   margin: 0 auto;
+  padding-top: 50px;
   text-align: center;
   color: #3f3e3c;
   .slick-slider {
@@ -425,6 +441,8 @@ const SubPaging = styled.div`
     position: relative;
   }
   .slick-track {
+    font-family: 'Montserrat';
+    font-weight: 700;
     text-align: center;
   }
   .slick-arrow {
@@ -460,7 +478,7 @@ const SubPaging = styled.div`
       flex-direction: column;
       flex-wrap: nowrap;
       margin: 0 auto;
-      width: 95%;
+      /* width: 100%; */
     }
     .slick-track {
     }
@@ -772,6 +790,13 @@ const Main = () => {
                   Rocketing rewards
                 </div>
               </MainTitleText>
+              <MainSubTitleText>
+                <div data-aos="fade-up" data-aos-delay="600">
+                  Xylo aims to provide transparent governance with a safer
+                  investment platform and create a new financial ecosystem with
+                  everyone involved.
+                </div>
+              </MainSubTitleText>
             </InnerSection>
           </MainTitle>
           <DonutImg data-aos="fade-left" data-aos-duration="2500" />
