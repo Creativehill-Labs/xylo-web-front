@@ -41,6 +41,9 @@ const ContentContainer = styled.div`
 const InputContainer = styled.div`
   display: flex;
   gap: 20px;
+  input[type='text'] {
+    color: white;
+  }
 
   @media screen and (max-width: 768px) {
     justify-content: center;
