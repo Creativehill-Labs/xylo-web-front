@@ -65,7 +65,7 @@ const Navigation = () => {
   const dispatch = useDispatch();
   const { navIsOpen } = useSelector(selectCommonSlice);
   const isMobile = useMediaQuery({
-    query: `(max-width: 768px)`,
+    query: `(max-width: 959px)`,
   });
 
   return (
