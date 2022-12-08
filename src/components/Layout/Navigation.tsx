@@ -7,6 +7,7 @@ import { setNavIsOpen } from '../../features/commonSlice';
 import iconLogo from '../../assets/png/icon-logo@2x-8.png';
 import HamburgerMenu from '../Partials/HamburgerMenu';
 import { selectCommonSlice } from '../../store';
+import whitePaper from '../../assets/whitePaper.pdf';
 
 const NavStyle = styled.div`
   background-color: #000000;
@@ -90,7 +91,9 @@ const Navigation = () => {
               Docs
             </a>
             <Link to="/helpcenter/faq">Help Center</Link>
-            <Link to="/">White Paper</Link>
+            <a href={`${whitePaper}`} target="_blank" rel="noreferrer">
+              White Paper
+            </a>
           </LinkContainer>
         )}
       </Navheader>

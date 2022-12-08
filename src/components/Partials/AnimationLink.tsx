@@ -80,20 +80,36 @@ const MainContainer = styled.div`
 interface IAnimationLink {
   link: string;
   name: string;
+  isBlankOpen?: boolean;
 }
 
-const AnimationLink: FC<IAnimationLink> = ({ link, name }) => {
+const AnimationLink: FC<IAnimationLink> = ({ link, name, isBlankOpen }) => {
   return (
     <MainContainer>
       <ul>
         <li>
-          <Link className="animated-arrow" to={link}>
-            <div className="the-arrow -left" />
-            <span className="main">
-              <span className="text">{name}</span>
-              <div className="the-arrow -right" />
-            </span>
-          </Link>
+          {isBlankOpen ? (
+            <a
+              className="animated-arrow"
+              href={link}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <div className="the-arrow -left" />
+              <span className="main">
+                <span className="text">{name}</span>
+                <div className="the-arrow -right" />
+              </span>
+            </a>
+          ) : (
+            <Link className="animated-arrow" to={link}>
+              <div className="the-arrow -left" />
+              <span className="main">
+                <span className="text">{name}</span>
+                <div className="the-arrow -right" />
+              </span>
+            </Link>
+          )}
         </li>
       </ul>
     </MainContainer>

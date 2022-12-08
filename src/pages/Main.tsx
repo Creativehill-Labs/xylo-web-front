@@ -30,6 +30,7 @@ import iconO from '../assets/png/icon-O.png';
 import KeyServiceMock from '../components/Partials/KeyServiceMock';
 import { CommunityData, WalletData, XoData } from '../dummy/KeyServiceMockData';
 import InnerSection from '../components/Layout/InnerSection';
+import whitePaper from '../assets/whitePaper.pdf';
 
 const MainStyled = styled.div<MainStyleProps>``;
 
@@ -1013,7 +1014,11 @@ const Main = () => {
                 </InfoContentText>
               </DocsContent>
               <AnimationLinkContainer data-aos="fade-right">
-                <AnimationLink link="/" name="XYLO DOCS" />
+                <AnimationLink
+                  link="https://xylo.gitbook.io/xylo/"
+                  name="XYLO DOCS"
+                  isBlankOpen
+                />
               </AnimationLinkContainer>
             </DocsContainer>
             <HelpContainer data-aos="fade-up" data-aos-delay="100">
@@ -1045,7 +1050,11 @@ const Main = () => {
                 </InfoContentText>
               </PaperContent>
               <AnimationLinkContainer data-aos="fade-right">
-                <AnimationLink link="/" name="White Paper" />
+                <AnimationLink
+                  link={`${whitePaper}`}
+                  name="White Paper"
+                  isBlankOpen
+                />
               </AnimationLinkContainer>
             </PaperContainer>
           </InfoContent>
