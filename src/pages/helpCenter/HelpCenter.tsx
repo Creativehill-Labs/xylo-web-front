@@ -5,6 +5,8 @@ import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
 import CategoryCard from './CategoryCard';
 import { faqCardData } from '../../dummy/faqCardData';
 import Title from '../../components/Title/Title';
+import InnerSection from '../../components/Layout/InnerSection';
+import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
 
 const HelpCenterStyle = styled.div`
   display: flex;
@@ -12,7 +14,7 @@ const HelpCenterStyle = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh + 9px);
+  margin-bottom: 10%;
 
   @media screen and (max-width: 1400px) and (min-width: 768px) {
     height: 100%;
@@ -32,7 +34,7 @@ const HelpCenterStyle = styled.div`
   }
 `;
 
-const TitleContainer = styled.div``;
+const TitleContainer = styled(HelpCenterTitleBox)``;
 
 const HelpCenterCardContainer = styled.div`
   max-width: 1280px;
@@ -62,26 +64,27 @@ const HelpCenter = () => {
   return (
     <>
       <HelpCenterLayout />
-      <HelpCenterStyle>
-        <TitleContainer>
-          <Title size={isMobile ? `senary` : `secondary`}>
-            We&apos;re standing by to help!
-          </Title>
-        </TitleContainer>
-        <HelpCenterCardContainer>
-          {faqCardData.map((el) => {
-            return (
-              <CategoryCard
-                key={el.id}
-                title={el.title}
-                link={el.link}
-                src={el.src}
-                activeSrc={el.activeSrc}
-              />
-            );
-          })}
-        </HelpCenterCardContainer>
-      </HelpCenterStyle>
+      <InnerSection>
+        <HelpCenterStyle>
+          <TitleContainer>
+            <Title size={isMobile ? `senary` : `secondary`}>
+              We&apos;re standing by to help!
+            </Title>
+          </TitleContainer>
+          <HelpCenterCardContainer>
+            {faqCardData.map((el) => {
+              return (
+                <CategoryCard
+                  title={el.title}
+                  link={el.link}
+                  src={el.src}
+                  activeSrc={el.activeSrc}
+                />
+              );
+            })}
+          </HelpCenterCardContainer>
+        </HelpCenterStyle>
+      </InnerSection>
     </>
   );
 };
