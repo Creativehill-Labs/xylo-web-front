@@ -9,6 +9,7 @@ import iconClip from '../../assets/svg/icon-clip.svg';
 import iconClose from '../../assets/svg/icon-close.svg';
 import Icon from '../../components/Icon';
 import HelpCenterTitleBox from '../../components/Partials/HelpCenterTitleBox';
+import SelectDown from '../../assets/png/select-down.png';
 
 const SubmitSection = styled.section`
   max-width: 618px;
@@ -45,6 +46,12 @@ const SubmitText = styled.input`
   }
 `;
 
+const SelectBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+`;
+
 const SubmitSelect = styled.select`
   width: 618px;
   height: 68px;
@@ -56,6 +63,11 @@ const SubmitSelect = styled.select`
   background-color: #f9f9f9;
   border-radius: 8px;
   color: black;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
   :focus {
     border: 1px solid #202020;
   }
@@ -67,6 +79,21 @@ const SubmitSelect = styled.select`
     height: 54px;
     margin: 8px 0 24px 0;
     font-size: 14px;
+  }
+`;
+
+const SelectArrow = styled.div`
+  position: absolute;
+  top: 68px;
+  right: 20px;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  background: url('${SelectDown}') no-repeat;
+  background-size: contain;
+  @media screen and (max-width: 767px) {
+    top: 45px;
+    right: 16px;
   }
 `;
 
@@ -218,7 +245,7 @@ const Submit: FC = () => {
                 /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
             })}
           />
-          <Flex flexDirection="column">
+          <SelectBox>
             <Text
               size={isMobile ? `14px` : `24px`}
               weight="700"
@@ -244,7 +271,8 @@ const Submit: FC = () => {
               <option value="reward">Reward</option>
               <option value="products">Supported Products</option>
             </SubmitSelect>
-          </Flex>
+            <SelectArrow />
+          </SelectBox>
           <Text size={isMobile ? `14px` : `24px`} weight="700" display="block">
             Subject
           </Text>
