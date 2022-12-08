@@ -440,6 +440,9 @@ const SubPaging = styled.div`
     display: inline-block;
     position: relative;
   }
+  .slick-slider.slick-initialized {
+    width: 40%;
+  }
   .slick-track {
     font-family: 'Montserrat';
     font-weight: 700;
