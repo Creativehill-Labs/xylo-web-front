@@ -184,26 +184,39 @@ interface RecentlyViewedProps extends DataProps {
 const ArticleDetail: FC = () => {
   const isMobile = useMediaQuery({ query: `(max-width: 767px)` });
   const [recentlyData, setRecentlyData] = useState<RecentlyViewedProps[]>([]);
+  const [filteredData, setFilteredData] = useState<DataProps>();
+  const [inSectionData, setInSectionData] = useState<DataProps[]>([]);
+  const [relatedData, setRelatedData] = useState<DataProps[]>([]);
   const { pathname } = useLocation();
   const paramsId = Number(useParams().id);
 
-  const allData = [...faqData, ...policyData];
   const dataUrl = pathname.split(`/`)[2];
   const dataCategory = pathname.split(`/`)[3];
-  const filteredData = allData
-    .filter((data) => data.category === dataCategory)
-    .filter((data) => data.id === paramsId)[0];
-  const inSectionData = allData
-    .filter((data) => data.category === filteredData.category)
-    .slice(0, 5);
-  const relatedData = allData
-    .filter((data) => data.category === dataCategory)
-    .filter((data) => data.id !== filteredData.id)
-    .slice(0, 5);
+
+  useEffect(() => {
+    const allData = [...faqData, ...policyData];
+    setFilteredData(
+      allData
+        .filter((data) => data.category === dataCategory)
+        .filter((data) => data.id === paramsId)[0],
+    );
+    setInSectionData(
+      allData
+        .filter((data) => data.category === filteredData?.category)
+        .slice(0, 5),
+    );
+    setRelatedData(
+      allData
+        .filter((data) => data.category === dataCategory)
+        .filter((data) => data.id !== filteredData?.id)
+        .slice(0, 5),
+    );
+  }, [dataCategory, paramsId, filteredData?.id, filteredData?.category]);
+
   useEffect(() => {
     const newRecently = {
-      id: filteredData.id,
-      title: filteredData.title,
+      id: filteredData?.id,
+      title: filteredData?.title,
       url: pathname,
     };
     const recently = [
@@ -217,7 +230,7 @@ const ArticleDetail: FC = () => {
       .slice(0, 6);
     localStorage.setItem(`recently`, JSON.stringify(recently));
     setRecentlyData(recently);
-  }, [filteredData.id, filteredData.title, pathname, filteredData]);
+  }, [filteredData?.id, filteredData?.title, pathname, filteredData]);
 
   const clickCopyWallet = async () => {
     if (navigator.clipboard) {
@@ -293,7 +306,7 @@ const ArticleDetail: FC = () => {
               </Flex>
             </Flex>
             <Text size={isMobile ? `14px` : `20px`}>
-              {filteredData.content}
+              {filteredData?.content}
             </Text>
           </Box>
           <Box

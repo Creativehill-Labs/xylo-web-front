@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import HelpCenterLayout from '../../components/Layout/HelpCenterLayout';
@@ -29,11 +29,15 @@ const ArticleList: FC = () => {
   const [currentItems, setCurrentItems] = useState<DataProps[]>([]);
   const [pageNum, setPageNum] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
+  const [articleData, setArticleData] = useState<DataProps[]>([]);
 
   const dataUrl = pathname.split(`/`)[2];
   const dataCategory = pathname.split(`/`)[3];
-  const allData = [...faqData, ...policyData];
-  const articleData = allData.filter((data) => data.category === dataCategory);
+
+  useEffect(() => {
+    const allData = [...faqData, ...policyData];
+    setArticleData(allData.filter((data) => data.category === dataCategory));
+  }, [dataCategory]);
 
   const articleListItems = useMemo(() => {
     if (articleData.length > 5 && !isMobile) {

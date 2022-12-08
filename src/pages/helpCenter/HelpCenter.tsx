@@ -72,6 +72,7 @@ const HelpCenter = () => {
           {faqCardData.map((el) => {
             return (
               <CategoryCard
+                key={el.id}
                 title={el.title}
                 link={el.link}
                 src={el.src}
