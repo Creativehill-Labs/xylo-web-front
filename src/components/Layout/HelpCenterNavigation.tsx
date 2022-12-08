@@ -55,6 +55,14 @@ const NavButton = styled.button`
   cursor: pointer;
 `;
 
+const NavText = styled.span`
+  font-size: 20px;
+  font-weight: 700;
+  @media screen and (max-width: 767px) {
+    font-size: 12px;
+  }
+`;
+
 interface INavbutton {
   currentClick: string;
 }
@@ -74,15 +82,18 @@ const HelpCenterNavigation = () => {
     <NavStyle>
       <NavContent currentClick={currentClick}>
         <Link to="/helpcenter/faq">
-          <NavButton onClick={() => setCurrentClick(`1`)}>FAQ</NavButton>
+          <NavButton onClick={() => setCurrentClick(`1`)}>
+            <NavText>FAQ</NavText>
+          </NavButton>
         </Link>
         <Link to="/helpcenter/notice">
-          <NavButton onClick={() => setCurrentClick(`2`)}>Notice</NavButton>
+          <NavButton onClick={() => setCurrentClick(`2`)}>
+            <NavText>Notice</NavText>
+          </NavButton>
         </Link>
         <Link to="/helpcenter/policy">
           <NavButton onClick={() => setCurrentClick(`3`)}>
-            {`Operation
-            Policy`}
+            <NavText>Operation Policy</NavText>
           </NavButton>
         </Link>
       </NavContent>
